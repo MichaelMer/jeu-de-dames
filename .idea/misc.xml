@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout-land/fragment_nom_joueur.xml" value="0.152" />
+        <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/activity_container.xml" value="0.1" />
         <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/activity_main.xml" value="0.13496376811594202" />
+        <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/fragment_nom_joueur.xml" value="0.24010416666666667" />
       </map>
     </option>
   </component>
