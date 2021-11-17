@@ -97,9 +97,32 @@ public class Damier {
     ArrayList<Integer> selectionnerPion(int position) {
         ArrayList<Integer> reslutat = new ArrayList<>();
         if(listePion.get(position) != null) {
-            //ajouter les position qui son disponible a la liste
+            /**
+             * +5 pour droite
+             * +6 pour gauche
+             * -5 pour gauche
+             * -6 pour droite
+             *
+             *
+             */
+            if (estColImpaire(position)) {
+
+            }
         }
 
         return reslutat;
+    }
+
+    public boolean estColImpaire(int position) {
+        int nbColonne = 1;
+        for (int i = 0; i <= 50; i++) {
+            if (i % 5 == 0) {
+                nbColonne++;
+            }
+            if (i == position) {
+                return nbColonne % 2 == 0;
+            }
+        }
+        return false;
     }
 }

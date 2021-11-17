@@ -84,9 +84,17 @@ public class TestDamier {
     @Test
     public void testSelectionnerPion() {
         Damier damier = Damier.getInstance();
+
+        damier.initialiser();
         ArrayList<Integer> resultat = new ArrayList<>();
-        //remplir la liste
+        resultat.add(21);
+        resultat.add(22);
         assertEquals(resultat, damier.selectionnerPion(17));
 
+        damier.initialiser();
+        resultat = new ArrayList<>();
+        resultat.add(27);
+        resultat.add(28);
+        assertEquals(resultat, damier.selectionnerPion(32));
     }
 }
