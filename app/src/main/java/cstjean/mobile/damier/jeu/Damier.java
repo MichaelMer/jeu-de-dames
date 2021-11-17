@@ -1,5 +1,6 @@
 package cstjean.mobile.damier.jeu;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,11 +18,14 @@ public class Damier {
      */
     private final Map<Integer, Pion> listePion;
 
+    private boolean pionSelectionne;
+
     /**
      * Constructeur.
      */
     private Damier() {
         listePion = new LinkedHashMap<>();
+        pionSelectionne = false;
     }
 
     public static Damier getInstance() {
@@ -64,6 +68,7 @@ public class Damier {
      * Initialise le damier avec les pions et l'affichage.
      */
     void initialiser() {
+        pionSelectionne = false;
         listePion.clear();
         for (int i = 1; i <= 20; i++) {
             listePion.put(i, new Pion(CouleurPion.NOIR));
@@ -87,5 +92,14 @@ public class Damier {
             }
         }
         return nbPion;
+    }
+
+    ArrayList<Integer> selectionnerPion(int position) {
+        ArrayList<Integer> reslutat = new ArrayList<>();
+        if(listePion.get(position) != null) {
+            //ajouter les position qui son disponible a la liste
+        }
+
+        return reslutat;
     }
 }

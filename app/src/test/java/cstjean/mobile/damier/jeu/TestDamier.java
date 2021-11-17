@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 /**
  * Test pour les damier.
  *
@@ -77,5 +79,14 @@ public class TestDamier {
         assertEquals(20, damier.getNbPionParCouleur(CouleurPion.BLANC));
 
         assertEquals(20, damier.getNbPionParCouleur(CouleurPion.NOIR));
+    }
+
+    @Test
+    public void testSelectionnerPion() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        //remplir la liste
+        assertEquals(resultat, damier.selectionnerPion(17));
+
     }
 }
