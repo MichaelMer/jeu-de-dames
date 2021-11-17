@@ -16,7 +16,7 @@ public class TestDamier {
      */
     @Test
     public void testCreer() {
-        Damier damier = new Damier();
+        Damier damier = Damier.getInstance();
         assertEquals(0, damier.getNombrePion());
     }
 
@@ -25,7 +25,7 @@ public class TestDamier {
      */
     @Test
     public void testAjoutPion() {
-        Damier damier = new Damier();
+        Damier damier = Damier.getInstance();
         Pion pion = new Pion(CouleurPion.NOIR);
 
         damier.ajouterPion(38, pion);
@@ -42,7 +42,7 @@ public class TestDamier {
      */
     @Test
     public void testInitialiserPions() {
-        Damier damier = new Damier();
+        Damier damier = Damier.getInstance();
         assertEquals(0, damier.getNombrePion());
         damier.initialiser();
         assertEquals(40, damier.getNombrePion());
@@ -59,7 +59,7 @@ public class TestDamier {
      */
     @Test
     public void testNbPion() {
-        Damier damier = new Damier();
+        Damier damier = Damier.getInstance();
 
         damier.ajouterPion(1, new Pion());
         assertEquals(1, damier.getNbPionParCouleur(CouleurPion.BLANC));

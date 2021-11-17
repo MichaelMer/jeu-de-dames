@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Damier</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="msg_erreur_nom_vide">un joueur ne pas avoir un nom vide</string>
+    <string name="msg_erreur_nom_identique">Les deux nom sont identiques</string>
     <string name="txt_nom_joueur1">nom joueur 1</string>
     <string name="txt_nom_joueur2">nom joueur 2</string>
     <string name="btn_commencer_partie">Commencer</string>

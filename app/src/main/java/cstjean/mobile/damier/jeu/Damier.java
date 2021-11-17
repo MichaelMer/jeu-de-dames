@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class Damier {
 
+    private static Damier instance = null;
     /**
      * Liste de pion du damier.
      */
@@ -19,8 +20,15 @@ public class Damier {
     /**
      * Constructeur.
      */
-    Damier() {
+    private Damier() {
         listePion = new LinkedHashMap<>();
+    }
+
+    public static Damier getInstance() {
+        if(instance == null) {
+            return new Damier();
+        }
+        return instance;
     }
 
     /**

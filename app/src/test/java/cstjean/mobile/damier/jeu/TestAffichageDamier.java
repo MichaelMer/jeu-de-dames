@@ -25,7 +25,7 @@ public class TestAffichageDamier {
                         "-p-p-p-p-p" + Util.SAUT_LIGNE +
                         "p-p-p-p-p-" + Util.SAUT_LIGNE;
 
-        Damier damier = new Damier();
+        Damier damier = Damier.getInstance();
         damier.initialiser();
         assertEquals(representationDamier, AffichageDamier.afficherDamier(damier));
     }
