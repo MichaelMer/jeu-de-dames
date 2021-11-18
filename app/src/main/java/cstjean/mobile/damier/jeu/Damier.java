@@ -98,34 +98,41 @@ public class Damier {
         ArrayList<Integer> reslutat = new ArrayList<>();
         if (listePion.get(position) != null) {
             if (position % 10 <= 5 && position % 10 > 0) {
-                reslutat.addAll(chercherMovement(new int[]{-5, -4, 5, 6},position));
+                reslutat.addAll(chercherMovement(new int[]{-5, -4, 5, 6}, position));
             } else {
-                reslutat.addAll(chercherMovement(new int[]{-6, -5, 4, 5},position));
+                reslutat.addAll(chercherMovement(new int[]{-6, -5, 4, 5}, position));
             }
         }
         return reslutat;
     }
 
-    private ArrayList<Integer> chercherMovement(int[] mouvements, int position){
-        ArrayList<Integer> reslutat = new ArrayList<>();;
-        for (int mouvement: mouvements) {
-            if (listePion.get(position + mouvement) == null) {
+    private ArrayList<Integer> chercherMovement(int[] mouvements, int position) {
+        ArrayList<Integer> reslutat = new ArrayList<>();
+        for (int mouvement : mouvements) {
                 if (listePion.get(position).estNoir() &&
                         listePion.get(position).getType() == TypePion.PION &&
-                        position  < position + mouvement) {
+                        position < position + mouvement) {
 
                     reslutat.add(position + mouvement);
                 } else if (!listePion.get(position).estNoir() &&
                         listePion.get(position).getType() == TypePion.PION &&
-                        position > position +mouvement) {
-                    reslutat.add(position+mouvement);
+                        position > position + mouvement) {
+                    reslutat.add(position + mouvement);
                 }
-                if(listePion.get(position).getType() == TypePion.DAME){
-                    reslutat.add(position+mouvement);
+                if (listePion.get(position).getType() == TypePion.DAME) {
+                    reslutat.add(position + mouvement);
                 }
-            }
         }
         return reslutat;
     }
 
+    private int movement(int mouvementAfaire,int position) {
+        int mouvement = 0;
+        if (listePion.get(position + mouvementAfaire).getCouleur() != listePion.get(position).getCouleur()) {
+
+
+        }
+
+        return mouvement;
+    }
 }
