@@ -3,6 +3,7 @@ package cstjean.mobile.damier.jeu;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Classe pour les damiers.
@@ -29,8 +30,8 @@ public class Damier {
     }
 
     public static Damier getInstance() {
-        if(instance == null) {
-            return new Damier();
+        if (instance == null) {
+            instance = new Damier();
         }
         return instance;
     }
@@ -94,30 +95,29 @@ public class Damier {
         return nbPion;
     }
 
-    ArrayList<Integer> selectionnerPion(int position) {
-        ArrayList<Integer> reslutat = new ArrayList<>();
-        if(listePion.get(position) != null) {
-            /**
-             * +5 pour droite
-             * +6 pour gauche
-             * -5 pour gauche
-             * -6 pour droite
-             *
-             *
-             */
-            if (estColImpaire(position)) {
-                if (listePion.get(position + 6) == null) {
-                    reslutat.add(position + 6);
-                }
-                if (listePion.get(position + 5) == null) {
-                    reslutat.add(position + 5);
-                }
-                if (listePion.get(position).getType() == TypePion.DAME){
+    public void viderDamier() {
+        listePion.clear();
+    }
 
-                }
+    public ArrayList<Integer> selectionnerPion(int position) {
+        ArrayList<Integer> reslutat = new ArrayList<>();
+        if (listePion.get(position) != null) {
+            if (estColImpaire(position)) {
+                reslutat.addAll(chercherMovement2(new int[]{-5, -4, 5, 6},position));
+            } else {
+                reslutat.addAll(chercherMovement2(new int[]{-6, -5, 4, 5},position));
             }
         }
+        return reslutat;
+    }
 
+    private ArrayList<Integer> chercherMovement2(int[] mouvements, int position){
+        ArrayList<Integer> reslutat = new ArrayList<>();
+        for (int mouvement: mouvements) {
+            if (listePion.get(position + mouvement) == null) {
+                reslutat.add(position + mouvement);
+            }
+        }
         return reslutat;
     }
 
@@ -133,5 +133,4 @@ public class Damier {
         }
         return false;
     }
-
 }
