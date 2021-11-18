@@ -3,7 +3,6 @@ package cstjean.mobile.damier.jeu;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Classe pour les damiers.
@@ -19,14 +18,11 @@ public class Damier {
      */
     private final Map<Integer, Pion> listePion;
 
-    private boolean pionSelectionne;
-
     /**
      * Constructeur.
      */
     private Damier() {
         listePion = new LinkedHashMap<>();
-        pionSelectionne = false;
     }
 
     public static Damier getInstance() {
@@ -69,7 +65,6 @@ public class Damier {
      * Initialise le damier avec les pions et l'affichage.
      */
     void initialiser() {
-        pionSelectionne = false;
         listePion.clear();
         for (int i = 1; i <= 20; i++) {
             listePion.put(i, new Pion(CouleurPion.NOIR));
@@ -102,16 +97,16 @@ public class Damier {
     public ArrayList<Integer> selectionnerPion(int position) {
         ArrayList<Integer> reslutat = new ArrayList<>();
         if (listePion.get(position) != null) {
-            if (estColImpaire(position)) {
-                reslutat.addAll(chercherMovement2(new int[]{-5, -4, 5, 6},position));
+            if (position % 10 <= 5 && position % 10 > 0) {
+                reslutat.addAll(chercherMovement(new int[]{-5, -4, 5, 6},position));
             } else {
-                reslutat.addAll(chercherMovement2(new int[]{-6, -5, 4, 5},position));
+                reslutat.addAll(chercherMovement(new int[]{-6, -5, 4, 5},position));
             }
         }
         return reslutat;
     }
 
-    private ArrayList<Integer> chercherMovement2(int[] mouvements, int position){
+    private ArrayList<Integer> chercherMovement(int[] mouvements, int position){
         ArrayList<Integer> reslutat = new ArrayList<>();
         for (int mouvement: mouvements) {
             if (listePion.get(position + mouvement) == null) {
@@ -119,18 +114,5 @@ public class Damier {
             }
         }
         return reslutat;
-    }
-
-    private boolean estColImpaire(int position) {
-        int nbColonne = 1;
-        for (int i = 0; i <= 50; i++) {
-            if (i % 5 == 0) {
-                nbColonne++;
-            }
-            if (i == position) {
-                return nbColonne % 2 == 0;
-            }
-        }
-        return false;
     }
 }
