@@ -107,12 +107,25 @@ public class Damier {
     }
 
     private ArrayList<Integer> chercherMovement(int[] mouvements, int position){
-        ArrayList<Integer> reslutat = new ArrayList<>();
+        ArrayList<Integer> reslutat = new ArrayList<>();;
         for (int mouvement: mouvements) {
             if (listePion.get(position + mouvement) == null) {
-                reslutat.add(position + mouvement);
+                if (listePion.get(position).estNoir() &&
+                        listePion.get(position).getType() == TypePion.PION &&
+                        position  < position + mouvement) {
+
+                    reslutat.add(position + mouvement);
+                } else if (!listePion.get(position).estNoir() &&
+                        listePion.get(position).getType() == TypePion.PION &&
+                        position > position +mouvement) {
+                    reslutat.add(position+mouvement);
+                }
+                if(listePion.get(position).getType() == TypePion.DAME){
+                    reslutat.add(position+mouvement);
+                }
             }
         }
         return reslutat;
     }
+
 }
