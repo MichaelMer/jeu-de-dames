@@ -34,4 +34,9 @@ public class Dame extends Pion {
         }
         return 'd';
     }
+
+    @Override
+    public TypePion getType() {
+        return TypePion.DAME;
+    }
 }

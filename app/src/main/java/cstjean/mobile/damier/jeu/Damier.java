@@ -106,14 +106,22 @@ public class Damier {
              *
              */
             if (estColImpaire(position)) {
+                if (listePion.get(position + 6) == null) {
+                    reslutat.add(position + 6);
+                }
+                if (listePion.get(position + 5) == null) {
+                    reslutat.add(position + 5);
+                }
+                if (listePion.get(position).getType() == TypePion.DAME){
 
+                }
             }
         }
 
         return reslutat;
     }
 
-    public boolean estColImpaire(int position) {
+    private boolean estColImpaire(int position) {
         int nbColonne = 1;
         for (int i = 0; i <= 50; i++) {
             if (i % 5 == 0) {
@@ -125,4 +133,5 @@ public class Damier {
         }
         return false;
     }
+
 }

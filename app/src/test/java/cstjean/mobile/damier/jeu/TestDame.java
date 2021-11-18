@@ -1,5 +1,7 @@
 package cstjean.mobile.damier.jeu;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -43,5 +45,12 @@ public class TestDame extends TestPion{
 
         Pion dameBlanche = creerPion();
         Assert.assertEquals('d', dameBlanche.getRepresentation());
+    }
+
+    @Test
+    @Override
+    public void testPionType() {
+        Pion pion = creerPion();
+        assertEquals(TypePion.DAME, pion.getType());
     }
 }

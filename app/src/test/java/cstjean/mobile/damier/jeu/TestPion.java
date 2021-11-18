@@ -54,6 +54,12 @@ public class TestPion {
         assertEquals('p', pionBlanc.getRepresentation());
     }
 
+    @Test
+    public void testPionType() {
+        Pion pion = creerPion();
+        assertEquals(TypePion.PION, pion.getType());
+    }
+
     /**
      * Méthode qui crée un pion selon la couleur donné.
      *
