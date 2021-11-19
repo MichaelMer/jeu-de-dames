@@ -120,16 +120,26 @@ public class Damier {
                     resultat.add(getMouvement(i,position));
                 }
         }
-        return resultat;
+        return filtrer(resultat, position);
+    }
+
+    private ArrayList<Integer> filtrer(ArrayList<Integer> listeAFiltrer, int nbAEnlever) {
+        ArrayList<Integer> listeFiltrer = new ArrayList<>();
+        for (int nb: listeAFiltrer) {
+            if(nb != nbAEnlever){
+                listeFiltrer.add(nb);
+            }
+        }
+        return listeFiltrer;
     }
 
     private int getMouvement(int index, int position) {
         int nouvellePosition = position + getSuiteMouvement(position)[index];
 
         if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2){
-            return 0;
+            return position;
         } else if (position % 10 == 5 && index == 1 || position % 10 == 6 && index == 3){
-            return 0;
+            return position;
         }
 
         if (listePion.get(nouvellePosition) == null) {
@@ -144,7 +154,7 @@ public class Damier {
         } else if (listePion.get(nouvellePosition) == null) {
             return nouvellePosition;
         }
-        return 0;
+        return position;
     }
 
     private int[] getSuiteMouvement(int position) {

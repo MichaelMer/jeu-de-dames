@@ -57,7 +57,7 @@ public class TestDamier {
     }
 
     @Test
-    public void testSelectionnerPion() {
+    public void testSelectionnerPionCouleur() {
         Damier damier = Damier.getInstance();
         ArrayList<Integer> resultat = new ArrayList<>();
         damier.viderDamier();
@@ -71,21 +71,21 @@ public class TestDamier {
         damier.viderDamier();
         resultat.clear();
         assertEquals(0, damier.getNombrePion());
-        damier.ajouterPion(1, new Pion(CouleurPion.NOIR));
-        resultat.add(6);
-        resultat.add(7);
-        assertEquals(resultat, damier.selectionnerPion(1));
-
-        damier.viderDamier();
-        resultat.clear();
-        assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(44, new Pion(CouleurPion.BLANC));
         resultat.add(39);
         resultat.add(40);
         assertEquals(resultat, damier.selectionnerPion(44));
 
+
+    }
+
+    @Test
+    public void testSelectionnerPionLimiteJeu() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
         damier.viderDamier();
-        resultat.clear();
+
+        damier.viderDamier();
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(25, new Pion(CouleurPion.BLANC));
         resultat.add(20);
@@ -98,5 +98,73 @@ public class TestDamier {
         resultat.add(40);
         assertEquals(resultat, damier.selectionnerPion(45));
 
+        damier.viderDamier();
+        resultat.clear();
+        assertEquals(0, damier.getNombrePion());
+        damier.ajouterPion(49, new Pion(CouleurPion.NOIR));
+        assertEquals(resultat, damier.selectionnerPion(49));
+
+        damier.viderDamier();
+        resultat.clear();
+        assertEquals(0, damier.getNombrePion());
+        damier.ajouterPion(2, new Pion(CouleurPion.BLANC));
+        assertEquals(resultat, damier.selectionnerPion(2));
+
+    }
+
+    @Test
+    public void testSelectionnerPionPrise() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.viderDamier();
+
+       damier.viderDamier();
+       damier.ajouterPion(12,new Pion(CouleurPion.NOIR));
+       damier.ajouterPion(17, new Pion(CouleurPion.BLANC));
+       resultat.add(21);
+       resultat.add(18);
+       assertEquals(resultat, damier.selectionnerPion(12));
+       resultat.clear();
+        resultat.add(11);
+        resultat.add(8);
+        assertEquals(resultat, damier.selectionnerPion(17));
+
+       damier.viderDamier();
+       resultat.clear();
+       damier.ajouterPion(32, new Pion(CouleurPion.BLANC));
+       damier.ajouterPion(27, new Pion(CouleurPion.NOIR));
+       resultat.add(21);
+       resultat.add(28);
+        assertEquals(resultat, damier.selectionnerPion(32));
+        resultat.clear();
+        resultat.add(31);
+        resultat.add(38);
+        assertEquals(resultat, damier.selectionnerPion(27));
+    }
+
+    @Test
+    public void testSelectionnerPionPriseAuLimeJeu() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.viderDamier();
+
+        damier.viderDamier();
+        damier.ajouterPion(3,new Pion(CouleurPion.NOIR));
+        damier.ajouterPion(8, new Pion(CouleurPion.BLANC));
+        resultat.add(12);
+        resultat.add(9);
+        assertEquals(resultat, damier.selectionnerPion(3));
+        resultat.clear();
+        resultat.add(2);
+        assertEquals(resultat, damier.selectionnerPion(17));
+
+        damier.viderDamier();
+        damier.ajouterPion(6, new Pion(CouleurPion.NOIR));
+        damier.ajouterPion(11, new Pion(CouleurPion.BLANC));
+        resultat.add(17);
+        assertEquals(resultat, damier.selectionnerPion(6));
+        resultat.clear();
+        resultat.add(7);
+        assertEquals(resultat, damier.selectionnerPion(11));
     }
 }
