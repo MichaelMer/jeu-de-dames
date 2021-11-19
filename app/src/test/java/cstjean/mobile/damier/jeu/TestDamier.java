@@ -63,11 +63,40 @@ public class TestDamier {
         damier.viderDamier();
         assertEquals(0,damier.getNombrePion());
 
-        damier.ajouterPion(17, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(17, new Pion(CouleurPion.NOIR));
         resultat.add(21);
         resultat.add(22);
-        ArrayList<Integer> resultatDonner = damier.selectionnerPion(17);
         assertEquals(resultat, damier.selectionnerPion(17));
+
+        damier.viderDamier();
+        resultat.clear();
+        assertEquals(0, damier.getNombrePion());
+        damier.ajouterPion(1, new Pion(CouleurPion.NOIR));
+        resultat.add(6);
+        resultat.add(7);
+        assertEquals(resultat, damier.selectionnerPion(1));
+
+        damier.viderDamier();
+        resultat.clear();
+        assertEquals(0, damier.getNombrePion());
+        damier.ajouterPion(44, new Pion(CouleurPion.BLANC));
+        resultat.add(39);
+        resultat.add(40);
+        assertEquals(resultat, damier.selectionnerPion(44));
+
+        damier.viderDamier();
+        resultat.clear();
+        assertEquals(0, damier.getNombrePion());
+        damier.ajouterPion(25, new Pion(CouleurPion.BLANC));
+        resultat.add(20);
+        assertEquals(resultat, damier.selectionnerPion(25));
+
+        damier.viderDamier();
+        resultat.clear();
+        assertEquals(0, damier.getNombrePion());
+        damier.ajouterPion(45, new Pion(CouleurPion.BLANC));
+        resultat.add(40);
+        assertEquals(resultat, damier.selectionnerPion(45));
 
     }
 }
