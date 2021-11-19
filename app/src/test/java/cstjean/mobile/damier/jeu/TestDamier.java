@@ -59,19 +59,15 @@ public class TestDamier {
     @Test
     public void testSelectionnerPion() {
         Damier damier = Damier.getInstance();
-
-        damier.initialiser();
         ArrayList<Integer> resultat = new ArrayList<>();
+        damier.viderDamier();
+        assertEquals(0,damier.getNombrePion());
+
+        damier.ajouterPion(17, new Pion(CouleurPion.BLANC));
         resultat.add(21);
         resultat.add(22);
+        ArrayList<Integer> resultatDonner = damier.selectionnerPion(17);
         assertEquals(resultat, damier.selectionnerPion(17));
 
-        damier.initialiser();
-        resultat = new ArrayList<>();
-        resultat.add(27);
-        resultat.add(28);
-        ArrayList<Integer> resultatDonner = damier.selectionnerPion(32);
-        assertEquals(resultat, resultatDonner);
-        damier.viderDamier();
     }
 }

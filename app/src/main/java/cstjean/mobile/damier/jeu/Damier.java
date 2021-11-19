@@ -97,42 +97,58 @@ public class Damier {
     public ArrayList<Integer> selectionnerPion(int position) {
         ArrayList<Integer> reslutat = new ArrayList<>();
         if (listePion.get(position) != null) {
-            if (position % 10 <= 5 && position % 10 > 0) {
-                reslutat.addAll(chercherMovement(new int[]{-5, -4, 5, 6}, position));
-            } else {
-                reslutat.addAll(chercherMovement(new int[]{-6, -5, 4, 5}, position));
-            }
+            reslutat.addAll(chercherMovement(position));
         }
         return reslutat;
     }
 
-    private ArrayList<Integer> chercherMovement(int[] mouvements, int position) {
+    private ArrayList<Integer> chercherMovement(int position) {
         ArrayList<Integer> reslutat = new ArrayList<>();
-        for (int mouvement : mouvements) {
+        int [] mouvements = getSuiteMouvement(position);
+        for (int i =0; i < mouvements.length; i++) {
                 if (listePion.get(position).estNoir() &&
                         listePion.get(position).getType() == TypePion.PION &&
-                        position < position + mouvement) {
+                        position < position + mouvements[i]) {
 
-                    reslutat.add(position + mouvement);
+                    reslutat.add(getMovement(i,position));
                 } else if (!listePion.get(position).estNoir() &&
                         listePion.get(position).getType() == TypePion.PION &&
-                        position > position + mouvement) {
-                    reslutat.add(position + mouvement);
+                        position > position + mouvements[i]) {
+                    reslutat.add(getMovement(i,position));
                 }
                 if (listePion.get(position).getType() == TypePion.DAME) {
-                    reslutat.add(position + mouvement);
+                    reslutat.add(getMovement(i,position));
                 }
         }
         return reslutat;
     }
 
-    private int movement(int mouvementAfaire,int position) {
-        int mouvement = 0;
-        if (listePion.get(position + mouvementAfaire).getCouleur() != listePion.get(position).getCouleur()) {
-
-
+    private int getMovement(int index, int position) {
+        int nouvellePosition = position + getSuiteMouvement(position)[index];
+        if (listePion.get(nouvellePosition) == null) {
+            return nouvellePosition;
         }
+        if (listePion.get(position).getCouleur()!= listePion.get(nouvellePosition).getCouleur()) {
+            int positionDePrise = nouvellePosition + getSuiteMouvement(nouvellePosition)[index];
+            if(listePion.get(positionDePrise) == null) {
+                return positionDePrise;
+            }
+        } else if (listePion.get(nouvellePosition) == null) {
+            return nouvellePosition;
+        } else if (position % 10 == 6 && index == 0 || index == 3){
+            return 0;
+        } else if (position % 10 == 5 && index == 2 || index == 4){
+            return 0;
+        }
+        return 0;
+    }
 
-        return mouvement;
+    private int[] getSuiteMouvement(int position) {
+        if (position % 10 <= 5 && position % 10 > 0) {
+            return new int[]{-5, -4, 5, 6};
+        }
+        else {
+            return new int[]{-6, -5, 4, 5};
+        }
     }
 }
