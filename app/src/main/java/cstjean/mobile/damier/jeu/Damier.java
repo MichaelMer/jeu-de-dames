@@ -141,7 +141,9 @@ public class Damier {
         } else if (position % 10 == 5 && index == 1 || position % 10 == 6 && index == 3){
             return position;
         }
-
+        if (nouvellePosition < 1 || nouvellePosition > 50){
+            return position;
+        }
         if (listePion.get(nouvellePosition) == null) {
             return nouvellePosition;
         }

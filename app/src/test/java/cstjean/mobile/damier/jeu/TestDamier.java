@@ -19,6 +19,7 @@ public class TestDamier {
     @Test
     public void testCreer() {
         Damier damier = Damier.getInstance();
+        damier.viderDamier();
         assertEquals(0, damier.getNombrePion());
     }
 
@@ -110,6 +111,7 @@ public class TestDamier {
         damier.ajouterPion(2, new Pion(CouleurPion.BLANC));
         assertEquals(resultat, damier.selectionnerPion(2));
 
+
     }
 
     @Test
@@ -143,7 +145,7 @@ public class TestDamier {
     }
 
     @Test
-    public void testSelectionnerPionPriseAuLimeJeu() {
+    public void testSelectionnerPionPriseAuLimiteJeu() {
         Damier damier = Damier.getInstance();
         ArrayList<Integer> resultat = new ArrayList<>();
         damier.viderDamier();
@@ -156,7 +158,7 @@ public class TestDamier {
         assertEquals(resultat, damier.selectionnerPion(3));
         resultat.clear();
         resultat.add(2);
-        assertEquals(resultat, damier.selectionnerPion(17));
+        assertEquals(resultat, damier.selectionnerPion(8));
 
         damier.viderDamier();
         damier.ajouterPion(6, new Pion(CouleurPion.NOIR));
