@@ -106,19 +106,20 @@ public class Damier {
         ArrayList<Integer> resultat = new ArrayList<>();
         int [] mouvements = getSuiteMouvement(position);
         for (int i =0; i < mouvements.length; i++) {
-                if (listePion.get(position).estNoir() &&
-                        listePion.get(position).getType() == TypePion.PION &&
-                        position < position + mouvements[i]) {
 
-                    resultat.add(getMouvement(i,position));
-                } else if (!listePion.get(position).estNoir() &&
-                        listePion.get(position).getType() == TypePion.PION &&
-                        position > position + mouvements[i]) {
-                    resultat.add(getMouvement(i,position));
-                }
-                if (listePion.get(position).getType() == TypePion.DAME) {
-                    resultat.add(getMouvement(i,position));
-                }
+            if (listePion.get(position).estNoir() &&
+                    listePion.get(position).getType() == TypePion.PION &&
+                    position < position + mouvements[i]) {
+
+                resultat.add(getMouvement(i,position));
+            } else if (!listePion.get(position).estNoir() &&
+                    listePion.get(position).getType() == TypePion.PION &&
+                    position > position + mouvements[i]) {
+                resultat.add(getMouvement(i,position));
+            }
+            if (listePion.get(position).getType() == TypePion.DAME) {
+                resultat.add(getMouvement(i,position));
+            }
         }
         return filtrer(resultat, position);
     }
@@ -127,7 +128,10 @@ public class Damier {
         ArrayList<Integer> listeFiltrer = new ArrayList<>();
         for (int nb: listeAFiltrer) {
             if(nb != nbAEnlever){
-                listeFiltrer.add(nb);
+                if(nb >= 1 && nb <= 50) {
+                    listeFiltrer.add(nb);
+                }
+
             }
         }
         return listeFiltrer;
@@ -139,9 +143,6 @@ public class Damier {
         if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2){
             return position;
         } else if (position % 10 == 5 && index == 1 || position % 10 == 6 && index == 3){
-            return position;
-        }
-        if (nouvellePosition < 1 || nouvellePosition > 50){
             return position;
         }
         if (listePion.get(nouvellePosition) == null) {

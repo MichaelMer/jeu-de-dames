@@ -161,6 +161,7 @@ public class TestDamier {
         assertEquals(resultat, damier.selectionnerPion(8));
 
         damier.viderDamier();
+        resultat.clear();
         damier.ajouterPion(6, new Pion(CouleurPion.NOIR));
         damier.ajouterPion(11, new Pion(CouleurPion.BLANC));
         resultat.add(17);
