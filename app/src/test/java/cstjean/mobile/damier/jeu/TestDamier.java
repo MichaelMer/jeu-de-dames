@@ -1,6 +1,8 @@
 package cstjean.mobile.damier.jeu;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -179,5 +181,25 @@ public class TestDamier {
         resultat.clear();
         resultat.add(14);
         assertEquals(resultat, damier.selectionnerPion(20));
+    }
+
+    @Test
+    public void testBougerPion(){
+        Damier damier = Damier.getInstance();
+        damier.viderDamier();
+        damier.ajouterPion(18, new Pion(CouleurPion.NOIR));
+        damier.selectionnerPion(18);
+        damier.bougerPionSelectionner(22);
+        assertNull(damier.getPion(18));
+        assertNotNull(damier.getPion(22));
+        assertEquals(CouleurPion.NOIR, damier.getPion(22).getCouleur());
+
+        damier.viderDamier();
+        damier.ajouterPion(18, new Pion(CouleurPion.BLANC));
+        damier.selectionnerPion(18);
+        damier.bougerPionSelectionner(22);
+        assertNull(damier.getPion(18));
+        assertNotNull(damier.getPion(22));
+        assertEquals(CouleurPion.NOIR, damier.getPion(22).getCouleur());
     }
 }

@@ -18,6 +18,10 @@ public class Damier {
      */
     private final Map<Integer, Pion> listePion;
 
+    private boolean estPionSelectionner = false;
+    private int positionPionSelectionner = 0;
+    private final ArrayList<Integer> selectionMouvementPion = new ArrayList<>();
+
     /**
      * Constructeur.
      */
@@ -95,14 +99,16 @@ public class Damier {
     }
 
     public ArrayList<Integer> selectionnerPion(int position) {
-        ArrayList<Integer> resultat = new ArrayList<>();
         if (listePion.get(position) != null) {
-            resultat.addAll(chercherMovement(position));
+            positionPionSelectionner = position;
+            selectionMouvementPion.addAll(chercherMovement(position));
         }
-        return resultat;
+
+        return selectionMouvementPion;
     }
 
     private ArrayList<Integer> chercherMovement(int position) {
+        estPionSelectionner = true;
         ArrayList<Integer> resultat = new ArrayList<>();
         int [] mouvements = getSuiteMouvement(position);
         for (int i =0; i < mouvements.length; i++) {
@@ -130,7 +136,6 @@ public class Damier {
                 if(nb >= 1 && nb <= 50) {
                     listeFiltrer.add(nb);
                 }
-
             }
         }
         return listeFiltrer;
@@ -176,5 +181,20 @@ public class Damier {
                 position % 10 == 5 && index == 1 ||
                 position % 10 == 5 && index == 3;
 
+    }
+
+    public void enleverSelection(){
+        selectionMouvementPion.clear();
+        estPionSelectionner = false;
+        positionPionSelectionner = 0;
+    }
+
+    public void bougerPionSelectionner(int nouvellePosition) {
+        if(estPionSelectionner){
+            Pion pion = listePion.get(positionPionSelectionner);
+            listePion.remove(positionPionSelectionner);
+            listePion.put(nouvellePosition, pion);
+            enleverSelection();
+        }
     }
 }
