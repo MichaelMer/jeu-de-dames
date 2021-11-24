@@ -184,7 +184,7 @@ public class TestDamier {
     }
 
     @Test
-    public void testBougerPion(){
+    public void testBougerPion() {
         Damier damier = Damier.getInstance();
         damier.viderDamier();
         damier.ajouterPion(18, new Pion(CouleurPion.NOIR));
@@ -201,5 +201,20 @@ public class TestDamier {
         assertNull(damier.getPion(18));
         assertNotNull(damier.getPion(22));
         assertEquals(CouleurPion.BLANC, damier.getPion(22).getCouleur());
+    }
+
+    @Test
+    public void testPrisePion() {
+        Damier damier = Damier.getInstance();
+        damier.viderDamier();
+        damier.ajouterPion(18,new Pion(CouleurPion.NOIR));
+        damier.ajouterPion(22, new Pion(CouleurPion.BLANC));
+        damier.selectionnerPion(18);
+        damier.bougerPionSelectionner(27);
+        assertNull(damier.getPion(18));
+        assertNull(damier.getPion(22));
+        assertNotNull(damier.getPion(27));
+        assertEquals(CouleurPion.NOIR, damier.getPion(27).getCouleur());
+
     }
 }

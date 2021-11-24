@@ -235,10 +235,19 @@ public class Damier {
      * @param nouvellePosition la nouvlle position du pion
      */
     public void bougerPionSelectionner(int nouvellePosition) {
-        if(estPionSelectionner){
+        if(estPionSelectionner) {
             Pion pion = listePion.get(positionPionSelectionner);
             listePion.remove(positionPionSelectionner);
             listePion.put(nouvellePosition, pion);
+
+            for (int mouvementPionSelectionner: getSuiteMouvement(positionPionSelectionner)) {
+                for (int mouvementPionDeplacer: getSuiteMouvement(nouvellePosition)){
+                    if(positionPionSelectionner + mouvementPionSelectionner == nouvellePosition + mouvementPionDeplacer) {
+                        listePion.remove(positionPionSelectionner + mouvementPionSelectionner);
+                        break;
+                    }
+                }
+            }
             enleverSelection();
         }
     }
