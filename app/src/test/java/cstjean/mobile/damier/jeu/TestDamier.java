@@ -200,6 +200,6 @@ public class TestDamier {
         damier.bougerPionSelectionner(22);
         assertNull(damier.getPion(18));
         assertNotNull(damier.getPion(22));
-        assertEquals(CouleurPion.NOIR, damier.getPion(22).getCouleur());
+        assertEquals(CouleurPion.BLANC, damier.getPion(22).getCouleur());
     }
 }

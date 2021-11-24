@@ -20,7 +20,6 @@ public class Damier {
 
     private boolean estPionSelectionner = false;
     private int positionPionSelectionner = 0;
-    private final ArrayList<Integer> selectionMouvementPion = new ArrayList<>();
 
     /**
      * Constructeur.
@@ -107,11 +106,12 @@ public class Damier {
      * @return une liste des mouvements possibles
      */
     public ArrayList<Integer> selectionnerPion(int position) {
+        ArrayList<Integer> resultat = new ArrayList<>();
         if (listePion.get(position) != null) {
             positionPionSelectionner = position;
-            selectionMouvementPion.addAll(chercherMovement(position));
+            resultat.addAll(chercherMovement(position));
         }
-        return selectionMouvementPion;
+        return resultat;
     }
 
     /**
@@ -225,8 +225,7 @@ public class Damier {
     /**
      * Enlève la selection d'un pion.
      */
-    public void enleverSelection(){
-        selectionMouvementPion.clear();
+    public void enleverSelection(){ ;
         estPionSelectionner = false;
         positionPionSelectionner = 0;
     }
