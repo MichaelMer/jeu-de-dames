@@ -106,7 +106,6 @@ public class Damier {
         ArrayList<Integer> resultat = new ArrayList<>();
         int [] mouvements = getSuiteMouvement(position);
         for (int i =0; i < mouvements.length; i++) {
-
             if (listePion.get(position).estNoir() &&
                     listePion.get(position).getType() == TypePion.PION &&
                     position < position + mouvements[i]) {
@@ -140,9 +139,7 @@ public class Damier {
     private int getMouvement(int index, int position) {
         int nouvellePosition = position + getSuiteMouvement(position)[index];
 
-        if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2){
-            return position;
-        } else if (position % 10 == 5 && index == 1 || position % 10 == 6 && index == 3){
+        if(estAuLimite(index, position)) {
             return position;
         }
         if (listePion.get(nouvellePosition) == null) {
@@ -151,6 +148,10 @@ public class Damier {
 
         if (listePion.get(position).getCouleur()!= listePion.get(nouvellePosition).getCouleur()) {
             int positionDePrise = nouvellePosition + getSuiteMouvement(nouvellePosition)[index];
+
+            if(estAuLimite(index, nouvellePosition)) {
+                return position;
+            }
             if(listePion.get(positionDePrise) == null) {
                 return positionDePrise;
             }
@@ -167,5 +168,13 @@ public class Damier {
         else {
             return new int[]{-6, -5, 4, 5};
         }
+    }
+
+    private boolean estAuLimite(int index, int position) {
+        return position % 10 == 6 && index == 0 ||
+                position % 10 == 6 && index == 2 ||
+                position % 10 == 5 && index == 1 ||
+                position % 10 == 5 && index == 3;
+
     }
 }
