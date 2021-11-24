@@ -239,7 +239,6 @@ public class Damier {
             Pion pion = listePion.get(positionPionSelectionner);
             listePion.remove(positionPionSelectionner);
             listePion.put(nouvellePosition, pion);
-
             for (int mouvementPionSelectionner: getSuiteMouvement(positionPionSelectionner)) {
                 for (int mouvementPionDeplacer: getSuiteMouvement(nouvellePosition)){
                     if(positionPionSelectionner + mouvementPionSelectionner == nouvellePosition + mouvementPionDeplacer) {
