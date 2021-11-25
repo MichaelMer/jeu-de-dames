@@ -102,6 +102,7 @@ public class Damier {
 
     /**
      * Selectionne les mouvement disponible pour le pion.
+     *
      * @param position la position du pion sélectionné
      * @return une liste des mouvements possibles
      */
@@ -116,26 +117,27 @@ public class Damier {
 
     /**
      * Cherche les mouvements possible.
+     *
      * @param position la position du pion sélectionné
      * @return un liste des mouvements disponibles
      */
     private ArrayList<Integer> chercherMovement(int position) {
         estPionSelectionner = true;
         ArrayList<Integer> resultat = new ArrayList<>();
-        int [] mouvements = getSuiteMouvement(position);
-        for (int i =0; i < mouvements.length; i++) {
+        int[] mouvements = getSuiteMouvement(position);
+        for (int i = 0; i < mouvements.length; i++) {
             if (listePion.get(position).estNoir() &&
                     listePion.get(position).getType() == TypePion.PION &&
                     position < position + mouvements[i]) {
 
-                resultat.add(getMouvement(i,position));
+                resultat.add(getMouvement(i, position));
             } else if (!listePion.get(position).estNoir() &&
                     listePion.get(position).getType() == TypePion.PION &&
                     position > position + mouvements[i]) {
-                resultat.add(getMouvement(i,position));
+                resultat.add(getMouvement(i, position));
             }
             if (listePion.get(position).getType() == TypePion.DAME) {
-                resultat.add(getMouvement(i,position));
+                resultat.addAll(getMouvementDame(i, position));
             }
         }
         return filtrer(resultat, position);
@@ -143,15 +145,16 @@ public class Damier {
 
     /**
      * Filtre une liste de nombre.
+     *
      * @param listeAFiltrer la liste à filtrer
-     * @param nbAEnlever le nb à enlever de la liste de nombre
+     * @param nbAEnlever    le nb à enlever de la liste de nombre
      * @return la liste filtré
      */
     private ArrayList<Integer> filtrer(ArrayList<Integer> listeAFiltrer, int nbAEnlever) {
         ArrayList<Integer> listeFiltrer = new ArrayList<>();
-        for (int nb: listeAFiltrer) {
-            if(nb != nbAEnlever){
-                if(nb >= 1 && nb <= 50) {
+        for (int nb : listeAFiltrer) {
+            if (nb != nbAEnlever) {
+                if (nb >= 1 && nb <= 50) {
                     listeFiltrer.add(nb);
                 }
             }
@@ -161,27 +164,28 @@ public class Damier {
 
     /**
      * Donne le mouvement selon la suite de mouvement.
-     * @param index l'index de la liste de mouvement
+     *
+     * @param index    l'index de la liste de mouvement
      * @param position la position du pion sélectionné
      * @return le nouveaux mouvement si possible sinon la position du pion
      */
     private int getMouvement(int index, int position) {
         int nouvellePosition = position + getSuiteMouvement(position)[index];
 
-        if(estAuLimite(index, position)) {
+        if (estAuLimite(index, position)) {
             return position;
         }
         if (listePion.get(nouvellePosition) == null) {
             return nouvellePosition;
         }
 
-        if (listePion.get(position).getCouleur()!= listePion.get(nouvellePosition).getCouleur()) {
+        if (listePion.get(position).getCouleur() != listePion.get(nouvellePosition).getCouleur()) {
             int positionDePrise = nouvellePosition + getSuiteMouvement(nouvellePosition)[index];
 
-            if(estAuLimite(index, nouvellePosition)) {
+            if (estAuLimite(index, nouvellePosition)) {
                 return position;
             }
-            if(listePion.get(positionDePrise) == null) {
+            if (listePion.get(positionDePrise) == null) {
                 return positionDePrise;
             }
         } else if (listePion.get(nouvellePosition) == null) {
@@ -190,27 +194,53 @@ public class Damier {
         return position;
     }
 
+
+    private ArrayList<Integer> getMouvementDame(int index, int position) {
+            ArrayList<Integer> resultat = new ArrayList<>();
+        if (listePion.get(position)!= null &&
+                listePion.get(position).getCouleur() == listePion.get(positionPionSelectionner).getCouleur() &&
+                position!= positionPionSelectionner) {
+            return resultat;
+        } else if(listePion.get(position + getSuiteMouvement(position)[index]) != null &&
+                position != positionPionSelectionner && listePion.get(position) != null) {
+            return resultat;
+        } else if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2 ||
+                position % 10 == 5 && index == 1 || position % 10 == 5 && index == 3) {
+            resultat.add(position);
+
+        } else if (position >= 1 && position <= 5 || position >= 46 && position <= 50) {
+            resultat.add(position);
+        }else {
+            resultat.addAll(getMouvementDame(index, position + getSuiteMouvement(position)[index]));
+            if(listePion.get(position) == null) {
+                resultat.add(position);
+            }
+        }
+        return resultat;
+    }
+
     /**
      * Donne la suite de mouvement disponible selon si la rangée est impaire où non.
+     *
      * @param position La position du pion sélectionné.
      * @return Une liste des nombre à additonner selon leur directions:
-     *  0: haut droit
-     *  1: haut gauche
-     *  2: bas droit
-     *  3: bas gauche
+     * 0: haut droit
+     * 1: haut gauche
+     * 2: bas droit
+     * 3: bas gauche
      */
     private int[] getSuiteMouvement(int position) {
         if (position % 10 <= 5 && position % 10 > 0) {
             return new int[]{-5, -4, 5, 6};
-        }
-        else {
+        } else {
             return new int[]{-6, -5, 4, 5};
         }
     }
 
     /**
      * Regarde si la position est au limite du jeu.
-     * @param index l'index de la liste de mouvement
+     *
+     * @param index    l'index de la liste de mouvement
      * @param position la position du pion sélectionné
      * @return oui si le pion est au limite du jeu
      */
@@ -225,23 +255,25 @@ public class Damier {
     /**
      * Enlève la selection d'un pion.
      */
-    public void enleverSelection(){ ;
+    public void enleverSelection() {
+        ;
         estPionSelectionner = false;
         positionPionSelectionner = 0;
     }
 
     /**
      * bouge le pion selectionner à la position donné
+     *
      * @param nouvellePosition la nouvlle position du pion
      */
     public void bougerPionSelectionner(int nouvellePosition) {
-        if(estPionSelectionner) {
+        if (estPionSelectionner) {
             Pion pion = listePion.get(positionPionSelectionner);
             listePion.remove(positionPionSelectionner);
             listePion.put(nouvellePosition, pion);
-            for (int mouvementPionSelectionner: getSuiteMouvement(positionPionSelectionner)) {
-                for (int mouvementPionDeplacer: getSuiteMouvement(nouvellePosition)){
-                    if(positionPionSelectionner + mouvementPionSelectionner == nouvellePosition + mouvementPionDeplacer) {
+            for (int mouvementPionSelectionner : getSuiteMouvement(positionPionSelectionner)) {
+                for (int mouvementPionDeplacer : getSuiteMouvement(nouvellePosition)) {
+                    if (positionPionSelectionner + mouvementPionSelectionner == nouvellePosition + mouvementPionDeplacer) {
                         listePion.remove(positionPionSelectionner + mouvementPionSelectionner);
                         break;
                     }

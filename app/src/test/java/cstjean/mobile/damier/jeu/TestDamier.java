@@ -2,6 +2,7 @@ package cstjean.mobile.damier.jeu;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
@@ -227,4 +228,29 @@ public class TestDamier {
         assertEquals(CouleurPion.BLANC, damier.getPion(19).getCouleur());
 
     }
+
+    @Test
+    public void testSelectionDame(){
+        Damier damier = Damier.getInstance();
+        damier.ajouterPion(28, new Dame(CouleurPion.NOIR));
+        damier.ajouterPion(22, new Pion(CouleurPion.NOIR));
+        damier.ajouterPion(44, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(32, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(37, new Pion(CouleurPion.BLANC));
+        System.out.println("dame: " + damier.selectionnerPion(28));
+    }
+
+    @Test
+    public void testSelectionDameDeuxBlanc(){
+        Damier damier = Damier.getInstance();
+        damier.ajouterPion(28, new Dame(CouleurPion.NOIR));
+        damier.ajouterPion(17, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(23, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(19, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(32, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(37, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(39, new Pion(CouleurPion.BLANC));
+        System.out.println("dame: " + damier.selectionnerPion(28));
+    }
 }
+
