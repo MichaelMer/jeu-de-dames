@@ -71,6 +71,7 @@ public class TestDamier {
         resultat.add(21);
         resultat.add(22);
         assertEquals(resultat, damier.selectionnerPion(17));
+        damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
@@ -79,6 +80,7 @@ public class TestDamier {
         resultat.add(39);
         resultat.add(40);
         assertEquals(resultat, damier.selectionnerPion(44));
+        damier.enleverSelection();
 
 
     }
@@ -94,6 +96,7 @@ public class TestDamier {
         damier.ajouterPion(25, new Pion(CouleurPion.BLANC));
         resultat.add(20);
         assertEquals(resultat, damier.selectionnerPion(25));
+        damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
@@ -101,20 +104,21 @@ public class TestDamier {
         damier.ajouterPion(45, new Pion(CouleurPion.BLANC));
         resultat.add(40);
         assertEquals(resultat, damier.selectionnerPion(45));
+        damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(49, new Pion(CouleurPion.NOIR));
         assertEquals(resultat, damier.selectionnerPion(49));
+        damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(2, new Pion(CouleurPion.BLANC));
         assertEquals(resultat, damier.selectionnerPion(2));
-
-
+        damier.enleverSelection();
     }
 
     @Test
@@ -129,10 +133,12 @@ public class TestDamier {
        resultat.add(21);
        resultat.add(18);
        assertEquals(resultat, damier.selectionnerPion(12));
+        damier.enleverSelection();
        resultat.clear();
         resultat.add(11);
         resultat.add(8);
         assertEquals(resultat, damier.selectionnerPion(17));
+        damier.enleverSelection();
 
        damier.viderDamier();
        resultat.clear();
@@ -141,10 +147,12 @@ public class TestDamier {
        resultat.add(21);
        resultat.add(28);
         assertEquals(resultat, damier.selectionnerPion(32));
+        damier.enleverSelection();
         resultat.clear();
         resultat.add(31);
         resultat.add(38);
         assertEquals(resultat, damier.selectionnerPion(27));
+        damier.enleverSelection();
     }
 
     @Test
@@ -159,9 +167,11 @@ public class TestDamier {
         resultat.add(12);
         resultat.add(9);
         assertEquals(resultat, damier.selectionnerPion(3));
+        damier.enleverSelection();
         resultat.clear();
         resultat.add(2);
         assertEquals(resultat, damier.selectionnerPion(8));
+        damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
@@ -169,9 +179,11 @@ public class TestDamier {
         damier.ajouterPion(11, new Pion(CouleurPion.BLANC));
         resultat.add(17);
         assertEquals(resultat, damier.selectionnerPion(6));
+        damier.enleverSelection();
         resultat.clear();
         resultat.add(7);
         assertEquals(resultat, damier.selectionnerPion(11));
+        damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
@@ -179,9 +191,11 @@ public class TestDamier {
         damier.ajouterPion(20, new Pion(CouleurPion.BLANC));
         resultat.add(24);
         assertEquals(resultat, damier.selectionnerPion(15));
+        damier.enleverSelection();
         resultat.clear();
         resultat.add(14);
         assertEquals(resultat, damier.selectionnerPion(20));
+        damier.enleverSelection();
     }
 
     @Test
@@ -238,6 +252,7 @@ public class TestDamier {
         damier.ajouterPion(32, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(37, new Pion(CouleurPion.BLANC));
         System.out.println("dame: " + damier.selectionnerPion(28));
+        damier.enleverSelection();
     }
 
     @Test
@@ -251,6 +266,7 @@ public class TestDamier {
         damier.ajouterPion(37, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(39, new Pion(CouleurPion.BLANC));
         System.out.println("dame: " + damier.selectionnerPion(28));
+        damier.enleverSelection();
     }
 }
 
