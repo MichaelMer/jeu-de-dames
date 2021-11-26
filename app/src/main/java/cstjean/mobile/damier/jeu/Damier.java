@@ -175,13 +175,20 @@ public class Damier {
         }else {
             if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME || position == positionPionSelectionner ) {
                 resultat.addAll(getMouvement(index, position + getSuiteMouvement(position)[index]));
-                if(listePion.get(position) == null) {
-                    resultat.add(position);
-                }
+
             } else {
-                if (index > 2 || listePion.get(position) == null && position != positionPionSelectionner) {
-                     resultat.add(position);
+                if (listePion.get(positionPionSelectionner).estNoir()) {
+                    if(index > 2) {
+                        if (listePion.get(position) != null) {
+                            if(listePion.get(position).getCouleur() == listePion.get(positionPionSelectionner).getCouleur()){
+
+                            }
+                        }
+                    }
                 }
+            }
+            if(listePion.get(position) == null) {
+                resultat.add(position);
             }
         }
         return resultat;
