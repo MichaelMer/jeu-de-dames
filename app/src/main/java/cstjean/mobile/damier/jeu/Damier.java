@@ -127,19 +127,7 @@ public class Damier {
         ArrayList<Integer> resultat = new ArrayList<>();
         int[] mouvements = getSuiteMouvement(position);
         for (int i = 0; i < mouvements.length; i++) {
-            if (listePion.get(position).estNoir() &&
-                    listePion.get(position).getType() == TypePion.PION &&
-                    position < position + mouvements[i]) {
-
-                resultat.add(getMouvement(i, position));
-            } else if (!listePion.get(position).estNoir() &&
-                    listePion.get(position).getType() == TypePion.PION &&
-                    position > position + mouvements[i]) {
-                resultat.add(getMouvement(i, position));
-            }
-            if (listePion.get(position).getType() == TypePion.DAME) {
-                resultat.addAll(getMouvementDame(i, position));
-            }
+            resultat.addAll(getMouvement(i,position));
         }
         return filtrer(resultat, position);
     }
@@ -162,7 +150,6 @@ public class Damier {
         }
         return listeFiltrer;
     }
-
     /**
      * Donne le mouvement selon la suite de mouvement.
      *
@@ -170,33 +157,7 @@ public class Damier {
      * @param position la position du pion sélectionné
      * @return le nouveaux mouvement si possible sinon la position du pion
      */
-    private int getMouvement(int index, int position) {
-        int nouvellePosition = position + getSuiteMouvement(position)[index];
-
-        if (estAuLimite(index, position)) {
-            return position;
-        }
-        if (listePion.get(nouvellePosition) == null) {
-            return nouvellePosition;
-        }
-
-        if (listePion.get(position).getCouleur() != listePion.get(nouvellePosition).getCouleur()) {
-            int positionDePrise = nouvellePosition + getSuiteMouvement(nouvellePosition)[index];
-
-            if (estAuLimite(index, nouvellePosition)) {
-                return position;
-            }
-            if (listePion.get(positionDePrise) == null) {
-                return positionDePrise;
-            }
-        } else if (listePion.get(nouvellePosition) == null) {
-            return nouvellePosition;
-        }
-        return position;
-    }
-
-
-    private ArrayList<Integer> getMouvementDame(int index, int position) {
+    private ArrayList<Integer> getMouvement(int index, int position) {
             ArrayList<Integer> resultat = new ArrayList<>();
         if (listePion.get(position)!= null &&
                 listePion.get(position).getCouleur() == listePion.get(positionPionSelectionner).getCouleur() &&
@@ -212,9 +173,15 @@ public class Damier {
         } else if (position >= 1 && position <= 5 || position >= 46 && position <= 50) {
             resultat.add(position);
         }else {
-            resultat.addAll(getMouvementDame(index, position + getSuiteMouvement(position)[index]));
-            if(listePion.get(position) == null) {
-                resultat.add(position);
+            if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME || position == positionPionSelectionner ) {
+                resultat.addAll(getMouvement(index, position + getSuiteMouvement(position)[index]));
+                if(listePion.get(position) == null) {
+                    resultat.add(position);
+                }
+            } else {
+                if (index > 2 || listePion.get(position) == null && position != positionPionSelectionner) {
+                     resultat.add(position);
+                }
             }
         }
         return resultat;
