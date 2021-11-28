@@ -166,6 +166,16 @@ public class Damier {
         } else if(listePion.get(position + getSuiteMouvement(position)[index]) != null &&
                 position != positionPionSelectionner && listePion.get(position) != null) {
             return resultat;
+        } else if (estMauvaiseDirectionPion(position, index)) {
+            if(listePion.get(position) == null) {
+                return resultat;
+            } else {
+                if(listePion.get(position).getCouleur() != listePion.get(positionPionSelectionner).getCouleur()) {
+                    if (listePion.get(position + getSuiteMouvement(position)[index]) == null) {
+                        resultat.add(position + getSuiteMouvement(position)[index]);
+                    }
+                }
+            }
         } else if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2 ||
                 position % 10 == 5 && index == 1 || position % 10 == 5 && index == 3) {
             resultat.add(position);
@@ -173,25 +183,28 @@ public class Damier {
         } else if (position >= 1 && position <= 5 || position >= 46 && position <= 50) {
             resultat.add(position);
         }else {
-            if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME || position == positionPionSelectionner ) {
+            if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME ||
+                    position == positionPionSelectionner || listePion.get(position) != null ) {
                 resultat.addAll(getMouvement(index, position + getSuiteMouvement(position)[index]));
-
-            } else {
-                if (listePion.get(positionPionSelectionner).estNoir()) {
-                    if(index > 2) {
-                        if (listePion.get(position) != null) {
-                            if(listePion.get(position).getCouleur() == listePion.get(positionPionSelectionner).getCouleur()){
-
-                            }
-                        }
-                    }
-                }
             }
             if(listePion.get(position) == null) {
                 resultat.add(position);
             }
         }
         return resultat;
+    }
+
+    public boolean estMauvaiseDirectionPion(int position, int index) {
+        if (position == positionPionSelectionner) {
+            return false;
+        } else if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME) {
+            return false;
+        } else if (listePion.get(positionPionSelectionner).estNoir() &&
+                index < 2) {
+            return true;
+        } else return !listePion.get(positionPionSelectionner).estNoir() &&
+                index >= 2;
+
     }
 
     /**

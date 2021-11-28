@@ -2,7 +2,6 @@ package cstjean.mobile.damier.jeu;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
@@ -258,6 +257,7 @@ public class TestDamier {
     @Test
     public void testSelectionDameDeuxBlanc(){
         Damier damier = Damier.getInstance();
+        damier.viderDamier();
         damier.ajouterPion(28, new Dame(CouleurPion.NOIR));
         damier.ajouterPion(17, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(23, new Pion(CouleurPion.BLANC));
