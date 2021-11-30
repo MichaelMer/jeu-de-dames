@@ -176,13 +176,15 @@ public class Damier {
                     }
                 }
             }
-        } else if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2 ||
-                position % 10 == 5 && index == 1 || position % 10 == 5 && index == 3) {
-            resultat.add(position);
-
-        } else if (position >= 1 && position <= 5 || position >= 46 && position <= 50) {
-            resultat.add(position);
-        }else {
+        } else if (estAuLimite(positionPionSelectionner, index))  {
+            return resultat;
+        } else if (estAuLimite(position,index)) {
+            if (listePion.get(position) == null){
+                resultat.add(position);
+            } else {
+                return resultat;
+            }
+        } else {
             if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME ||
                     position == positionPionSelectionner || listePion.get(position) != null ) {
                 resultat.addAll(getMouvement(index, position + getSuiteMouvement(position)[index]));
@@ -206,6 +208,22 @@ public class Damier {
                 index >= 2;
 
     }
+    /**
+     * Regarde si la position est au limite du jeu.
+     *
+     * @param index    l'index de la liste de mouvement
+     * @param position la position du pion sélectionné
+     * @return oui si le pion est au limite du jeu
+     */
+    public boolean estAuLimite(int position, int index) {
+        if(position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2 ||
+                position % 10 == 5 && index == 1 || position % 10 == 5 && index == 3) {
+            return true;
+        } else return position >= 1 && position <= 5  && index < 2||
+                position >= 46 && position <= 50 && index >=2;
+    }
+
+
 
     /**
      * Donne la suite de mouvement disponible selon si la rangée est impaire où non.
@@ -225,20 +243,7 @@ public class Damier {
         }
     }
 
-    /**
-     * Regarde si la position est au limite du jeu.
-     *
-     * @param index    l'index de la liste de mouvement
-     * @param position la position du pion sélectionné
-     * @return oui si le pion est au limite du jeu
-     */
-    private boolean estAuLimite(int index, int position) {
-        return position % 10 == 6 && index == 0 ||
-                position % 10 == 6 && index == 2 ||
-                position % 10 == 5 && index == 1 ||
-                position % 10 == 5 && index == 3;
 
-    }
 
     /**
      * Enlève la selection d'un pion.

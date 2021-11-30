@@ -198,6 +198,28 @@ public class TestDamier {
     }
 
     @Test
+    public void testSelectionPionArriere() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.viderDamier();
+
+        damier.viderDamier();
+        damier.ajouterPion(12,new Pion(CouleurPion.NOIR));
+        damier.ajouterPion(8, new Pion(CouleurPion.BLANC));
+        resultat.add(3);
+        resultat.add(17);
+        resultat.add(18);
+        assertEquals(resultat, damier.selectionnerPion(12));
+        damier.enleverSelection();
+        resultat.clear();
+        resultat.add(2);
+        resultat.add(3);
+        resultat.add(17);
+        assertEquals(resultat, damier.selectionnerPion(8));
+        damier.enleverSelection();
+    }
+
+    @Test
     public void testBougerPion() {
         Damier damier = Damier.getInstance();
         damier.viderDamier();
