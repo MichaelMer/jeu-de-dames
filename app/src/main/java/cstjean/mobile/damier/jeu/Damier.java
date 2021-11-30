@@ -261,20 +261,37 @@ public class Damier {
      */
     public void bougerPionSelectionner(int nouvellePosition) {
         if (estPionSelectionner) {
-            Pion pion = listePion.get(positionPionSelectionner);
-            listePion.remove(positionPionSelectionner);
-            listePion.put(nouvellePosition, pion);
-            for (int mouvementPionSelectionner : getSuiteMouvement(positionPionSelectionner)) {
-                for (int mouvementPionDeplacer : getSuiteMouvement(nouvellePosition)) {
-                    if (positionPionSelectionner + mouvementPionSelectionner == nouvellePosition + mouvementPionDeplacer) {
-                        listePion.remove(positionPionSelectionner + mouvementPionSelectionner);
-                        break;
-                    }
-                }
-
-
+            Pion pion =  listePion.get(positionPionSelectionner);
+                listePion.remove(positionPionSelectionner);
+                for (int i= 0; i <= 3; i++) {
+                 if(regarderBranche(nouvellePosition,positionPionSelectionner, i)) {
+                     supprimerPion(nouvellePosition,i);
+                     listePion.put(nouvellePosition, pion);
+                     break;
+                 }
             }
             enleverSelection();
+        }
+    }
+
+    public boolean regarderBranche(int positionAtrouver,int positionActuel, int index) {
+        if(estAuLimite(positionActuel, index)) {
+            return false;
+        }
+        if (positionActuel == positionAtrouver) {
+            return true;
+        }
+        return regarderBranche(positionAtrouver,
+                positionActuel + getSuiteMouvement(positionActuel)[index],
+                index);
+    }
+
+    public void supprimerPion(int positionaArreter, int index) {
+        int positionActuel =
+                positionPionSelectionner + getSuiteMouvement(positionPionSelectionner)[index];
+        while (positionaArreter!= positionActuel) {
+            listePion.remove(positionActuel);
+            positionActuel = positionaArreter + getSuiteMouvement(positionActuel)[index];
         }
     }
 }
