@@ -267,18 +267,29 @@ public class TestDamier {
     @Test
     public void testSelectionDame(){
         Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.viderDamier();
         damier.ajouterPion(28, new Dame(CouleurPion.NOIR));
         damier.ajouterPion(22, new Pion(CouleurPion.NOIR));
         damier.ajouterPion(44, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(32, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(37, new Pion(CouleurPion.BLANC));
-        System.out.println("dame: " + damier.selectionnerPion(28));
+        resultat.add(5);
+        resultat.add(10);
+        resultat.add(14);
+        resultat.add(19);
+        resultat.add(23);
+        resultat.add(50);
+        resultat.add(39);
+        resultat.add(33);
+        assertEquals(resultat, damier.selectionnerPion(28));
         damier.enleverSelection();
     }
 
     @Test
     public void testSelectionDameDeuxBlanc(){
         Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
         damier.viderDamier();
         damier.ajouterPion(28, new Dame(CouleurPion.NOIR));
         damier.ajouterPion(17, new Pion(CouleurPion.BLANC));
@@ -287,7 +298,13 @@ public class TestDamier {
         damier.ajouterPion(32, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(37, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(39, new Pion(CouleurPion.BLANC));
-        System.out.println("dame: " + damier.selectionnerPion(28));
+        resultat.add(6);
+        resultat.add(11);
+        resultat.add(22);
+        resultat.add(50);
+        resultat.add(44);
+        resultat.add(33);
+        assertEquals(resultat, damier.selectionnerPion(28));
         damier.enleverSelection();
     }
 }

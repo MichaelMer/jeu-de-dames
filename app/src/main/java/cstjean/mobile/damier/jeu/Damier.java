@@ -18,6 +18,10 @@ public class Damier {
      */
     private final Map<Integer, Pion> listePion;
 
+    private boolean tourAuBlanc = true;
+    private String nomBlanc = "Blanc";
+    private String nomNoir = "Noir";
+
     private boolean estPionSelectionner = false;
     private int positionPionSelectionner = 0;
     private final ArrayList<Integer> mouvementDispoPion = new ArrayList<>();
@@ -44,6 +48,21 @@ public class Damier {
      */
     int getNombrePion() {
         return listePion.size();
+    }
+
+    /**
+     * change le nom du joueur pour les blancs
+     * @param nomBlanc ne nouveau nom
+     */
+    public void setNomBlanc(String nomBlanc) {
+        this.nomBlanc = nomBlanc;
+    }
+    /**
+     * change le nom du joueur pour les noirs
+     * @param nomNoir ne nouveau nom
+     */
+    public void setNomNoir(String nomNoir) {
+        this.nomNoir = nomNoir;
     }
 
     /**
@@ -274,7 +293,7 @@ public class Damier {
         }
     }
 
-    public boolean regarderBranche(int positionAtrouver,int positionActuel, int index) {
+    private boolean regarderBranche(int positionAtrouver,int positionActuel, int index) {
         if(estAuLimite(positionActuel, index)) {
             return false;
         }
@@ -286,12 +305,12 @@ public class Damier {
                 index);
     }
 
-    public void supprimerPion(int positionaArreter, int index) {
+    private void supprimerPion(int positionaArreter, int index) {
         int positionActuel =
                 positionPionSelectionner + getSuiteMouvement(positionPionSelectionner)[index];
-        while (positionaArreter!= positionActuel) {
+        while (positionaArreter != positionActuel) {
             listePion.remove(positionActuel);
-            positionActuel = positionaArreter + getSuiteMouvement(positionActuel)[index];
+            positionActuel = positionActuel + getSuiteMouvement(positionActuel)[index];
         }
     }
 }
