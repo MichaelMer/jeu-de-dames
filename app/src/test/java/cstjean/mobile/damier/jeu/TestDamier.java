@@ -59,31 +59,37 @@ public class TestDamier {
         damier.viderDamier();
     }
 
+    /**
+     * Test la selection selon la couleur.
+     */
     @Test
     public void testSelectionnerPionCouleur() {
         Damier damier = Damier.getInstance();
         ArrayList<Integer> resultat = new ArrayList<>();
         damier.viderDamier();
-        assertEquals(0,damier.getNombrePion());
 
-        damier.ajouterPion(17, new Pion(CouleurPion.NOIR));
-        resultat.add(21);
-        resultat.add(22);
-        assertEquals(resultat, damier.selectionnerPion(17));
-        damier.enleverSelection();
-
-        damier.viderDamier();
-        resultat.clear();
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(44, new Pion(CouleurPion.BLANC));
         resultat.add(39);
         resultat.add(40);
-        assertEquals(resultat, damier.selectionnerPion(44));
+        damier.selectionnerPion(44);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
 
-
+        damier.viderDamier();
+        resultat.clear();
+        assertEquals(0,damier.getNombrePion());
+        damier.ajouterPion(17, new Pion(CouleurPion.NOIR));
+        resultat.add(21);
+        resultat.add(22);
+        damier.selectionnerPion(17);
+        assertEquals(resultat, damier.getMouvementDispoPion());
+        damier.enleverSelection();
     }
 
+    /**
+     * Test la selection pour les pions sur les limites du jeu.
+     */
     @Test
     public void testSelectionnerPionLimiteJeu() {
         Damier damier = Damier.getInstance();
@@ -94,7 +100,8 @@ public class TestDamier {
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(25, new Pion(CouleurPion.BLANC));
         resultat.add(20);
-        assertEquals(resultat, damier.selectionnerPion(25));
+        damier.selectionnerPion(25);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
 
         damier.viderDamier();
@@ -102,24 +109,30 @@ public class TestDamier {
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(45, new Pion(CouleurPion.BLANC));
         resultat.add(40);
-        assertEquals(resultat, damier.selectionnerPion(45));
+        damier.selectionnerPion(45);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(49, new Pion(CouleurPion.NOIR));
-        assertEquals(resultat, damier.selectionnerPion(49));
+        damier.selectionnerPion(49);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
 
         damier.viderDamier();
         resultat.clear();
         assertEquals(0, damier.getNombrePion());
         damier.ajouterPion(2, new Pion(CouleurPion.BLANC));
-        assertEquals(resultat, damier.selectionnerPion(2));
+        damier.selectionnerPion(2);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
     }
 
+    /**
+     * Test pour la selection d'un pion sur une prise disponible.
+     */
     @Test
     public void testSelectionnerPionPrise() {
         Damier damier = Damier.getInstance();
@@ -131,12 +144,14 @@ public class TestDamier {
        damier.ajouterPion(17, new Pion(CouleurPion.BLANC));
        resultat.add(21);
        resultat.add(18);
-       assertEquals(resultat, damier.selectionnerPion(12));
+        damier.selectionnerPion(12);
+       assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
        resultat.clear();
         resultat.add(11);
         resultat.add(8);
-        assertEquals(resultat, damier.selectionnerPion(17));
+        damier.selectionnerPion(17);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
 
        damier.viderDamier();
@@ -145,15 +160,20 @@ public class TestDamier {
        damier.ajouterPion(27, new Pion(CouleurPion.NOIR));
        resultat.add(21);
        resultat.add(28);
-        assertEquals(resultat, damier.selectionnerPion(32));
+       damier.selectionnerPion(32);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
         resultat.clear();
         resultat.add(31);
         resultat.add(38);
-        assertEquals(resultat, damier.selectionnerPion(27));
+        damier.selectionnerPion(27);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
     }
 
+    /**
+     * Test selection pour les prise sur les limites du jeu.
+     */
     @Test
     public void testSelectionnerPionPriseAuLimiteJeu() {
         Damier damier = Damier.getInstance();
@@ -165,11 +185,13 @@ public class TestDamier {
         damier.ajouterPion(8, new Pion(CouleurPion.BLANC));
         resultat.add(12);
         resultat.add(9);
-        assertEquals(resultat, damier.selectionnerPion(3));
+        damier.selectionnerPion(3);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
         resultat.clear();
         resultat.add(2);
-        assertEquals(resultat, damier.selectionnerPion(8));
+        damier.selectionnerPion(8);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
 
         damier.viderDamier();
@@ -177,11 +199,13 @@ public class TestDamier {
         damier.ajouterPion(6, new Pion(CouleurPion.NOIR));
         damier.ajouterPion(11, new Pion(CouleurPion.BLANC));
         resultat.add(17);
-        assertEquals(resultat, damier.selectionnerPion(6));
+        damier.selectionnerPion(6);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
         resultat.clear();
         resultat.add(7);
-        assertEquals(resultat, damier.selectionnerPion(11));
+        damier.selectionnerPion(11);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
 
         damier.viderDamier();
@@ -189,14 +213,19 @@ public class TestDamier {
         damier.ajouterPion(15, new Pion(CouleurPion.NOIR));
         damier.ajouterPion(20, new Pion(CouleurPion.BLANC));
         resultat.add(24);
-        assertEquals(resultat, damier.selectionnerPion(15));
+        damier.selectionnerPion(15);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
         resultat.clear();
         resultat.add(14);
-        assertEquals(resultat, damier.selectionnerPion(20));
+        damier.selectionnerPion(20);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
     }
 
+    /**
+     * Test pour les selection pour les pion qui on des prise par arriere.
+     */
     @Test
     public void testSelectionPionArriere() {
         Damier damier = Damier.getInstance();
@@ -209,16 +238,21 @@ public class TestDamier {
         resultat.add(3);
         resultat.add(17);
         resultat.add(18);
-        assertEquals(resultat, damier.selectionnerPion(12));
+        damier.selectionnerPion(12);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
         resultat.clear();
         resultat.add(2);
         resultat.add(3);
         resultat.add(17);
-        assertEquals(resultat, damier.selectionnerPion(8));
+        damier.selectionnerPion(8);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
     }
 
+    /**
+     * Test pour bouger un pion.
+     */
     @Test
     public void testBougerPion() {
         Damier damier = Damier.getInstance();
@@ -239,6 +273,9 @@ public class TestDamier {
         assertEquals(CouleurPion.BLANC, damier.getPion(22).getCouleur());
     }
 
+    /**
+     * Test pour les prise d'un pion
+     */
     @Test
     public void testPrisePion() {
         Damier damier = Damier.getInstance();
@@ -264,6 +301,9 @@ public class TestDamier {
 
     }
 
+    /**
+     * Test pour la selection d'une dame
+     */
     @Test
     public void testSelectionDame(){
         Damier damier = Damier.getInstance();
@@ -282,10 +322,14 @@ public class TestDamier {
         resultat.add(50);
         resultat.add(39);
         resultat.add(33);
-        assertEquals(resultat, damier.selectionnerPion(28));
+        damier.selectionnerPion(28);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
     }
 
+    /**
+     * Test pour la selection d'une dame si il y a 2 pion de suite.
+     */
     @Test
     public void testSelectionDameDeuxBlanc(){
         Damier damier = Damier.getInstance();
@@ -304,7 +348,8 @@ public class TestDamier {
         resultat.add(50);
         resultat.add(44);
         resultat.add(33);
-        assertEquals(resultat, damier.selectionnerPion(28));
+        damier.selectionnerPion(28);
+        assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
     }
 }
