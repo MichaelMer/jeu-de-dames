@@ -352,5 +352,26 @@ public class TestDamier {
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
     }
+
+    @Test
+    public void testGetNomDefaut() {
+        Damier damier = Damier.getInstance();
+        damier.viderDamier();
+        assertEquals("Noir", damier.getNomNoir());
+        assertEquals("Blanc", damier.getNomBlanc());
+    }
+
+    @Test
+    public void testSetNom() {
+        Damier damier = Damier.getInstance();
+        damier.viderDamier();
+        damier.setNomBlanc("1");
+        damier.setNomNoir("2");
+        assertEquals("2", damier.getNomNoir());
+        assertEquals("1", damier.getNomBlanc());
+        damier.viderDamier();
+        assertEquals("Noir", damier.getNomNoir());
+        assertEquals("Blanc", damier.getNomBlanc());
+    }
 }
 

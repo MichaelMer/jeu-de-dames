@@ -138,6 +138,8 @@ public class Damier {
      */
     public void viderDamier() {
         listePion.clear();
+        nomBlanc = "Blanc";
+        nomNoir = "Noir";
     }
 
     /**
