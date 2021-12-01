@@ -13,10 +13,6 @@ public enum EtatJeu {
      */
     VICTOIRENOIR,
     /**
-     * Quand ses une partie nulle
-     */
-    PARTIENULLE,
-    /**
      * Lorsque la partie n'est pas fini.
      */
     ENCOURS

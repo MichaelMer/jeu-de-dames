@@ -57,6 +57,7 @@ public class Damier {
     public void setNomBlanc(String nomBlanc) {
         this.nomBlanc = nomBlanc;
     }
+
     /**
      * change le nom du joueur pour les noirs
      * @param nomNoir ne nouveau nom
@@ -72,6 +73,7 @@ public class Damier {
     public String getNomBlanc() {
         return nomBlanc;
     }
+
     /**
      * getter pour le nom du joueur pour les noirs
      * @return le nom du joueur pour les noirs
@@ -80,41 +82,20 @@ public class Damier {
         return nomNoir;
     }
 
+    /**
+     * getter pour les mouvement pour le pion qui est selectionner
+     * @return les mouvement possible
+     */
     public ArrayList<Integer> getMouvementDispoPion() {
         return mouvementDispoPion;
     }
 
     /**
-     * Ajoute un pion sur le damier.
-     *
-     * @param index où ajouter le pion dans le damier.
-     * @param pion  le pion à ajouter.
+     * getter pour l'etat courant du jeu
+     * @return l'etat du jeu
      */
-    void ajouterPion(int index, Pion pion) {
-        listePion.put(index, pion);
-    }
-
-    /**
-     * retourne le pion a la place spécifier.
-     *
-     * @param index la case où se situe le pions.
-     * @return le pion sur la case.
-     */
-    Pion getPion(int index) {
-        return listePion.get(index);
-    }
-
-    /**
-     * Initialise le damier avec les pions et l'affichage.
-     */
-    void initialiser() {
-        listePion.clear();
-        for (int i = 1; i <= 20; i++) {
-            listePion.put(i, new Pion(CouleurPion.NOIR));
-        }
-        for (int i = 31; i <= 50; i++) {
-            listePion.put(i, new Pion(CouleurPion.BLANC));
-        }
+    public EtatJeu getEtatJeu() {
+        return etatJeu;
     }
 
     /**
@@ -131,6 +112,51 @@ public class Damier {
             }
         }
         return nbPion;
+    }
+
+    /**
+     * getter pour avoir le joueur courant
+     * @return le nom du joueur a qui ses le tours
+     */
+    public String getJoueurCourant() {
+        if(tourAuBlanc) {
+            return nomBlanc;
+        } else {
+            return  nomNoir;
+        }
+    }
+
+    /**
+     * retourne le pion a la place spécifier.
+     *
+     * @param index la case où se situe le pions.
+     * @return le pion sur la case.
+     */
+    Pion getPion(int index) {
+        return listePion.get(index);
+    }
+
+    /**
+     * Ajoute un pion sur le damier.
+     *
+     * @param index où ajouter le pion dans le damier.
+     * @param pion  le pion à ajouter.
+     */
+    void ajouterPion(int index, Pion pion) {
+        listePion.put(index, pion);
+    }
+
+    /**
+     * Initialise le damier avec les pions et l'affichage.
+     */
+    void initialiser() {
+        listePion.clear();
+        for (int i = 1; i <= 20; i++) {
+            listePion.put(i, new Pion(CouleurPion.NOIR));
+        }
+        for (int i = 31; i <= 50; i++) {
+            listePion.put(i, new Pion(CouleurPion.BLANC));
+        }
     }
 
     /**
@@ -165,6 +191,9 @@ public class Damier {
     private ArrayList<Integer> chercherMovement(int position) {
         ArrayList<Integer> resultat = new ArrayList<>();
         int[] mouvements = getSuiteMouvement(position);
+        if (listePion.get(position) == null) {
+                return resultat;
+        }
         for (int i = 0; i < mouvements.length; i++) {
             resultat.addAll(getMouvement(i,position));
         }
@@ -248,8 +277,6 @@ public class Damier {
                 position >= 46 && position <= 50 && index >=2;
     }
 
-
-
     /**
      * Donne la suite de mouvement disponible selon si la rangée est impaire où non.
      *
@@ -283,7 +310,7 @@ public class Damier {
      * @param nouvellePosition la nouvlle position du pion
      */
     public void bougerPionSelectionner(int nouvellePosition) {
-        if (estPionSelectionner) {
+        if (estPionSelectionner && etatJeu == EtatJeu.ENCOURS) {
             Pion pion =  listePion.get(positionPionSelectionner);
                 listePion.remove(positionPionSelectionner);
                 for (int i= 0; i <= 3; i++) {
@@ -293,6 +320,9 @@ public class Damier {
                      break;
                  }
             }
+            changerTour();
+            positionPionSelectionner = nouvellePosition;
+            verfigerEtatJeu();
             enleverSelection();
         }
     }
@@ -330,7 +360,10 @@ public class Damier {
         }
     }
 
-    public void PartieTerminer() {
+    /**
+     * Verifier l'etat du jeu.
+     */
+    public void verfigerEtatJeu() {
         boolean aucunBlanc = true;
         boolean aucunNoir = true;
         boolean pionsBlancImmobile = true;
@@ -358,5 +391,12 @@ public class Damier {
         } else {
             etatJeu = EtatJeu.ENCOURS;
         }
+    }
+
+    /**
+     * Change se le tour a qui.
+     */
+    public void changerTour() {
+        tourAuBlanc = !tourAuBlanc;
     }
 }

@@ -353,6 +353,9 @@ public class TestDamier {
         damier.enleverSelection();
     }
 
+    /**
+     * Test pour les noms par defaut des joueurs.
+     */
     @Test
     public void testGetNomDefaut() {
         Damier damier = Damier.getInstance();
@@ -361,6 +364,9 @@ public class TestDamier {
         assertEquals("Blanc", damier.getNomBlanc());
     }
 
+    /**
+     * Test pour les setter pour changer les nom
+     */
     @Test
     public void testSetNom() {
         Damier damier = Damier.getInstance();
@@ -372,6 +378,51 @@ public class TestDamier {
         damier.viderDamier();
         assertEquals("Noir", damier.getNomNoir());
         assertEquals("Blanc", damier.getNomBlanc());
+    }
+
+    /**
+     * Test pour les victoire pour les blancs.
+     */
+    @Test
+    public void testVictoireBlanc() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.viderDamier();
+        assertEquals(EtatJeu.ENCOURS, damier.getEtatJeu());
+        damier.ajouterPion(18, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(12, new Pion(CouleurPion.NOIR));
+        damier.selectionnerPion(18);
+        resultat.add(7);
+        resultat.add(13);
+        assertEquals(resultat,damier.getMouvementDispoPion());
+        damier.bougerPionSelectionner(7);
+        assertEquals(EtatJeu.VICTOIREBLANC, damier.getEtatJeu());
+    }
+
+    /**
+     * Test pour la victoire des noirs.
+     */
+    @Test
+    public void testVictoireNoir() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.viderDamier();
+        assertEquals(EtatJeu.ENCOURS, damier.getEtatJeu());
+        damier.ajouterPion(33, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(11, new Pion(CouleurPion.NOIR));
+
+        damier.selectionnerPion(33);
+        damier.bougerPionSelectionner(28);
+
+        damier.selectionnerPion(11);
+        damier.bougerPionSelectionner(17);
+
+        damier.selectionnerPion(28);
+        damier.bougerPionSelectionner(22);
+
+        damier.selectionnerPion(17);
+        damier.bougerPionSelectionner(28);
+        assertEquals(EtatJeu.VICTOIRENOIR, damier.getEtatJeu());
     }
 }
 
