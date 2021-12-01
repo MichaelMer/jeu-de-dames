@@ -310,7 +310,9 @@ public class Damier {
      * @param nouvellePosition la nouvlle position du pion
      */
     public void bougerPionSelectionner(int nouvellePosition) {
-        if (estPionSelectionner && etatJeu == EtatJeu.ENCOURS) {
+        if (estPionSelectionner &&
+                etatJeu == EtatJeu.ENCOURS &&
+                verifierTours()) {
             Pion pion =  listePion.get(positionPionSelectionner);
                 listePion.remove(positionPionSelectionner);
                 for (int i= 0; i <= 3; i++) {
@@ -396,7 +398,13 @@ public class Damier {
     /**
      * Change se le tour a qui.
      */
-    public void changerTour() {
+    private void changerTour() {
         tourAuBlanc = !tourAuBlanc;
+    }
+
+    private boolean verifierTours() {
+        if (listePion.get(positionPionSelectionner).estNoir() && !tourAuBlanc) {
+            return true;
+        } else return !listePion.get(positionPionSelectionner).estNoir() && tourAuBlanc;
     }
 }
