@@ -17,7 +17,7 @@ public class Damier {
      * Liste de pion du damier.
      */
     private final Map<Integer, Pion> listePion;
-
+    private EtatJeu etatJeu = EtatJeu.ENCOURS;
     private boolean tourAuBlanc = true;
     private String nomBlanc = "Blanc";
     private String nomNoir = "Noir";
@@ -150,6 +150,7 @@ public class Damier {
      */
     public void selectionnerPion(int position) {
         if (listePion.get(position) != null) {
+            estPionSelectionner = true;
             positionPionSelectionner = position;
             mouvementDispoPion.addAll(chercherMovement(position));
         }
@@ -162,7 +163,6 @@ public class Damier {
      * @return un liste des mouvements disponibles
      */
     private ArrayList<Integer> chercherMovement(int position) {
-        estPionSelectionner = true;
         ArrayList<Integer> resultat = new ArrayList<>();
         int[] mouvements = getSuiteMouvement(position);
         for (int i = 0; i < mouvements.length; i++) {
@@ -327,6 +327,36 @@ public class Damier {
         while (positionaArreter != positionActuel) {
             listePion.remove(positionActuel);
             positionActuel = positionActuel + getSuiteMouvement(positionActuel)[index];
+        }
+    }
+
+    public void PartieTerminer() {
+        boolean aucunBlanc = true;
+        boolean aucunNoir = true;
+        boolean pionsBlancImmobile = true;
+        boolean pionsNoirImmobile = true;
+        for(int i =1; i <=50; i++) {
+            Pion pion = listePion.get(i);
+            if (pion != null) {
+                if(pion.estNoir()) {
+                    aucunNoir = false;
+                    if (chercherMovement(i).size() != 0) {
+                        pionsNoirImmobile = false;
+                    }
+                } else {
+                    aucunBlanc = false;
+                    if (chercherMovement(i).size() != 0) {
+                        pionsBlancImmobile = false;
+                    }
+                }
+            }
+        }
+        if(aucunBlanc || pionsBlancImmobile) {
+            etatJeu = EtatJeu.VICTOIRENOIR;
+        } else if (aucunNoir || pionsNoirImmobile) {
+            etatJeu = EtatJeu.VICTOIREBLANC;
+        } else {
+            etatJeu = EtatJeu.ENCOURS;
         }
     }
 }
