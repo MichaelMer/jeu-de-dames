@@ -373,22 +373,26 @@ public class Damier {
         boolean aucunNoir = true;
         boolean pionsBlancImmobile = true;
         boolean pionsNoirImmobile = true;
-        for(int i =1; i <=50; i++) {
-            Pion pion = listePion.get(i);
-            if (pion != null) {
-                if(pion.estNoir()) {
-                    aucunNoir = false;
-                    if (chercherMovement(i).size() != 0) {
-                        pionsNoirImmobile = false;
-                    }
-                } else {
-                    aucunBlanc = false;
-                    if (chercherMovement(i).size() != 0) {
-                        pionsBlancImmobile = false;
-                    }
-                }
+        if(getNbPionParCouleur(CouleurPion.BLANC) > 0) {
+            aucunBlanc = false;
+        }
+
+        if(getNbPionParCouleur(CouleurPion.NOIR) > 0) {
+            aucunNoir = false;
+        }
+
+        for(int position : listePion.keySet()) {
+            selectionnerPion(position);
+            if (getMouvementDispoPion().size() != 0 && listePion.get(position).estNoir()) {
+                pionsNoirImmobile = false;
+            }
+
+            if (getMouvementDispoPion().size() != 0 && !listePion.get(position).estNoir()) {
+                pionsBlancImmobile = false;
             }
         }
+
+
         if(aucunBlanc || pionsBlancImmobile) {
             etatJeu = EtatJeu.VICTOIRENOIR;
         } else if (aucunNoir || pionsNoirImmobile) {
