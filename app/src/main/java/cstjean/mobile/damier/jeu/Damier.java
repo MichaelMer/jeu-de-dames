@@ -164,6 +164,9 @@ public class Damier {
      */
     public void viderDamier() {
         listePion.clear();
+        etatJeu = EtatJeu.ENCOURS;
+        tourAuBlanc = true;
+        enleverSelection();
         nomBlanc = "Blanc";
         nomNoir = "Noir";
     }

@@ -85,6 +85,7 @@ public class TestDamier {
         damier.selectionnerPion(17);
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
+        damier.viderDamier();
     }
 
     /**
@@ -128,6 +129,7 @@ public class TestDamier {
         damier.selectionnerPion(2);
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
+        damier.viderDamier();
     }
 
     /**
@@ -169,6 +171,7 @@ public class TestDamier {
         damier.selectionnerPion(27);
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
+        damier.viderDamier();
     }
 
     /**
@@ -221,6 +224,7 @@ public class TestDamier {
         damier.selectionnerPion(20);
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
+        damier.viderDamier();
     }
 
     /**
@@ -248,6 +252,7 @@ public class TestDamier {
         damier.selectionnerPion(8);
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
+        damier.viderDamier();
     }
 
     /**
@@ -257,7 +262,20 @@ public class TestDamier {
     public void testBougerPion() {
         Damier damier = Damier.getInstance();
         damier.viderDamier();
-        //refaire test
+
+        damier.ajouterPion(22, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(44, new Pion(CouleurPion.NOIR));
+        damier.selectionnerPion(22);
+        damier.bougerPionSelectionner(18);
+        assertNotNull(damier.getPion(18));
+        assertNull(damier.getPion(22));
+
+        damier.selectionnerPion(44);
+        damier.bougerPionSelectionner(49);
+
+        assertNotNull(damier.getPion(49));
+        assertNull(damier.getPion(44));
+        damier.viderDamier();
     }
 
     /**
@@ -295,6 +313,7 @@ public class TestDamier {
         damier.selectionnerPion(28);
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
+        damier.viderDamier();
     }
 
     /**
@@ -321,6 +340,7 @@ public class TestDamier {
         damier.selectionnerPion(28);
         assertEquals(resultat, damier.getMouvementDispoPion());
         damier.enleverSelection();
+        damier.viderDamier();
     }
 
     /**
@@ -332,6 +352,7 @@ public class TestDamier {
         damier.viderDamier();
         assertEquals("Noir", damier.getNomNoir());
         assertEquals("Blanc", damier.getNomBlanc());
+        damier.viderDamier();
     }
 
     /**
@@ -348,6 +369,7 @@ public class TestDamier {
         damier.viderDamier();
         assertEquals("Noir", damier.getNomNoir());
         assertEquals("Blanc", damier.getNomBlanc());
+        damier.viderDamier();
     }
 
     /**
@@ -367,6 +389,7 @@ public class TestDamier {
         assertEquals(resultat,damier.getMouvementDispoPion());
         damier.bougerPionSelectionner(7);
         assertEquals(EtatJeu.VICTOIREBLANC, damier.getEtatJeu());
+        damier.viderDamier();
     }
 
     /**
@@ -375,24 +398,20 @@ public class TestDamier {
     @Test
     public void testVictoireNoir() {
         Damier damier = Damier.getInstance();
-        ArrayList<Integer> resultat = new ArrayList<>();
         damier.viderDamier();
         assertEquals(EtatJeu.ENCOURS, damier.getEtatJeu());
         damier.ajouterPion(33, new Pion(CouleurPion.BLANC));
         damier.ajouterPion(11, new Pion(CouleurPion.NOIR));
-
         damier.selectionnerPion(33);
         damier.bougerPionSelectionner(28);
-
         damier.selectionnerPion(11);
         damier.bougerPionSelectionner(17);
-
         damier.selectionnerPion(28);
         damier.bougerPionSelectionner(22);
-
         damier.selectionnerPion(17);
         damier.bougerPionSelectionner(28);
         assertEquals(EtatJeu.VICTOIRENOIR, damier.getEtatJeu());
+        damier.viderDamier();
     }
 }
 
