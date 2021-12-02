@@ -52,6 +52,7 @@ public class Damier {
 
     /**
      * change le nom du joueur pour les blancs
+     *
      * @param nomBlanc ne nouveau nom
      */
     public void setNomBlanc(String nomBlanc) {
@@ -60,6 +61,7 @@ public class Damier {
 
     /**
      * change le nom du joueur pour les noirs
+     *
      * @param nomNoir ne nouveau nom
      */
     public void setNomNoir(String nomNoir) {
@@ -68,6 +70,7 @@ public class Damier {
 
     /**
      * getter pour le nom du joueur pour les blancs
+     *
      * @return le nom du joueur pour les blancs
      */
     public String getNomBlanc() {
@@ -76,6 +79,7 @@ public class Damier {
 
     /**
      * getter pour le nom du joueur pour les noirs
+     *
      * @return le nom du joueur pour les noirs
      */
     public String getNomNoir() {
@@ -84,6 +88,7 @@ public class Damier {
 
     /**
      * getter pour les mouvement pour le pion qui est selectionner
+     *
      * @return les mouvement possible
      */
     public ArrayList<Integer> getMouvementDispoPion() {
@@ -92,6 +97,7 @@ public class Damier {
 
     /**
      * getter pour l'etat courant du jeu
+     *
      * @return l'etat du jeu
      */
     public EtatJeu getEtatJeu() {
@@ -116,13 +122,14 @@ public class Damier {
 
     /**
      * getter pour avoir le joueur courant
+     *
      * @return le nom du joueur a qui ses le tours
      */
     public String getJoueurCourant() {
-        if(tourAuBlanc) {
+        if (tourAuBlanc) {
             return nomBlanc;
         } else {
-            return  nomNoir;
+            return nomNoir;
         }
     }
 
@@ -194,13 +201,14 @@ public class Damier {
         ArrayList<Integer> resultat = new ArrayList<>();
         int[] mouvements = getSuiteMouvement(position);
         if (listePion.get(position) == null) {
-                return resultat;
+            return resultat;
         }
         for (int i = 0; i < mouvements.length; i++) {
-            resultat.addAll(getMouvement(i,position));
+            resultat.addAll(getMouvement(i, position));
         }
         return resultat;
     }
+
     /**
      * Donne le mouvement selon la suite de mouvement.
      *
@@ -209,38 +217,38 @@ public class Damier {
      * @return le nouveaux mouvement si possible sinon la position du pion
      */
     private ArrayList<Integer> getMouvement(int index, int position) {
-            ArrayList<Integer> resultat = new ArrayList<>();
+        ArrayList<Integer> resultat = new ArrayList<>();
         if (listePion.get(position) != null &&
                 listePion.get(position).getCouleur() == listePion.get(positionPionSelectionner).getCouleur() &&
-                position!= positionPionSelectionner) {
+                position != positionPionSelectionner) {
             return resultat;
-        } else if(listePion.get(position + getSuiteMouvement(position)[index]) != null &&
+        } else if (listePion.get(position + getSuiteMouvement(position)[index]) != null &&
                 position != positionPionSelectionner && listePion.get(position) != null) {
             return resultat;
         } else if (estMauvaiseDirectionPion(position, index)) {
-            if(listePion.get(position) == null) {
+            if (listePion.get(position) == null) {
                 return resultat;
             } else {
-                if(listePion.get(position).getCouleur() != listePion.get(positionPionSelectionner).getCouleur()) {
+                if (listePion.get(position).getCouleur() != listePion.get(positionPionSelectionner).getCouleur()) {
                     if (listePion.get(position + getSuiteMouvement(position)[index]) == null) {
                         resultat.add(position + getSuiteMouvement(position)[index]);
                     }
                 }
             }
-        } else if (estAuLimite(positionPionSelectionner, index))  {
+        } else if (estAuLimite(positionPionSelectionner, index)) {
             return resultat;
-        } else if (estAuLimite(position,index)) {
-            if (listePion.get(position) == null){
+        } else if (estAuLimite(position, index)) {
+            if (listePion.get(position) == null) {
                 resultat.add(position);
             } else {
                 return resultat;
             }
         } else {
             if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME ||
-                    position == positionPionSelectionner || listePion.get(position) != null ) {
+                    position == positionPionSelectionner || listePion.get(position) != null) {
                 resultat.addAll(getMouvement(index, position + getSuiteMouvement(position)[index]));
             }
-            if(listePion.get(position) == null) {
+            if (listePion.get(position) == null) {
                 resultat.add(position);
             }
         }
@@ -249,8 +257,9 @@ public class Damier {
 
     /**
      * regarde si la position donner est en arriere du pion
+     *
      * @param position la position a verifier
-     * @param index l'index pour la direction dans la suite de mouvement
+     * @param index    l'index pour la direction dans la suite de mouvement
      * @return true si la position est en arriere du pion
      */
     public boolean estMauvaiseDirectionPion(int position, int index) {
@@ -264,6 +273,7 @@ public class Damier {
         } else return !listePion.get(positionPionSelectionner).estNoir() &&
                 index >= 2;
     }
+
     /**
      * Regarde si la position est au limite du jeu.
      *
@@ -272,11 +282,11 @@ public class Damier {
      * @return oui si le pion est au limite du jeu
      */
     public boolean estAuLimite(int position, int index) {
-        if(position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2 ||
+        if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2 ||
                 position % 10 == 5 && index == 1 || position % 10 == 5 && index == 3) {
             return true;
-        } else return position >= 1 && position <= 5  && index < 2||
-                position >= 46 && position <= 50 && index >=2;
+        } else return position >= 1 && position <= 5 && index < 2 ||
+                position >= 46 && position <= 50 && index >= 2;
     }
 
     /**
@@ -316,23 +326,23 @@ public class Damier {
                 etatJeu == EtatJeu.ENCOURS &&
                 verifierTours()) {
             boolean aPrise = false;
-            Pion pion =  listePion.get(positionPionSelectionner);
-            if (pion == null){
+            Pion pion = listePion.get(positionPionSelectionner);
+            if (pion == null) {
                 return;
             }
             listePion.remove(positionPionSelectionner);
-                for (int i= 0; i <= 3; i++) {
-                 if(regarderBranche(nouvellePosition,positionPionSelectionner, i)) {
-                     aPrise = supprimerPion(nouvellePosition,i);
-                     listePion.put(nouvellePosition, pion);
-                     break;
-                 }
+            for (int i = 0; i <= 3; i++) {
+                if (regarderBranche(nouvellePosition, positionPionSelectionner, i)) {
+                    aPrise = supprimerPion(nouvellePosition, i);
+                    listePion.put(nouvellePosition, pion);
+                    break;
+                }
             }
             NotationManoury.getInstance().ajouterNotation(pion.estNoir(),
                     positionPionSelectionner,
                     nouvellePosition,
                     aPrise);
-
+            changerPion(nouvellePosition);
             changerTour();
             positionPionSelectionner = nouvellePosition;
             verfigerEtatJeu();
@@ -341,17 +351,34 @@ public class Damier {
     }
 
     /**
+     * Change les pions en damier si il sont a bout du damier.
+     * @param position positon a verifer
+     */
+    private void changerPion(int position) {
+        if (position >= 46 && position <= 50 &&
+                listePion.get(position).getType() == TypePion.PION &&
+                listePion.get(position).estNoir()) {
+            listePion.put(position, new Dame(CouleurPion.NOIR));
+        } else if (position >= 1 && position <= 5 &&
+                listePion.get(position).getType() == TypePion.PION &&
+                !listePion.get(position).estNoir()) {
+            listePion.put(position, new Dame(CouleurPion.BLANC));
+        }
+    }
+
+    /**
      * fonction qui regarde si la postion demmander fait partie de cet direction
+     *
      * @param positionAtrouver la poisiton a trouver
-     * @param positionActuel la postion actuel
-     * @param index l'index pour la direction dans la suite de mouvement
+     * @param positionActuel   la postion actuel
+     * @param index            l'index pour la direction dans la suite de mouvement
      * @return true si la position fait parti de cet branche
      */
-    private boolean regarderBranche(int positionAtrouver,int positionActuel, int index) {
+    private boolean regarderBranche(int positionAtrouver, int positionActuel, int index) {
         if (positionActuel == positionAtrouver) {
             return true;
         }
-        if(estAuLimite(positionActuel, index)) {
+        if (estAuLimite(positionActuel, index)) {
             return false;
         }
         return regarderBranche(positionAtrouver,
@@ -361,15 +388,16 @@ public class Damier {
 
     /**
      * supprimer les pion dans le chemin
+     *
      * @param positionaArreter la position a arreter
-     * @param index l'index pour la direction dans la suite de mouvement
+     * @param index            l'index pour la direction dans la suite de mouvement
      */
     private boolean supprimerPion(int positionaArreter, int index) {
         boolean aPrise = false;
         int positionActuel =
                 positionPionSelectionner + getSuiteMouvement(positionPionSelectionner)[index];
         while (positionaArreter != positionActuel) {
-            if (listePion.get(positionActuel) != null){
+            if (listePion.get(positionActuel) != null) {
                 aPrise = true;
                 listePion.remove(positionActuel);
             }
@@ -387,15 +415,15 @@ public class Damier {
         boolean aucunNoir = true;
         boolean pionsBlancImmobile = true;
         boolean pionsNoirImmobile = true;
-        if(getNbPionParCouleur(CouleurPion.BLANC) > 0) {
+        if (getNbPionParCouleur(CouleurPion.BLANC) > 0) {
             aucunBlanc = false;
         }
 
-        if(getNbPionParCouleur(CouleurPion.NOIR) > 0) {
+        if (getNbPionParCouleur(CouleurPion.NOIR) > 0) {
             aucunNoir = false;
         }
 
-        for(int position : listePion.keySet()) {
+        for (int position : listePion.keySet()) {
             selectionnerPion(position);
             if (getMouvementDispoPion().size() != 0 && listePion.get(position).estNoir()) {
                 pionsNoirImmobile = false;
@@ -405,7 +433,7 @@ public class Damier {
                 pionsBlancImmobile = false;
             }
         }
-        if(aucunBlanc || pionsBlancImmobile) {
+        if (aucunBlanc || pionsBlancImmobile) {
             etatJeu = EtatJeu.VICTOIRENOIR;
         } else if (aucunNoir || pionsNoirImmobile) {
             etatJeu = EtatJeu.VICTOIREBLANC;
@@ -421,6 +449,10 @@ public class Damier {
         tourAuBlanc = !tourAuBlanc;
     }
 
+    /**
+     * Verifie si le pion selectionner est de la bonne couleur pour le tours.
+     * @return true si il est de la meme couleur
+     */
     private boolean verifierTours() {
         if (listePion.get(positionPionSelectionner).estNoir() && !tourAuBlanc) {
             return true;

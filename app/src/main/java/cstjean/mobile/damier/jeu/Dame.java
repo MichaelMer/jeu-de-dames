@@ -35,6 +35,10 @@ public class Dame extends Pion {
         return 'd';
     }
 
+    /**
+     * Getter pour le type des dames
+     * @return Enum de TypePion pour les dames
+     */
     @Override
     public TypePion getType() {
         return TypePion.DAME;

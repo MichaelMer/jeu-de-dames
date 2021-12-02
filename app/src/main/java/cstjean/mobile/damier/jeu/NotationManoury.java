@@ -26,8 +26,10 @@ public class NotationManoury {
         listeManoury = new ArrayList<>();
         damier = Damier.getInstance();
     }
+
     /**
      * getter pour l'instance
+     *
      * @return l'instance de NotationManoury
      */
     public static NotationManoury getInstance() {
@@ -36,12 +38,14 @@ public class NotationManoury {
         }
         return instance;
     }
+
     /**
      * Ajoute une notation.
-     * @param pionNoir true si le pion est noir.
-     * @param positionInitiale ancienne postion du pion
+     *
+     * @param pionNoir          true si le pion est noir.
+     * @param positionInitiale  ancienne postion du pion
      * @param nouvellePostition nouvelle position du pion
-     * @param prise true si il y a une prise
+     * @param prise             true si il y a une prise
      */
     public void ajouterNotation(boolean pionNoir,
                                 int positionInitiale,
@@ -49,38 +53,42 @@ public class NotationManoury {
                                 boolean prise) {
         String notation = "";
 
-        if(positionInitiale <= 9) {
-           notation += '0';
+        if (positionInitiale <= 9) {
+            notation += '0';
         }
         notation += positionInitiale;
 
-        if(prise){
-           notation += 'x';
+        if (prise) {
+            notation += 'x';
         } else {
             notation += '-';
         }
 
-        if(nouvellePostition <= 9) {
+        if (nouvellePostition <= 9) {
             notation += '0';
         }
         notation += nouvellePostition;
 
-        if(pionNoir){
+        if (pionNoir) {
             notation = '(' + notation + ')';
         }
 
         listeManoury.add(notation);
     }
+
     /**
      * Getter pour une notation
+     *
      * @param positionNotation la notation a retourner
      * @return la notation selon la position demmander
      */
     public String getNotation(int positionNotation) {
         return listeManoury.get(positionNotation - 1);
     }
+
     /**
      * Getter pour le nombre de notations
+     *
      * @return le nombre de notation
      */
     public int getNbNotation() {
@@ -89,12 +97,18 @@ public class NotationManoury {
 
     /**
      * Faire un retour en arriere a un ancien etat du jeu
+     *
      * @param positionNotation la position a recommencer a jouer
      */
     public void retournerArriere(int positionNotation) {
         ArrayList<String> nouvelleListe = new ArrayList<>();
 
-        for (int i =0; i<positionNotation; i++){
+        if (positionNotation == 0) {
+            Damier.getInstance().initialiser();
+            return;
+        }
+
+        for (int i = 0; i < positionNotation; i++) {
             nouvelleListe.add(listeManoury.get(i));
         }
         listeManoury = nouvelleListe;
@@ -107,10 +121,10 @@ public class NotationManoury {
     public void rafraichirJeu() {
         damier.viderDamier();
 
-        for (String notation:listeManoury) {
-            int milieuNotation = (int)(notation.length()/2);
-            int positionInitiale = convertirCharEnNombre(notation.charAt(milieuNotation-2),
-                    notation.charAt(milieuNotation-1));
+        for (String notation : listeManoury) {
+            int milieuNotation = (int) (notation.length() / 2);
+            int positionInitiale = convertirCharEnNombre(notation.charAt(milieuNotation - 2),
+                    notation.charAt(milieuNotation - 1));
 
             int nouvellePosition = convertirCharEnNombre(notation.charAt(milieuNotation + 1),
                     notation.charAt(milieuNotation + 2));
@@ -122,13 +136,15 @@ public class NotationManoury {
 
     /**
      * Converti les carateres en nombre.
+     *
      * @param positionDizane nombre pour les dizaines
-     * @param positionUnite nombre pour les unite
+     * @param positionUnite  nombre pour les unite
      * @return le nombre converti
      */
-    private int convertirCharEnNombre (char positionDizane, char positionUnite) {
-       return Integer.parseInt("" + positionDizane + positionUnite);
+    private int convertirCharEnNombre(char positionDizane, char positionUnite) {
+        return Integer.parseInt("" + positionDizane + positionUnite);
     }
+
     /**
      * Vide la liste.
      */

@@ -59,7 +59,7 @@ public class Pion {
         return 'p';
     }
 
-    public TypePion getType () {
+    public TypePion getType() {
         return TypePion.PION;
     }
 }
