@@ -7,6 +7,8 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Test pour les damier.
@@ -285,8 +287,38 @@ public class TestDamier {
     public void testPrisePion() {
         Damier damier = Damier.getInstance();
        damier.viderDamier();
-       //refaire test
 
+       damier.ajouterPion(33, new Pion(CouleurPion.BLANC));
+       damier.ajouterPion(28, new Pion(CouleurPion.NOIR));
+
+       damier.selectionnerPion(33);
+       damier.bougerPionSelectionner(22);
+
+        assertNull(damier.getPion(33));
+        assertNull(damier.getPion(28));
+        assertNotNull(damier.getPion(22));
+
+        damier.viderDamier();
+
+        damier.ajouterPion(33, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(11, new Pion(CouleurPion.NOIR));
+
+        damier.selectionnerPion(33);
+        damier.bougerPionSelectionner(28);
+
+        damier.selectionnerPion(11);
+        damier.bougerPionSelectionner(17);
+
+        damier.selectionnerPion(28);
+        damier.bougerPionSelectionner(22);
+
+        damier.selectionnerPion(17);
+        damier.bougerPionSelectionner(28);
+
+        assertNull(damier.getPion(22));
+        assertNull(damier.getPion(17));
+        assertNotNull(damier.getPion(28));
+        damier.viderDamier();
     }
 
     /**

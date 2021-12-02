@@ -340,11 +340,11 @@ public class Damier {
      * @return true si la position fait parti de cet branche
      */
     private boolean regarderBranche(int positionAtrouver,int positionActuel, int index) {
-        if(estAuLimite(positionActuel, index)) {
-            return false;
-        }
         if (positionActuel == positionAtrouver) {
             return true;
+        }
+        if(estAuLimite(positionActuel, index)) {
+            return false;
         }
         return regarderBranche(positionAtrouver,
                 positionActuel + getSuiteMouvement(positionActuel)[index],
@@ -391,8 +391,6 @@ public class Damier {
                 pionsBlancImmobile = false;
             }
         }
-
-
         if(aucunBlanc || pionsBlancImmobile) {
             etatJeu = EtatJeu.VICTOIRENOIR;
         } else if (aucunNoir || pionsNoirImmobile) {
