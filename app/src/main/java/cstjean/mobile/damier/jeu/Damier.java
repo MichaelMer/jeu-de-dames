@@ -175,7 +175,6 @@ public class Damier {
      * Selectionne les mouvement disponible pour le pion.
      *
      * @param position la position du pion sélectionné
-     * @return une liste des mouvements possibles
      */
     public void selectionnerPion(int position) {
         if (listePion.get(position) != null) {
@@ -211,7 +210,7 @@ public class Damier {
      */
     private ArrayList<Integer> getMouvement(int index, int position) {
             ArrayList<Integer> resultat = new ArrayList<>();
-        if (listePion.get(position)!= null &&
+        if (listePion.get(position) != null &&
                 listePion.get(position).getCouleur() == listePion.get(positionPionSelectionner).getCouleur() &&
                 position!= positionPionSelectionner) {
             return resultat;
