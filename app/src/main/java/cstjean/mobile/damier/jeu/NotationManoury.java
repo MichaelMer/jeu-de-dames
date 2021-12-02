@@ -22,30 +22,29 @@ public class NotationManoury {
 
     public void ajouterNotation(boolean pionNoir, int ancienne_pos, int nouv_pos, boolean prise) {
 
-        StringBuilder builder = new StringBuilder();
+        String notation = "";
 
-        if(ancienne_pos >=5) {
-            builder.append("0");
+        if(ancienne_pos >= 5) {
+           notation += '0';
         }
-        builder.append(ancienne_pos);
+        notation += ancienne_pos;
 
         if(prise){
-            builder.append('x');
+           notation += 'x';
         } else {
-            builder.append('-');
+            notation += '-';
         }
 
         if(nouv_pos >=5) {
-            builder.append("0");
+            notation += '0';
         }
-        builder.append(nouv_pos);
+        notation += nouv_pos;
 
         if(pionNoir){
-            builder.insert(0,'(');
-            builder.append(')');
+            notation = '(' + notation + ')';
         }
 
-        listeManoury.add(builder.toString());
+        listeManoury.add(notation);
     }
 
     public String getEtatDamier(int positionNotation) {
