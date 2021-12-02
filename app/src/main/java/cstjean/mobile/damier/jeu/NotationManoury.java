@@ -2,32 +2,57 @@ package cstjean.mobile.damier.jeu;
 
 import java.util.ArrayList;
 
+/**
+ * Classe pour les notations manoury.
+ */
 public class NotationManoury {
-
+    /**
+     * instance de NotationManoury
+     */
     private static NotationManoury instance = null;
+    /**
+     * liste des notations manoury
+     */
     private ArrayList<String> listeManoury;
+    /**
+     * le jeu de Damier
+     */
     private final Damier damier;
 
+    /**
+     * Constructeur.
+     */
     private NotationManoury() {
         listeManoury = new ArrayList<>();
         damier = Damier.getInstance();
     }
-
+    /**
+     * getter pour l'instance
+     * @return l'instance de NotationManoury
+     */
     public static NotationManoury getInstance() {
         if (instance == null) {
             instance = new NotationManoury();
         }
         return instance;
     }
-
-    public void ajouterNotation(boolean pionNoir, int ancienne_pos, int nouv_pos, boolean prise) {
-
+    /**
+     * Ajoute une notation.
+     * @param pionNoir true si le pion est noir.
+     * @param positionInitiale ancienne postion du pion
+     * @param nouvellePostition nouvelle position du pion
+     * @param prise true si il y a une prise
+     */
+    public void ajouterNotation(boolean pionNoir,
+                                int positionInitiale,
+                                int nouvellePostition,
+                                boolean prise) {
         String notation = "";
 
-        if(ancienne_pos <= 9) {
+        if(positionInitiale <= 9) {
            notation += '0';
         }
-        notation += ancienne_pos;
+        notation += positionInitiale;
 
         if(prise){
            notation += 'x';
@@ -35,10 +60,10 @@ public class NotationManoury {
             notation += '-';
         }
 
-        if(nouv_pos <= 9) {
+        if(nouvellePostition <= 9) {
             notation += '0';
         }
-        notation += nouv_pos;
+        notation += nouvellePostition;
 
         if(pionNoir){
             notation = '(' + notation + ')';
@@ -46,15 +71,26 @@ public class NotationManoury {
 
         listeManoury.add(notation);
     }
-
+    /**
+     * Getter pour une notation
+     * @param positionNotation la notation a retourner
+     * @return la notation selon la position demmander
+     */
     public String getNotation(int positionNotation) {
         return listeManoury.get(positionNotation - 1);
     }
-
+    /**
+     * Getter pour le nombre de notations
+     * @return le nombre de notation
+     */
     public int getNbNotation() {
         return listeManoury.size();
     }
 
+    /**
+     * Faire un retour en arriere a un ancien etat du jeu
+     * @param positionNotation la position a recommencer a jouer
+     */
     public void retournerArriere(int positionNotation) {
         ArrayList<String> nouvelleListe = new ArrayList<>();
 
@@ -65,6 +101,9 @@ public class NotationManoury {
         rafraichirJeu();
     }
 
+    /**
+     * rafraichi le jeu selon les notations manoury
+     */
     public void rafraichirJeu() {
         damier.viderDamier();
 
@@ -81,12 +120,19 @@ public class NotationManoury {
         }
     }
 
+    /**
+     * Converti les carateres en nombre.
+     * @param positionDizane nombre pour les dizaines
+     * @param positionUnite nombre pour les unite
+     * @return le nombre converti
+     */
     private int convertirCharEnNombre (char positionDizane, char positionUnite) {
        return Integer.parseInt("" + positionDizane + positionUnite);
     }
-
+    /**
+     * Vide la liste.
+     */
     public void viderNotations() {
         listeManoury.clear();
     }
-
 }

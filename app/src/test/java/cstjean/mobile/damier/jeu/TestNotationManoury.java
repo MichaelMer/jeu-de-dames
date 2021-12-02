@@ -2,6 +2,7 @@ package cstjean.mobile.damier.jeu;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,6 +11,14 @@ import java.util.ArrayList;
  * Test pour la notation manoury
  */
 public class TestNotationManoury {
+    /**
+     * Methode appeler avant chaque test.
+     */
+    @Before
+    public void setup(){
+        NotationManoury.getInstance().viderNotations();
+    }
+
     /**
      * test pour recupere l'instance des notations
      */
@@ -41,6 +50,9 @@ public class TestNotationManoury {
         notations.viderNotations();
     }
 
+    /**
+     * Test pour retourner en arriere a un etas specifier du jeu selon les notations.
+     */
     @Test
     public void testRetourArriere() {
         NotationManoury notations = NotationManoury.getInstance();

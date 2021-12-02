@@ -315,15 +315,24 @@ public class Damier {
         if (estPionSelectionner &&
                 etatJeu == EtatJeu.ENCOURS &&
                 verifierTours()) {
+            boolean aPrise = false;
             Pion pion =  listePion.get(positionPionSelectionner);
-                listePion.remove(positionPionSelectionner);
+            if (pion == null){
+                return;
+            }
+            listePion.remove(positionPionSelectionner);
                 for (int i= 0; i <= 3; i++) {
                  if(regarderBranche(nouvellePosition,positionPionSelectionner, i)) {
-                     supprimerPion(nouvellePosition,i);
+                     aPrise = supprimerPion(nouvellePosition,i);
                      listePion.put(nouvellePosition, pion);
                      break;
                  }
             }
+            NotationManoury.getInstance().ajouterNotation(pion.estNoir(),
+                    positionPionSelectionner,
+                    nouvellePosition,
+                    aPrise);
+
             changerTour();
             positionPionSelectionner = nouvellePosition;
             verfigerEtatJeu();
@@ -355,13 +364,19 @@ public class Damier {
      * @param positionaArreter la position a arreter
      * @param index l'index pour la direction dans la suite de mouvement
      */
-    private void supprimerPion(int positionaArreter, int index) {
+    private boolean supprimerPion(int positionaArreter, int index) {
+        boolean aPrise = false;
         int positionActuel =
                 positionPionSelectionner + getSuiteMouvement(positionPionSelectionner)[index];
         while (positionaArreter != positionActuel) {
-            listePion.remove(positionActuel);
+            if (listePion.get(positionActuel) != null){
+                aPrise = true;
+                listePion.remove(positionActuel);
+            }
+
             positionActuel = positionActuel + getSuiteMouvement(positionActuel)[index];
         }
+        return aPrise;
     }
 
     /**
