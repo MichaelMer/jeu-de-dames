@@ -5,14 +5,12 @@ import java.util.ArrayList;
 public class NotationManoury {
 
     private static NotationManoury instance = null;
-    private final ArrayList<String> listeManoury;
+    private ArrayList<String> listeManoury;
+    private final Damier damier;
 
     private NotationManoury() {
         listeManoury = new ArrayList<>();
-    }
-
-    public ArrayList<String> getListeNotation() {
-        return listeManoury;
+        damier = Damier.getInstance();
     }
 
     public static NotationManoury getInstance() {
@@ -22,17 +20,70 @@ public class NotationManoury {
         return instance;
     }
 
+    public void ajouterNotation(boolean pionNoir, int ancienne_pos, int nouv_pos, boolean prise) {
 
-    public void ajouterNotation(Pion pion, int ancienne_pos, int nouv_pos, boolean prise) {
-        String notation = ancienne_pos + "-" + nouv_pos;
-        if (pion.estNoir()) {
-            notation =  '(' + notation + ')';
+        StringBuilder builder = new StringBuilder();
+
+        if(ancienne_pos >=5) {
+            builder.append("0");
         }
-        if (prise) {
-            notation = notation.replace('-', 'x');
+        builder.append(ancienne_pos);
+
+        if(prise){
+            builder.append('x');
+        } else {
+            builder.append('-');
         }
 
-        listeManoury.add(notation);
+        if(nouv_pos >=5) {
+            builder.append("0");
+        }
+        builder.append(nouv_pos);
+
+        if(pionNoir){
+            builder.insert(0,'(');
+            builder.append(')');
+        }
+
+        listeManoury.add(builder.toString());
+    }
+
+    public String getEtatDamier(int positionNotation) {
+        return listeManoury.get(positionNotation - 1);
+    }
+
+    public int getNbNotation() {
+        return listeManoury.size();
+    }
+
+    public void retournerANotation(int positionNotation) {
+        ArrayList<String> nouvelleListe = new ArrayList<>();
+
+        for (int i =0; i<positionNotation; i++){
+            nouvelleListe.add(listeManoury.get(i));
+        }
+        listeManoury = nouvelleListe;
+        rafraichirJeu();
+    }
+
+    public void rafraichirJeu() {
+        damier.viderDamier();
+
+        for (String notation:listeManoury) {
+            int milieuNotation = (int)(notation.length()/2);
+            int positionInitiale = convertirCharEnNombre(notation.charAt(milieuNotation-1),
+                    notation.charAt(milieuNotation));
+
+            int nouvellePosition = convertirCharEnNombre(notation.charAt(milieuNotation + 2),
+                    notation.charAt(milieuNotation + 3));
+
+            damier.selectionnerPion(positionInitiale);
+            damier.bougerPionSelectionner(nouvellePosition);
+        }
+    }
+
+    private int convertirCharEnNombre (char positionDizane, char positionUnite) {
+       return Integer.parseInt("" + positionDizane + positionUnite);
     }
 
 }
