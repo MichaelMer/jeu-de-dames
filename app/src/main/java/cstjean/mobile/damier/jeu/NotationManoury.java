@@ -24,7 +24,7 @@ public class NotationManoury {
 
         String notation = "";
 
-        if(ancienne_pos >= 5) {
+        if(ancienne_pos <= 9) {
            notation += '0';
         }
         notation += ancienne_pos;
@@ -35,7 +35,7 @@ public class NotationManoury {
             notation += '-';
         }
 
-        if(nouv_pos >=5) {
+        if(nouv_pos <= 9) {
             notation += '0';
         }
         notation += nouv_pos;
@@ -47,7 +47,7 @@ public class NotationManoury {
         listeManoury.add(notation);
     }
 
-    public String getEtatDamier(int positionNotation) {
+    public String getNotation(int positionNotation) {
         return listeManoury.get(positionNotation - 1);
     }
 
@@ -55,7 +55,7 @@ public class NotationManoury {
         return listeManoury.size();
     }
 
-    public void retournerANotation(int positionNotation) {
+    public void retournerArriere(int positionNotation) {
         ArrayList<String> nouvelleListe = new ArrayList<>();
 
         for (int i =0; i<positionNotation; i++){
@@ -70,11 +70,11 @@ public class NotationManoury {
 
         for (String notation:listeManoury) {
             int milieuNotation = (int)(notation.length()/2);
-            int positionInitiale = convertirCharEnNombre(notation.charAt(milieuNotation-1),
-                    notation.charAt(milieuNotation));
+            int positionInitiale = convertirCharEnNombre(notation.charAt(milieuNotation-2),
+                    notation.charAt(milieuNotation-1));
 
-            int nouvellePosition = convertirCharEnNombre(notation.charAt(milieuNotation + 2),
-                    notation.charAt(milieuNotation + 3));
+            int nouvellePosition = convertirCharEnNombre(notation.charAt(milieuNotation + 1),
+                    notation.charAt(milieuNotation + 2));
 
             damier.selectionnerPion(positionInitiale);
             damier.bougerPionSelectionner(nouvellePosition);
@@ -83,6 +83,10 @@ public class NotationManoury {
 
     private int convertirCharEnNombre (char positionDizane, char positionUnite) {
        return Integer.parseInt("" + positionDizane + positionUnite);
+    }
+
+    public void viderNotations() {
+        listeManoury.clear();
     }
 
 }
