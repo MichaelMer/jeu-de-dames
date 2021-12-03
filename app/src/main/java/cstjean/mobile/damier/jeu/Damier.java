@@ -46,7 +46,7 @@ public class Damier {
      *
      * @return le nombre de pio sur le damier.
      */
-    int getNombrePion() {
+    public int getNombrePion() {
         return listePion.size();
     }
 
@@ -110,7 +110,7 @@ public class Damier {
      * @param couleur la couleur des pions.
      * @return le nombre de pion de la couleur
      */
-    int getNbPionParCouleur(CouleurPion couleur) {
+    public int getNbPionParCouleur(CouleurPion couleur) {
         int nbPion = 0;
         for (Pion pion : listePion.values()) {
             if (pion.getCouleur().equals(couleur)) {
@@ -139,7 +139,7 @@ public class Damier {
      * @param index la case où se situe le pions.
      * @return le pion sur la case.
      */
-    Pion getPion(int index) {
+    public Pion getPion(int index) {
         return listePion.get(index);
     }
 
@@ -149,15 +149,16 @@ public class Damier {
      * @param index où ajouter le pion dans le damier.
      * @param pion  le pion à ajouter.
      */
-    void ajouterPion(int index, Pion pion) {
+    public void ajouterPion(int index, Pion pion) {
         listePion.put(index, pion);
     }
 
     /**
      * Initialise le damier avec les pions et l'affichage.
      */
-    void initialiser() {
+    public void initialiser() {
         listePion.clear();
+        NotationManoury.getInstance().viderNotations();
         for (int i = 1; i <= 20; i++) {
             listePion.put(i, new Pion(CouleurPion.NOIR));
         }
@@ -176,6 +177,7 @@ public class Damier {
         enleverSelection();
         nomBlanc = "Blanc";
         nomNoir = "Noir";
+        NotationManoury.getInstance().viderNotations();
     }
 
     /**

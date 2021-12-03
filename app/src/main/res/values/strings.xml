@@ -5,4 +5,8 @@
     <string name="txt_nom_joueur1">nom joueur 1</string>
     <string name="txt_nom_joueur2">nom joueur 2</string>
     <string name="btn_commencer_partie">Commencer</string>
+    <string name="btn_recommencer">Redémarrer</string>
+    <string name="vider"> </string>
+    <string name="txt_victoire">%1$s à gagner!</string>
+    <string name="btn_notation">Notation Manoury</string>
 </resources>

@@ -13,11 +13,12 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import cstjean.mobile.damier.jeu.Damier;
+
 public class NomJoueurFragment extends Fragment {
     private TextInputEditText input_nomJoueur1;
     private TextInputEditText input_nomJoueur2;
     private TextView txt_erreur;
-    private Button btn_commencer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,12 +26,24 @@ public class NomJoueurFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nom_joueur, container, false);
         input_nomJoueur1 = view.findViewById(R.id.input_nom_joueur1);
         input_nomJoueur2 = view.findViewById(R.id.input_nom_joueur2);
-        btn_commencer = view.findViewById(R.id.btn_commencer);
+        Button btn_commencer = view.findViewById(R.id.btn_commencer);
         txt_erreur = view.findViewById(R.id.txt_erreur);
 
 
         btn_commencer.setOnClickListener(v -> {
             if(nomCorrect()) {
+                Damier.getInstance().
+                        setNomNoir(input_nomJoueur1.
+                                getEditableText().
+                                toString().
+                                trim());
+
+                Damier.getInstance().
+                        setNomBlanc(input_nomJoueur2.
+                                getEditableText().
+                                toString().
+                                trim());
+
                 Intent intent = DamierActivity.newIntent(getActivity());
                 startActivity(intent);
             }
