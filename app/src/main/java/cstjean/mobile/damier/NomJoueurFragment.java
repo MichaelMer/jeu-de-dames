@@ -1,5 +1,6 @@
 package cstjean.mobile.damier;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,11 +13,12 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-public class nomJoueurFragment extends Fragment {
+public class NomJoueurFragment extends Fragment {
     private TextInputEditText input_nomJoueur1;
     private TextInputEditText input_nomJoueur2;
     private TextView txt_erreur;
     private Button btn_commencer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,21 +30,22 @@ public class nomJoueurFragment extends Fragment {
 
 
         btn_commencer.setOnClickListener(v -> {
-            if(nomCorrrect()) {
-                //commencer partie
+            if(nomCorrect()) {
+                Intent intent = DamierActivity.newIntent(getActivity());
+                startActivity(intent);
             }
         });
         return view;
     }
-    private boolean nomCorrrect() {
-        if(input_nomJoueur1.getEditableText().toString().equals("") ||
-                input_nomJoueur2.getEditableText().toString().equals("")) {
 
+    private boolean nomCorrect() {
+        String nomJoueur1 = input_nomJoueur1.getEditableText().toString().toLowerCase().trim();
+        String nomJoueur2 = input_nomJoueur2.getEditableText().toString().toLowerCase().trim();
+
+        if(nomJoueur1.equals("") || nomJoueur2.equals("")) {
             txt_erreur.setText(R.string.msg_erreur_nom_vide);
             return false;
-        } else if (input_nomJoueur1.getEditableText().toString()
-                .equals(input_nomJoueur2.getEditableText().toString())) {
-
+        } else if (nomJoueur1.equals(nomJoueur2)) {
             txt_erreur.setText(R.string.msg_erreur_nom_identique);
             return false;
         }
