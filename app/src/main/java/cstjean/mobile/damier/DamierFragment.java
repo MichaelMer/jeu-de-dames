@@ -35,6 +35,7 @@ public class DamierFragment extends Fragment {
                     bouton.setBackgroundColor(Color.rgb(195, 141, 83));
                 } else {
                     bouton.setBackgroundColor(Color.rgb(244, 208, 165));
+                    bouton.setEnabled(false);
                 }
 
                 GridLayout.LayoutParams parametres = new GridLayout.LayoutParams();
@@ -48,7 +49,6 @@ public class DamierFragment extends Fragment {
                 gridBoutons.addView(bouton);
             }
         }
-
         return view;
     }
 
