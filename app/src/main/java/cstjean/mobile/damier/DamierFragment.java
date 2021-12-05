@@ -3,11 +3,14 @@ package cstjean.mobile.damier;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -44,7 +47,11 @@ public class DamierFragment extends Fragment {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
 
-                Button bouton = new Button(this.getContext());
+                ImageButton bouton = new ImageButton(this.getContext());
+
+                bouton.setImageResource(R.drawable.pion_noir);
+                bouton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                bouton.setPadding(8,8,8,8);
 
                 if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
                     bouton.setBackgroundColor(Color.rgb(195, 141, 83));
@@ -83,14 +90,16 @@ public class DamierFragment extends Fragment {
             txt_gagnant.setText(getString(R.string.vider));
         }
 
-        for (int i = 1; i <= 50; i++) {
-            if (damier.getPion(i).estNoir()){
-                //aller chercher le bouton et lui mettre un pion noir
-            } else if (!damier.getPion(i).estNoir()) {
-                // aller chercher le bouton et lui mettre un blanc
-            }
+        Log.d("Size damier", damier.getNombrePion() + "");
 
-        }
+//        for (int i = 1; i <= 50; i++) {
+//            if (damier.getPion(i).estNoir()){
+//                //aller chercher le bouton et lui mettre un pion noir
+//            } else if (!damier.getPion(i).estNoir()) {
+//                // aller chercher le bouton et lui mettre un blanc
+//            }
+//
+//        }
     }
 
     private Boolean getOrientation() {
