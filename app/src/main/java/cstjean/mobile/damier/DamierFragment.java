@@ -1,6 +1,7 @@
 package cstjean.mobile.damier;
 
 import android.content.res.Configuration;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,12 +58,12 @@ public class DamierFragment extends Fragment {
                 bouton.setEnabled(false);
 
                 if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
-                    bouton.setBackgroundColor(Color.rgb(195, 141, 83));
+                    bouton.setBackgroundColor(COULEUR_NOIR);
                     position++;
                     bouton.setTag(position);
 
                 } else {
-                    bouton.setBackgroundColor(Color.rgb(244, 208, 165));
+                    bouton.setBackgroundColor(COULEUR_BLANC);
                 }
 
                 GridLayout.LayoutParams parametres = new GridLayout.LayoutParams();
@@ -100,6 +101,8 @@ public class DamierFragment extends Fragment {
     }
 
     private void caseAppuyee(GridLayout gridBoutons, ImageButton bouton) {
+        enleverArtefact(gridBoutons);
+
         int position = (int)bouton.getTag();
         damier.selectionnerPion(position);
         ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
@@ -141,7 +144,18 @@ public class DamierFragment extends Fragment {
             caseDispo.setBackgroundColor(COULEUR_NOIR);
             caseDispo.setEnabled(false);
         }
+    }
 
+    private void enleverArtefact(GridLayout gridBoutons) {
+        for (int position : damier.getPositionsPionsCouleur(damier.getTourActuel())) {
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setBackgroundColor(COULEUR_NOIR);
+        }
+        for (int position : damier.getMouvementDispoPion()) {
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setBackgroundColor(COULEUR_NOIR);
+            pion.setEnabled(false);
+        }
     }
 
     private void rafraichirJeu(GridLayout gridBoutons) {
