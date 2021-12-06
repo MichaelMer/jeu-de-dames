@@ -120,6 +120,17 @@ public class Damier {
         return nbPion;
     }
 
+    public ArrayList<Integer> getPositionsPions() {
+        ArrayList<Integer> liste = new ArrayList<Integer>(30);
+        liste.addAll(listePion.keySet());
+        return liste;
+    }
+
+//    public ArrayList<Integer> getListePion() {
+//        ArrayList<Integer> liste = new ArrayList<Integer>();
+//        for ()
+//    }
+
     /**
      * getter pour avoir le joueur courant
      *
@@ -187,6 +198,7 @@ public class Damier {
      */
     public void selectionnerPion(int position) {
         if (listePion.get(position) != null) {
+            mouvementDispoPion.clear();
             estPionSelectionner = true;
             positionPionSelectionner = position;
             mouvementDispoPion.addAll(chercherMovement(position));

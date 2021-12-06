@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import cstjean.mobile.damier.jeu.CouleurPion;
 import cstjean.mobile.damier.jeu.Damier;
 import cstjean.mobile.damier.jeu.EtatJeu;
 
@@ -37,7 +39,7 @@ public class DamierFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_damier, container, false);
 
         txt_joueur = view.findViewById(R.id.txt_tour_joueur);
-        txt_gagnant = view.findViewById(R.id.txt_message_vitoire);
+        txt_gagnant = view.findViewById(R.id.txt_message_victoire);
         btn_recommencer = view.findViewById(R.id.btn_recommencer);
         btn_notation = view.findViewById(R.id.btn_afficher_Notation);
 
@@ -49,9 +51,8 @@ public class DamierFragment extends Fragment {
 
                 ImageButton bouton = new ImageButton(this.getContext());
 
-                bouton.setImageResource(R.drawable.pion_noir);
-                bouton.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 bouton.setPadding(8,8,8,8);
+                bouton.setEnabled(false);
 
                 if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
                     bouton.setBackgroundColor(Color.rgb(195, 141, 83));
@@ -60,7 +61,6 @@ public class DamierFragment extends Fragment {
 
                 } else {
                     bouton.setBackgroundColor(Color.rgb(244, 208, 165));
-                    bouton.setEnabled(false);
                 }
 
                 GridLayout.LayoutParams parametres = new GridLayout.LayoutParams();
@@ -72,34 +72,65 @@ public class DamierFragment extends Fragment {
                 bouton.setLayoutParams(parametres);
 
                 gridBoutons.addView(bouton);
+
+                bouton.setOnClickListener(v -> {
+                    caseAppuyee(gridBoutons, bouton);
+                });
             }
-            rafraichirJeu();
         }
+        rafraichirJeu(gridBoutons);
         return view;
     }
 
-    private void rafraichirJeu() {
+    private void initialiserPions(GridLayout gridBoutons) {
+        for (int index : damier.getPositionsPions()) {
+            CouleurPion couleur = damier.getPion(index).getCouleur();
+            ImageButton bouton = (ImageButton)gridBoutons.findViewWithTag(index);
 
-        if(damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
-            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomBlanc()));
-            txt_joueur.setText(getString(R.string.vider));
-        } else if (damier.getEtatJeu() == EtatJeu.VICTOIRENOIR) {
-            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomNoir()));
-            txt_joueur.setText(getString(R.string.vider));
-        } else {
-            txt_gagnant.setText(getString(R.string.vider));
+            if (couleur == CouleurPion.NOIR) {
+                bouton.setImageResource(R.drawable.pion_noir);
+            } else {
+                bouton.setImageResource(R.drawable.pion_blanc);
+                bouton.setEnabled(true);
+            }
+            bouton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+    }
+
+    private void caseAppuyee(GridLayout gridBoutons, ImageButton bouton) {
+        int position = (int)bouton.getTag();
+        damier.selectionnerPion(position);
+        ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
+
+        if (mouvements.isEmpty()) return;
+
+        bouton.setBackgroundColor(Color.rgb(230, 184, 37));
+        for (int mouvement : mouvements) {
+            ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
+            caseDispo.setEnabled(true);
+            caseDispo.setBackgroundColor(Color.rgb(13, 167, 209));
+        }
+    }
+
+    private void rafraichirJeu(GridLayout gridBoutons) {
+
+//        if(damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
+//            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomBlanc()));
+//            txt_joueur.setText(getString(R.string.vider));
+//        } else if (damier.getEtatJeu() == EtatJeu.VICTOIRENOIR) {
+//            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomNoir()));
+//            txt_joueur.setText(getString(R.string.vider));
+//        } else {
+//            txt_gagnant.setText(getString(R.string.vider));
+//        }
+
+        if (damier.getNombrePion() <= 0) {
+            damier.initialiser();
         }
 
-        Log.d("Size damier", damier.getNombrePion() + "");
+        initialiserPions(gridBoutons);
 
-//        for (int i = 1; i <= 50; i++) {
-//            if (damier.getPion(i).estNoir()){
-//                //aller chercher le bouton et lui mettre un pion noir
-//            } else if (!damier.getPion(i).estNoir()) {
-//                // aller chercher le bouton et lui mettre un blanc
-//            }
-//
-//        }
+        Log.d("Size damier", damier.getNombrePion() + "");
     }
 
     private Boolean getOrientation() {
