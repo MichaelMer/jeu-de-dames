@@ -32,6 +32,8 @@ public class DamierFragment extends Fragment {
     private TextView txt_gagnant;
     private Button btn_recommencer;
     private Button btn_notation;
+    private final int COULEUR_BLANC = Color.rgb(244, 208, 165);
+    private final int COULEUR_NOIR = Color.rgb(195, 141, 83);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,11 +73,12 @@ public class DamierFragment extends Fragment {
                 }
                 bouton.setLayoutParams(parametres);
 
-                gridBoutons.addView(bouton);
-
                 bouton.setOnClickListener(v -> {
                     caseAppuyee(gridBoutons, bouton);
+                    //Log.d("Liste positions", damier.getMouvementDispoPion().toString());
                 });
+
+                gridBoutons.addView(bouton);
             }
         }
         rafraichirJeu(gridBoutons);
@@ -91,7 +94,6 @@ public class DamierFragment extends Fragment {
                 bouton.setImageResource(R.drawable.pion_noir);
             } else {
                 bouton.setImageResource(R.drawable.pion_blanc);
-                bouton.setEnabled(true);
             }
             bouton.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
@@ -109,7 +111,37 @@ public class DamierFragment extends Fragment {
             ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
             caseDispo.setEnabled(true);
             caseDispo.setBackgroundColor(Color.rgb(13, 167, 209));
+            caseDispo.setOnClickListener(v -> {
+                rafraichirAffichage(gridBoutons);
+                damier.bougerPionSelectionner((int)caseDispo.getTag());
+                rafraichirJeu(gridBoutons);
+            });
         }
+    }
+
+    private void activerBoutons(GridLayout gridBoutons, CouleurPion tour) {
+        for (int position : damier.getPositionsPions()) {
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setEnabled(false);
+        }
+        for (int position : damier.getPositionsPionsCouleur(tour)) {
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setEnabled(true);
+        }
+    }
+
+    private void rafraichirAffichage(GridLayout gridBoutons) {
+        int pionActuel = damier.getPositionPionSelectionner();
+        ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
+        mouvements.add(pionActuel);
+
+        for (int mouvement : mouvements) {
+            ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
+            caseDispo.setImageResource(android.R.color.transparent);
+            caseDispo.setBackgroundColor(COULEUR_NOIR);
+            caseDispo.setEnabled(false);
+        }
+
     }
 
     private void rafraichirJeu(GridLayout gridBoutons) {
@@ -128,9 +160,8 @@ public class DamierFragment extends Fragment {
             damier.initialiser();
         }
 
+        activerBoutons(gridBoutons, damier.getTourActuel());
         initialiserPions(gridBoutons);
-
-        Log.d("Size damier", damier.getNombrePion() + "");
     }
 
     private Boolean getOrientation() {

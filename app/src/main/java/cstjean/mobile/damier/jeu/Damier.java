@@ -120,16 +120,38 @@ public class Damier {
         return nbPion;
     }
 
+    public int getPositionPionSelectionner() {
+        return positionPionSelectionner;
+    }
+
     public ArrayList<Integer> getPositionsPions() {
         ArrayList<Integer> liste = new ArrayList<Integer>(30);
         liste.addAll(listePion.keySet());
         return liste;
     }
 
-//    public ArrayList<Integer> getListePion() {
-//        ArrayList<Integer> liste = new ArrayList<Integer>();
-//        for ()
-//    }
+    public ArrayList<Integer> getPositionsPionsCouleur(CouleurPion couleur) {
+        ArrayList<Integer> liste = new ArrayList<Integer>(15);
+
+        for (int index : listePion.keySet()) {
+            if (listePion.get(index) != null ) {
+                if (listePion.get(index).getCouleur().equals(couleur)) {
+                    liste.add(index);
+                }
+            }
+        }
+
+        return liste;
+    }
+
+    public CouleurPion getTourActuel() {
+        if (tourAuBlanc) {
+            return CouleurPion.BLANC;
+        } else {
+            return CouleurPion.NOIR;
+        }
+    }
+
 
     /**
      * getter pour avoir le joueur courant
