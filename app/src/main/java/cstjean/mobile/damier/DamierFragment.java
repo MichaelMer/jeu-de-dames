@@ -87,15 +87,18 @@ public class DamierFragment extends Fragment {
 
     private void rafraichirJeu(GridLayout gridBoutons) {
 
-//        if(damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
-//            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomBlanc()));
-//            txt_joueur.setText(getString(R.string.vider));
-//        } else if (damier.getEtatJeu() == EtatJeu.VICTOIRENOIR) {
-//            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomNoir()));
-//            txt_joueur.setText(getString(R.string.vider));
-//        } else {
-//            txt_gagnant.setText(getString(R.string.vider));
-//        }
+       if(damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
+            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomBlanc()));
+            txt_joueur.setText(getString(R.string.vider));
+        } else if (damier.getEtatJeu() == EtatJeu.VICTOIRENOIR) {
+            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomNoir()));
+            txt_joueur.setText(getString(R.string.vider));
+        } else {
+            txt_gagnant.setText(getString(R.string.vider));
+            txt_joueur.setText("C'est le tour à " + damier.getJoueurCourant() + " (" + damier.getTourActuel().toString().toLowerCase() + ")");
+
+           Log.d("yo", txt_joueur.getText().toString());
+        }
 
         if (damier.getNombrePion() <= 0) {
             damier.initialiser();
