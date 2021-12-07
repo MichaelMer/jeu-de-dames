@@ -76,7 +76,6 @@ public class DamierFragment extends Fragment {
 
                 bouton.setOnClickListener(v -> {
                     caseAppuyee(gridBoutons, bouton);
-                    //Log.d("Liste positions", damier.getMouvementDispoPion().toString());
                 });
 
                 gridBoutons.addView(bouton);
@@ -84,78 +83,6 @@ public class DamierFragment extends Fragment {
         }
         rafraichirJeu(gridBoutons);
         return view;
-    }
-
-    private void initialiserPions(GridLayout gridBoutons) {
-        for (int index : damier.getPositionsPions()) {
-            CouleurPion couleur = damier.getPion(index).getCouleur();
-            ImageButton bouton = (ImageButton)gridBoutons.findViewWithTag(index);
-
-            if (couleur == CouleurPion.NOIR) {
-                bouton.setImageResource(R.drawable.pion_noir);
-            } else {
-                bouton.setImageResource(R.drawable.pion_blanc);
-            }
-            bouton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        }
-    }
-
-    private void caseAppuyee(GridLayout gridBoutons, ImageButton bouton) {
-        enleverArtefact(gridBoutons);
-
-        int position = (int)bouton.getTag();
-        damier.selectionnerPion(position);
-        ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
-
-        if (mouvements.isEmpty()) return;
-
-        bouton.setBackgroundColor(Color.rgb(230, 184, 37));
-        for (int mouvement : mouvements) {
-            ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
-            caseDispo.setEnabled(true);
-            caseDispo.setBackgroundColor(Color.rgb(13, 167, 209));
-            caseDispo.setOnClickListener(v -> {
-                rafraichirAffichage(gridBoutons);
-                damier.bougerPionSelectionner((int)caseDispo.getTag());
-                rafraichirJeu(gridBoutons);
-            });
-        }
-    }
-
-    private void activerBoutons(GridLayout gridBoutons, CouleurPion tour) {
-        for (int position : damier.getPositionsPions()) {
-            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
-            pion.setEnabled(false);
-        }
-        for (int position : damier.getPositionsPionsCouleur(tour)) {
-            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
-            pion.setEnabled(true);
-        }
-    }
-
-    private void rafraichirAffichage(GridLayout gridBoutons) {
-        int pionActuel = damier.getPositionPionSelectionner();
-        ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
-        mouvements.add(pionActuel);
-
-        for (int mouvement : mouvements) {
-            ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
-            caseDispo.setImageResource(android.R.color.transparent);
-            caseDispo.setBackgroundColor(COULEUR_NOIR);
-            caseDispo.setEnabled(false);
-        }
-    }
-
-    private void enleverArtefact(GridLayout gridBoutons) {
-        for (int position : damier.getPositionsPionsCouleur(damier.getTourActuel())) {
-            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
-            pion.setBackgroundColor(COULEUR_NOIR);
-        }
-        for (int position : damier.getMouvementDispoPion()) {
-            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
-            pion.setBackgroundColor(COULEUR_NOIR);
-            pion.setEnabled(false);
-        }
     }
 
     private void rafraichirJeu(GridLayout gridBoutons) {
@@ -174,10 +101,119 @@ public class DamierFragment extends Fragment {
             damier.initialiser();
         }
 
-        activerBoutons(gridBoutons, damier.getTourActuel());
+        activerBoutons(gridBoutons);
         initialiserPions(gridBoutons);
     }
 
+    /**
+     * Initialise les pions sur les cases appropriés
+     * @param gridBoutons Le layout des boutons
+     */
+    private void initialiserPions(GridLayout gridBoutons) {
+        for (int index : damier.getPositionsPions()) {
+            CouleurPion couleur = damier.getPion(index).getCouleur();
+            ImageButton bouton = (ImageButton)gridBoutons.findViewWithTag(index);
+
+            if (couleur == CouleurPion.NOIR) {
+                bouton.setImageResource(R.drawable.pion_noir);
+            } else {
+                bouton.setImageResource(R.drawable.pion_blanc);
+            }
+            bouton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+    }
+
+    /**
+     * Affiche le pion sélectionné (en jaune) et affiche les cases disponibles (en bleu)
+     * Active les boutons des cases disponibles
+     * @param gridBoutons Le layout des boutons
+     * @param bouton Le pion sélectionné
+     */
+    private void caseAppuyee(GridLayout gridBoutons, ImageButton bouton) {
+        enleverArtefact(gridBoutons);
+
+        int position = (int)bouton.getTag();
+        damier.selectionnerPion(position);
+        ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
+
+        Log.d("pionAvant", position + "");
+        if (mouvements.isEmpty()) return;
+        Log.d("pionApres",  "oui " + position);
+
+        bouton.setBackgroundColor(Color.rgb(230, 184, 37));
+
+        // Surpasse le setOnClickListener de base
+        for (int mouvement : mouvements) {
+            ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
+            caseDispo.setEnabled(true);
+            caseDispo.setBackgroundColor(Color.rgb(13, 167, 209));
+            caseDispo.setOnClickListener(v -> {
+                rafraichirAffichage(gridBoutons);
+                damier.bougerPionSelectionner((int)caseDispo.getTag());
+                rafraichirJeu(gridBoutons);
+            });
+        }
+    }
+
+    /**
+     * Désactive tous les boutons et active les boutons du joueur actuel
+     * @param gridBoutons Le layout des boutons
+     */
+    private void activerBoutons(GridLayout gridBoutons) {
+        for (int position : damier.getPositionsPions()) {
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setEnabled(false);
+        }
+        for (int position : damier.getPositionsPionsCouleur(damier.getTourActuel())) {
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setEnabled(true);
+        }
+    }
+
+    /**
+     * Affiche le pion sélectionné et ses mouvements disponibles
+     * @param gridBoutons Le layout des boutons
+     */
+    private void rafraichirAffichage(GridLayout gridBoutons) {
+        int pionActuel = damier.getPositionPionSelectionner();
+        ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
+        mouvements.add(pionActuel);
+
+        if (mouvements.contains(0)) return;
+
+        Log.d("pion", pionActuel + "");
+        Log.d("mouv", mouvements.toString());
+
+        for (int mouvement : mouvements) {
+            ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
+            caseDispo.setImageResource(android.R.color.transparent);
+            caseDispo.setBackgroundColor(COULEUR_NOIR);
+            caseDispo.setEnabled(false);
+        }
+    }
+
+    /**
+     * Supprime la case sélectionnée et les mouvements disponibles de l'ancien pion sélectionné
+     * @param gridBoutons Le layout des boutons
+     */
+    private void enleverArtefact(GridLayout gridBoutons) {
+        for (int position : damier.getPositionsPionsCouleur(damier.getTourActuel())) {
+            Log.d("Artefact 1", position + "");
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setBackgroundColor(COULEUR_NOIR);
+        }
+        for (int position : damier.getMouvementDispoPion()) {
+            if (position == 0) return;
+            ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+            pion.setBackgroundColor(COULEUR_NOIR);
+            pion.setEnabled(false);
+        }
+    }
+
+    /**
+     * Obtiens l'orientation de l'appareil
+     * @return Vrai si l'orientation est en mode portrait, sinon faux
+     */
     private Boolean getOrientation() {
         int orientation = this.getResources().getConfiguration().orientation;
         return orientation == Configuration.ORIENTATION_PORTRAIT;

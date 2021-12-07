@@ -120,16 +120,29 @@ public class Damier {
         return nbPion;
     }
 
+    /**
+     * Retourne la position du pion sélectionné
+     * @return la position du pion sélectionné
+     */
     public int getPositionPionSelectionner() {
         return positionPionSelectionner;
     }
 
+    /**
+     * Obtiens les positions de tous les pions
+     * @return ArrayList de toutes les positions
+     */
     public ArrayList<Integer> getPositionsPions() {
         ArrayList<Integer> liste = new ArrayList<Integer>(30);
         liste.addAll(listePion.keySet());
         return liste;
     }
 
+    /**
+     * Obtiens les positions des pions d'une couleur donnée
+     * @param couleur CouleurPion, la couleur des pions
+     * @return ArrayList des positions
+     */
     public ArrayList<Integer> getPositionsPionsCouleur(CouleurPion couleur) {
         ArrayList<Integer> liste = new ArrayList<Integer>(15);
 
@@ -144,6 +157,10 @@ public class Damier {
         return liste;
     }
 
+    /**
+     * Getter du tour actuel (blanc ou noir)
+     * @return CouleurPion
+     */
     public CouleurPion getTourActuel() {
         if (tourAuBlanc) {
             return CouleurPion.BLANC;
