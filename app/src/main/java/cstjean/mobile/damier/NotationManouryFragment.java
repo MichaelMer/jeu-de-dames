@@ -15,6 +15,7 @@ public class NotationManouryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.fragment_notation_manoury, container, false);
+
         return view;
     }
 }
