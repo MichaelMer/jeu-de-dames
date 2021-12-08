@@ -3,6 +3,7 @@ package cstjean.mobile.damier.jeu;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Classe pour les damiers.
@@ -133,7 +134,7 @@ public class Damier {
      * @return ArrayList de toutes les positions
      */
     public ArrayList<Integer> getPositionsPions() {
-        ArrayList<Integer> liste = new ArrayList<Integer>(30);
+        ArrayList<Integer> liste = new ArrayList<>(30);
         liste.addAll(listePion.keySet());
         return liste;
     }
@@ -144,11 +145,11 @@ public class Damier {
      * @return ArrayList des positions
      */
     public ArrayList<Integer> getPositionsPionsCouleur(CouleurPion couleur) {
-        ArrayList<Integer> liste = new ArrayList<Integer>(15);
+        ArrayList<Integer> liste = new ArrayList<>(15);
 
         for (int index : listePion.keySet()) {
             if (listePion.get(index) != null ) {
-                if (listePion.get(index).getCouleur().equals(couleur)) {
+                if (Objects.requireNonNull(listePion.get(index)).getCouleur().equals(couleur)) {
                     liste.add(index);
                 }
             }
@@ -272,7 +273,8 @@ public class Damier {
     private ArrayList<Integer> getMouvement(int index, int position) {
         ArrayList<Integer> resultat = new ArrayList<>();
         if (listePion.get(position) != null &&
-                listePion.get(position).getCouleur() == listePion.get(positionPionSelectionner).getCouleur() &&
+                Objects.requireNonNull(listePion.get(position)).getCouleur() ==
+                Objects.requireNonNull(listePion.get(positionPionSelectionner)).getCouleur() &&
                 position != positionPionSelectionner) {
             return resultat;
         } else if (listePion.get(position + getSuiteMouvement(position)[index]) != null &&
@@ -282,7 +284,8 @@ public class Damier {
             if (listePion.get(position) == null) {
                 return resultat;
             } else {
-                if (listePion.get(position).getCouleur() != listePion.get(positionPionSelectionner).getCouleur()) {
+                if (Objects.requireNonNull(listePion.get(position)).getCouleur() !=
+                    Objects.requireNonNull(listePion.get(positionPionSelectionner)).getCouleur()) {
                     if (listePion.get(position + getSuiteMouvement(position)[index]) == null) {
                         resultat.add(position + getSuiteMouvement(position)[index]);
                     }
@@ -297,9 +300,12 @@ public class Damier {
                 return resultat;
             }
         } else {
-            if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME ||
+            if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).getType() ==
+                    TypePion.DAME ||
                     position == positionPionSelectionner || listePion.get(position) != null) {
-                resultat.addAll(getMouvement(index, position + getSuiteMouvement(position)[index]));
+                resultat.addAll(
+                        getMouvement(index, position + getSuiteMouvement(position)[index])
+                );
             }
             if (listePion.get(position) == null) {
                 resultat.add(position);
@@ -318,12 +324,13 @@ public class Damier {
     public boolean estMauvaiseDirectionPion(int position, int index) {
         if (position == positionPionSelectionner) {
             return false;
-        } else if (listePion.get(positionPionSelectionner).getType() == TypePion.DAME) {
+        } else if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).getType() ==
+                TypePion.DAME) {
             return false;
-        } else if (listePion.get(positionPionSelectionner).estNoir() &&
+        } else if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
                 index < 2) {
             return true;
-        } else return !listePion.get(positionPionSelectionner).estNoir() &&
+        } else return !Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
                 index >= 2;
     }
 
@@ -409,12 +416,12 @@ public class Damier {
      */
     private void changerPion(int position) {
         if (position >= 46 && position <= 50 &&
-                listePion.get(position).getType() == TypePion.PION &&
-                listePion.get(position).estNoir()) {
+                Objects.requireNonNull(listePion.get(position)).getType() == TypePion.PION &&
+                Objects.requireNonNull(listePion.get(position)).estNoir()) {
             listePion.put(position, new Dame(CouleurPion.NOIR));
         } else if (position >= 1 && position <= 5 &&
-                listePion.get(position).getType() == TypePion.PION &&
-                !listePion.get(position).estNoir()) {
+                Objects.requireNonNull(listePion.get(position)).getType() == TypePion.PION &&
+                !Objects.requireNonNull(listePion.get(position)).estNoir()) {
             listePion.put(position, new Dame(CouleurPion.BLANC));
         }
     }
@@ -478,11 +485,13 @@ public class Damier {
 
         for (int position : listePion.keySet()) {
             selectionnerPion(position);
-            if (getMouvementDispoPion().size() != 0 && listePion.get(position).estNoir()) {
+            if (getMouvementDispoPion().size() != 0 &&
+                    Objects.requireNonNull(listePion.get(position)).estNoir()) {
                 pionsNoirImmobile = false;
             }
 
-            if (getMouvementDispoPion().size() != 0 && !listePion.get(position).estNoir()) {
+            if (getMouvementDispoPion().size() != 0 &&
+                    !Objects.requireNonNull(listePion.get(position)).estNoir()) {
                 pionsBlancImmobile = false;
             }
         }
@@ -507,8 +516,10 @@ public class Damier {
      * @return true si il est de la meme couleur
      */
     private boolean verifierTours() {
-        if (listePion.get(positionPionSelectionner).estNoir() && !tourAuBlanc) {
+        if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
+                !tourAuBlanc) {
             return true;
-        } else return !listePion.get(positionPionSelectionner).estNoir() && tourAuBlanc;
+        } else return !Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
+                tourAuBlanc;
     }
 }
