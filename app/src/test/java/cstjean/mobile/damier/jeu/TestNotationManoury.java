@@ -1,6 +1,8 @@
 package cstjean.mobile.damier.jeu;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +36,6 @@ public class TestNotationManoury {
         assertEquals(notations2.getNbNotation(), notations.getNbNotation());
         assertEquals(notations.getNotation(1), notations2.getNotation(1));
 
-        notations.viderNotations();
     }
 
     /**
@@ -48,7 +49,6 @@ public class TestNotationManoury {
         notations.viderNotations();
         notations.ajouterNotation(false, 33, 28, true);
         assertEquals("33x28", notations.getNotation(1));
-        notations.viderNotations();
     }
 
     /**
@@ -56,14 +56,20 @@ public class TestNotationManoury {
      */
     @Test
     public void testRetourArriere() {
-        NotationManoury notations = NotationManoury.getInstance();
-        notations.ajouterNotation(true, 8, 12, false);
-        notations.ajouterNotation(false, 33, 28, true);
-        assertEquals(2, notations.getNbNotation());
-        notations.retournerArriere(1);
-        assertEquals(1, notations.getNbNotation());
-        assertEquals("(08-12)", notations.getNotation(1));
-        notations.viderNotations();
+        Damier damier = Damier.getInstance();
+        damier.initialiser();
+
+        damier.selectionnerPion(33);
+        damier.bougerPionSelectionner(28);
+        assertEquals(1,NotationManoury.getInstance().getNbNotation());
+        damier.selectionnerPion(18);
+        damier.bougerPionSelectionner(22);
+        assertEquals(2,NotationManoury.getInstance().getNbNotation());
+        NotationManoury.getInstance().retournerArriere(1);
+        assertEquals(1,NotationManoury.getInstance().getNbNotation());
+        assertNull(damier.getPion(22));
+        assertNotNull(damier.getPion(18));
+        assertEquals("33-28", NotationManoury.getInstance().getNotation(1));
     }
 
     @Test

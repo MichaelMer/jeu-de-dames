@@ -119,10 +119,12 @@ public class NotationManoury {
      * rafraichi le jeu selon les notations manoury
      */
     public void rafraichirJeu() {
+        ArrayList<String> ancienneListe = new ArrayList<>(listeManoury);
         damier.viderDamier();
+        damier.initialiser();
 
-        for (String notation : listeManoury) {
-            int milieuNotation = (int) (notation.length() / 2);
+        for (String notation : ancienneListe) {
+            int milieuNotation = (notation.length() / 2);
             int positionInitiale = convertirCharEnNombre(notation.charAt(milieuNotation - 2),
                     notation.charAt(milieuNotation - 1));
 
