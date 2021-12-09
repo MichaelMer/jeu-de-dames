@@ -432,7 +432,7 @@ public class TestDamier {
     }
 
     /**
-     * Test pour le joueur courant
+     * Test pour le joueur courant.
      */
     @Test
     public void testJoueurCourant() {
@@ -446,7 +446,7 @@ public class TestDamier {
     }
 
     /**
-     * Test pour la transformation des pions en dame
+     * Test pour la transformation des pions en dame.
      */
     @Test
     public void testTransformationDame() {
@@ -463,6 +463,14 @@ public class TestDamier {
 
         assertEquals(TypePion.DAME, damier.getPion(49).getType());
         assertEquals(TypePion.DAME, damier.getPion(2).getType());
+    }
+
+    @Test
+    public void testbougerNull(){
+        Damier damier = Damier.getInstance();
+
+        damier.bougerPionSelectionner(2);
+        assertNull(damier.getPion(2));
     }
 }
 

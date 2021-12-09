@@ -7,8 +7,6 @@ import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 /**
  * Test pour la notation manoury
  */

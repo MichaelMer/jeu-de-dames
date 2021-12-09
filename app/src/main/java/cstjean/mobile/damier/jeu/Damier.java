@@ -254,9 +254,6 @@ public class Damier {
     private ArrayList<Integer> chercherMovement(int position) {
         ArrayList<Integer> resultat = new ArrayList<>();
         int[] mouvements = getSuiteMouvement(position);
-        if (listePion.get(position) == null) {
-            return resultat;
-        }
         for (int i = 0; i < mouvements.length; i++) {
             resultat.addAll(getMouvement(i, position));
         }
