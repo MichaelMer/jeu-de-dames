@@ -15,13 +15,12 @@
         <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/activity_container.xml" value="0.1" />
         <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/activity_main.xml" value="0.13496376811594202" />
         <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/fragment_nom_joueur.xml" value="0.1" />
-        <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/fragment_notation_manoury.xml" value="0.3801711840228245" />
         <entry key="..\:/Users/xgaga/Desktop/Damier/app/src/main/res/layout/item_notation_manoury.xml" value="0.264" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

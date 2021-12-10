@@ -208,8 +208,7 @@ public class Damier {
      * Initialise le damier avec les pions et l'affichage.
      */
     public void initialiser() {
-        listePion.clear();
-        NotationManoury.getInstance().viderNotations();
+        viderDamierSansNoms();
         for (int i = 1; i <= 20; i++) {
             listePion.put(i, new Pion(CouleurPion.NOIR));
         }
@@ -219,16 +218,23 @@ public class Damier {
     }
 
     /**
-     * Vide le damier de pions
+     * Vide le damier de pions sans modifier les noms
      */
-    public void viderDamier() {
+    public void viderDamierSansNoms() {
         listePion.clear();
         etatJeu = EtatJeu.ENCOURS;
         tourAuBlanc = true;
         enleverSelection();
+        NotationManoury.getInstance().viderNotations();
+    }
+
+    /**
+     * Vide le damier de pions et réinitialise les noms
+     */
+    public void viderDamier() {
+        viderDamierSansNoms();
         nomBlanc = "Blanc";
         nomNoir = "Noir";
-        NotationManoury.getInstance().viderNotations();
     }
 
     /**

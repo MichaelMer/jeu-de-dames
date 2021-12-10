@@ -46,7 +46,7 @@ public class DamierFragment extends Fragment {
 
         btn_recommencer.setOnClickListener(v -> {
             damier.initialiser();
-            rafraichirAffichage();
+            rafraichirJeu();
         });
 
         btn_notation.setOnClickListener(v -> {
@@ -104,13 +104,13 @@ public class DamierFragment extends Fragment {
             txt_joueur.setText(getString(R.string.txt_tour_joueur, damier.getJoueurCourant(),
                     damier.getTourActuel().toString().toLowerCase()));
         }
+        Log.d("Tour", damier.getTourActuel().toString());
          if (damier.getNombrePion() <= 0) {
            damier.initialiser();
         }
 
         activerBoutons();
         initialiserPions();
-
         enleverPrise();
     }
 
@@ -201,7 +201,6 @@ public class DamierFragment extends Fragment {
         mouvements.add(pionActuel);
 
         if (mouvements.contains(0)) return;
-
         //Log.d("pion", pionActuel + "");
         //Log.d("mouv", mouvements.toString());
 

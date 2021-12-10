@@ -386,6 +386,9 @@ public class TestDamier {
         damier.setNomNoir("2");
         assertEquals("2", damier.getNomNoir());
         assertEquals("1", damier.getNomBlanc());
+        damier.viderDamierSansNoms();
+        assertEquals("2", damier.getNomNoir());
+        assertEquals("1", damier.getNomBlanc());
         damier.viderDamier();
         assertEquals("Noir", damier.getNomNoir());
         assertEquals("Blanc", damier.getNomBlanc());

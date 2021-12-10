@@ -49,8 +49,8 @@ public class NomJoueurFragment extends Fragment {
             }
         });
         // À enlever(pour skipper le menu)
-        Intent intent = DamierActivity.newIntent(getActivity());
-        startActivity(intent);
+//        Intent intent = DamierActivity.newIntent(getActivity());
+//        startActivity(intent);
         return view;
     }
 
