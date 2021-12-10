@@ -103,8 +103,7 @@ public class NotationManoury {
     public void retournerArriere(int positionNotation) {
         ArrayList<String> nouvelleListe = new ArrayList<>();
 
-        if (positionNotation == 0) {
-            Damier.getInstance().initialiser();
+        if (positionNotation <= 0) {
             return;
         }
 

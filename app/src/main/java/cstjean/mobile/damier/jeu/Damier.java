@@ -146,7 +146,6 @@ public class Damier {
      */
     public ArrayList<Integer> getPositionsPionsCouleur(CouleurPion couleur) {
         ArrayList<Integer> liste = new ArrayList<>(15);
-
         for (int index : listePion.keySet()) {
             if (listePion.get(index) != null ) {
                 if (Objects.requireNonNull(listePion.get(index)).getCouleur().equals(couleur)) {
@@ -154,7 +153,6 @@ public class Damier {
                 }
             }
         }
-
         return liste;
     }
 
@@ -280,11 +278,12 @@ public class Damier {
         } else if (estMauvaiseDirectionPion(position, index)) {
             if (listePion.get(position) == null) {
                 return resultat;
+            } else if (estAuLimite(position, index)) {
+                return resultat;
             } else {
                 if (Objects.requireNonNull(listePion.get(position)).getCouleur() !=
                     Objects.requireNonNull(listePion.get(positionPionSelectionner)).getCouleur()) {
-                    if (listePion.get(position + getSuiteMouvement(position)[index]) == null &&
-                        estAuLimite(position + getSuiteMouvement(position)[index], index)) {
+                    if (listePion.get(position + getSuiteMouvement(position)[index]) == null) {
                         resultat.add(position + getSuiteMouvement(position)[index]);
                     }
                 }
@@ -382,12 +381,10 @@ public class Damier {
     public void bougerPionSelectionner(int nouvellePosition) {
         if (estPionSelectionner &&
                 etatJeu == EtatJeu.ENCOURS &&
-                verifierTours()) {
+                verifierTours() &&
+                listePion.get(positionPionSelectionner) != null) {
             boolean aPrise = false;
             Pion pion = listePion.get(positionPionSelectionner);
-            if (pion == null) {
-                return;
-            }
             listePion.remove(positionPionSelectionner);
             for (int i = 0; i <= 3; i++) {
                 if (regarderBranche(nouvellePosition, positionPionSelectionner, i)) {
