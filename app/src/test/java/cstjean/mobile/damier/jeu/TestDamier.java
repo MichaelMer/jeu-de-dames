@@ -364,6 +364,19 @@ public class TestDamier {
         damier.enleverSelection();
     }
 
+    @Test
+    public void testSelectionLimiteArriere(){
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.ajouterPion(20, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(25, new Pion(CouleurPion.NOIR));
+        resultat.add(14);
+        resultat.add(15);
+        damier.selectionnerPion(20);
+        assertEquals(resultat, damier.getMouvementDispoPion());
+
+    }
+
     /**
      * Test pour les noms par defaut des joueurs.
      */
@@ -468,12 +481,66 @@ public class TestDamier {
         assertEquals(TypePion.DAME, damier.getPion(2).getType());
     }
 
+    /**
+     * Test pour bouger un pion sans le selectionner.
+     */
     @Test
-    public void testbougerNull(){
+    public void testBougerNull(){
         Damier damier = Damier.getInstance();
-
         damier.bougerPionSelectionner(2);
         assertNull(damier.getPion(2));
+    }
+
+    /**
+     * Test pour le joueur courant.
+     */
+    @Test
+    public void testTourCourant() {
+        Damier damier = Damier.getInstance();
+        damier.initialiser();
+        assertEquals(CouleurPion.BLANC, damier.getTourActuel());
+        damier.selectionnerPion(34);
+        damier.bougerPionSelectionner(29);
+        assertEquals(CouleurPion.NOIR, damier.getTourActuel());
+    }
+
+    /**
+     * Test pour avoir la postion du pion selectionner.
+     */
+    @Test
+    public void testPositionPionSlectionner(){
+        Damier damier = Damier.getInstance();
+        damier.ajouterPion(38, new Pion(CouleurPion.BLANC));
+        damier.selectionnerPion(38);
+        assertEquals(38, damier.getPositionPionSelectionner());
+    }
+
+    /**
+     * Test pour avoir la position de tout les pions.
+     */
+    @Test
+    public void testGetPositionsPions() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.ajouterPion(38, new Pion(CouleurPion.BLANC));
+        resultat.add(38);
+        assertEquals(resultat, damier.getPositionsPions());
+    }
+
+    /**
+     * Test pour avoir la postion de tout les pions d'une certaine couleur.
+     */
+    @Test
+    public void testGetPositionsPionsCouleur() {
+        Damier damier = Damier.getInstance();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        damier.ajouterPion(38, new Pion(CouleurPion.BLANC));
+        damier.ajouterPion(42, new Pion(CouleurPion.NOIR));
+        resultat.add(38);
+        assertEquals(resultat, damier.getPositionsPionsCouleur(CouleurPion.BLANC));
+        resultat.clear();
+        resultat.add(42);
+        assertEquals(resultat, damier.getPositionsPionsCouleur(CouleurPion.NOIR));
     }
 }
 

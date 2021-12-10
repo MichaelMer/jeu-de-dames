@@ -116,4 +116,16 @@ public class TestNotationManoury {
         assertEquals(1, NotationManoury.getInstance().getNbNotation());
         assertEquals("33x17", NotationManoury.getInstance().getNotation(1));
     }
+
+    /**
+     * Test pour les de position de notation invalide.
+     */
+    @Test
+    public void tesNotationIndexNonValide() {
+        NotationManoury notationManoury = NotationManoury.getInstance();
+        notationManoury.ajouterNotation(false, 12,17,false);
+        assertEquals(1, notationManoury.getNbNotation());
+        notationManoury.retournerArriere(0);
+        assertEquals(1,notationManoury.getNbNotation());
+    }
 }
