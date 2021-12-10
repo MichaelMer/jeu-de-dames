@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Damier</string>
-    <string name="msg_erreur_nom_vide">un joueur ne pas avoir un nom vide</string>
-    <string name="msg_erreur_nom_identique">Les deux nom sont identiques</string>
+    <string name="nom_jeu">Super Jeu de Dames!</string>
+    <string name="msg_erreur_nom_vide">Un joueur ne doit pas avoir un nom vide</string>
+    <string name="msg_erreur_nom_identique">Les deux noms sont identiques</string>
     <string name="txt_nom_joueur1">Entrer le nom du premier joueur</string>
     <string name="txt_nom_joueur2">Entrer le nom du deuxième joueur</string>
     <string name="btn_commencer_partie">Commencer</string>

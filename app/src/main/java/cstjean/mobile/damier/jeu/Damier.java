@@ -13,28 +13,45 @@ import java.util.Objects;
  */
 public class Damier {
 
+    /** L'instance du damier. */
     private static Damier instance = null;
-    /**
-     * Liste de pion du damier.
-     */
+
+    /** Liste de pion du damier. */
     private final Map<Integer, Pion> listePion;
+
+    /** Enum de l'état du jeu actuel. */
     private EtatJeu etatJeu = EtatJeu.ENCOURS;
+
+    /** Enum de l'état du jeu actuel. */
     private boolean tourAuBlanc = true;
+
+    /** Nom du joueur avec pions blancs. */
     private String nomBlanc = "Blanc";
+
+    /** Nom du joueur avec pions noirs. */
     private String nomNoir = "Noir";
 
+    /** Si un pion est sélectionné. */
     private boolean estPionSelectionner = false;
+
+    /** Position du pion sélectionné. */
     private int positionPionSelectionner = 0;
+
+    /** Liste des mouvements disponibles pour un pion. */
     private final ArrayList<Integer> mouvementDispoPion = new ArrayList<>();
 
-
     /**
-     * Constructeur.
+     * Constructeur du damier.
      */
     private Damier() {
         listePion = new LinkedHashMap<>();
     }
 
+    /**
+     * Récupère l'instance du damier.
+     *
+     * @return L'instance du damier.
+     */
     public static Damier getInstance() {
         if (instance == null) {
             instance = new Damier();
@@ -43,73 +60,73 @@ public class Damier {
     }
 
     /**
-     * retourne le nombre de pion sur le damier.
+     * Retourne le nombre de pion sur le damier.
      *
-     * @return le nombre de pio sur le damier.
+     * @return le nombre de pions sur le damier.
      */
     public int getNombrePion() {
         return listePion.size();
     }
 
     /**
-     * change le nom du joueur pour les blancs
+     * Modifie le nom du joueur pour les blancs.
      *
-     * @param nomBlanc ne nouveau nom
+     * @param nomBlanc Le nouveau nom.
      */
     public void setNomBlanc(String nomBlanc) {
         this.nomBlanc = nomBlanc;
     }
 
     /**
-     * change le nom du joueur pour les noirs
+     * Modifie le nom du joueur pour les noirs.
      *
-     * @param nomNoir ne nouveau nom
+     * @param nomNoir Le nouveau nom.
      */
     public void setNomNoir(String nomNoir) {
         this.nomNoir = nomNoir;
     }
 
     /**
-     * getter pour le nom du joueur pour les blancs
+     * Obtiens le nom du joueur des blancs.
      *
-     * @return le nom du joueur pour les blancs
+     * @return le nom du joueur pour les blancs.
      */
     public String getNomBlanc() {
         return nomBlanc;
     }
 
     /**
-     * getter pour le nom du joueur pour les noirs
+     * Obtiens le nom du joueur des noirs.
      *
-     * @return le nom du joueur pour les noirs
+     * @return le nom du joueur pour les noirs.
      */
     public String getNomNoir() {
         return nomNoir;
     }
 
     /**
-     * getter pour les mouvement pour le pion qui est selectionner
+     * Obtiens les mouvements disponibles pour le pion selectionné.
      *
-     * @return les mouvement possible
+     * @return les mouvements possibles.
      */
     public ArrayList<Integer> getMouvementDispoPion() {
         return mouvementDispoPion;
     }
 
     /**
-     * getter pour l'etat courant du jeu
+     * Obtiens l'état courant du jeu.
      *
-     * @return l'etat du jeu
+     * @return l'état du jeu.
      */
     public EtatJeu getEtatJeu() {
         return etatJeu;
     }
 
     /**
-     * donne le nombre de pions qui on une certaine couleur.
+     * Obtiens le nombre de pions qui ont une couleur spécifiée.
      *
      * @param couleur la couleur des pions.
-     * @return le nombre de pion de la couleur
+     * @return le nombre de pions de cetter couleur.
      */
     public int getNbPionParCouleur(CouleurPion couleur) {
         int nbPion = 0;
@@ -122,16 +139,18 @@ public class Damier {
     }
 
     /**
-     * Retourne la position du pion sélectionné
-     * @return la position du pion sélectionné
+     * Retourne la position du pion sélectionné.
+     *
+     * @return la position du pion sélectionné.
      */
     public int getPositionPionSelectionner() {
         return positionPionSelectionner;
     }
 
     /**
-     * Obtiens les positions de tous les pions
-     * @return ArrayList de toutes les positions
+     * Obtiens les positions de tous les pions.
+     *
+     * @return ArrayList de toutes les positions.
      */
     public ArrayList<Integer> getPositionsPions() {
         ArrayList<Integer> liste = new ArrayList<>(30);
@@ -140,14 +159,15 @@ public class Damier {
     }
 
     /**
-     * Obtiens les positions des pions d'une couleur donnée
-     * @param couleur CouleurPion, la couleur des pions
-     * @return ArrayList des positions
+     * Obtiens les positions des pions d'une couleur donnée.
+     *
+     * @param couleur CouleurPion, la couleur des pions.
+     * @return ArrayList des positions.
      */
     public ArrayList<Integer> getPositionsPionsCouleur(CouleurPion couleur) {
         ArrayList<Integer> liste = new ArrayList<>(15);
         for (int index : listePion.keySet()) {
-            if (listePion.get(index) != null ) {
+            if (listePion.get(index) != null) {
                 if (Objects.requireNonNull(listePion.get(index)).getCouleur().equals(couleur)) {
                     liste.add(index);
                 }
@@ -157,8 +177,9 @@ public class Damier {
     }
 
     /**
-     * Getter du tour actuel (blanc ou noir)
-     * @return CouleurPion
+     * Obtiens la couleur des pions du tour actuel (blanc ou noir).
+     *
+     * @return CouleurPion CouleurPion.BLANC ou CouleurPion.NOIR
      */
     public CouleurPion getTourActuel() {
         if (tourAuBlanc) {
@@ -168,11 +189,10 @@ public class Damier {
         }
     }
 
-
     /**
-     * getter pour avoir le joueur courant
+     * Obtiens le nom du joueur courant.
      *
-     * @return le nom du joueur a qui ses le tours
+     * @return string du nom du joueur.
      */
     public String getJoueurCourant() {
         if (tourAuBlanc) {
@@ -183,13 +203,23 @@ public class Damier {
     }
 
     /**
-     * retourne le pion a la place spécifier.
+     * Retourne le pion à la position spécifiée.
      *
-     * @param index la case où se situe le pions.
+     * @param index la case où se situe le pion.
      * @return le pion sur la case.
      */
     public Pion getPion(int index) {
         return listePion.get(index);
+    }
+
+    /**
+     * Retourne vrai si le pion à l'index donné est une dame.
+     *
+     * @param index la case où se situe le pion.
+     * @return Vrai si le pion est une dame.
+     */
+    public Boolean getPionEstDame(int index) {
+        return Objects.requireNonNull(listePion.get(index)).getType() == TypePion.DAME;
     }
 
     /**
@@ -216,7 +246,7 @@ public class Damier {
     }
 
     /**
-     * Vide le damier de pions sans modifier les noms
+     * Vide le damier de pions sans modifier les noms.
      */
     public void viderDamierSansNoms() {
         listePion.clear();
@@ -227,7 +257,7 @@ public class Damier {
     }
 
     /**
-     * Vide le damier de pions et réinitialise les noms
+     * Vide le damier de pions et réinitialise les noms.
      */
     public void viderDamier() {
         viderDamierSansNoms();
@@ -236,9 +266,9 @@ public class Damier {
     }
 
     /**
-     * Selectionne les mouvement disponible pour le pion.
+     * Selectionne les mouvements disponibles pour le pion.
      *
-     * @param position la position du pion sélectionné
+     * @param position la position du pion sélectionné.
      */
     public void selectionnerPion(int position) {
         if (listePion.get(position) != null) {
@@ -250,10 +280,10 @@ public class Damier {
     }
 
     /**
-     * Cherche les mouvements possible.
+     * Cherche les mouvements possible d'un pion donné.
      *
-     * @param position la position du pion sélectionné
-     * @return un liste des mouvements disponibles
+     * @param position la position du pion sélectionné.
+     * @return un liste des mouvements disponibles.
      */
     private ArrayList<Integer> chercherMovement(int position) {
         ArrayList<Integer> resultat = new ArrayList<>();
@@ -265,11 +295,11 @@ public class Damier {
     }
 
     /**
-     * Donne le mouvement selon la suite de mouvement.
+     * Obtiens le mouvement selon la suite de mouvements.
      *
-     * @param index    l'index de la liste de mouvement
-     * @param position la position du pion sélectionné
-     * @return le nouveaux mouvement si possible sinon la position du pion
+     * @param index    l'index de la liste de mouvement.
+     * @param position la position du pion sélectionné.
+     * @return ArrayList contenant les mouvements si possible, sinon la position du pion.
      */
     private ArrayList<Integer> getMouvement(int index, int position) {
         ArrayList<Integer> resultat = new ArrayList<>();
@@ -318,38 +348,41 @@ public class Damier {
     }
 
     /**
-     * regarde si la position donner est en arriere du pion
+     * Vérifie si la position donnée est en arrière du pion.
      *
-     * @param position la position a verifier
-     * @param index    l'index pour la direction dans la suite de mouvement
-     * @return true si la position est en arriere du pion
+     * @param position la position à verifier.
+     * @param index    l'index pour la direction dans la suite de mouvement.
+     * @return true si la position est en arriêre du pion.
      */
     public boolean estMauvaiseDirectionPion(int position, int index) {
         if (position == positionPionSelectionner) {
             return false;
-        } else if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).getType() ==
-                TypePion.DAME) {
+        } else if (getPionEstDame(positionPionSelectionner)) {
             return false;
         } else if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
                 index < 2) {
             return true;
-        } else return !Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
-                index >= 2;
+        } else {
+            return !Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
+                    index >= 2;
+        }
     }
 
     /**
-     * Regarde si la position est au limite du jeu.
+     * Vérifie si la position est aux limites de jeu.
      *
-     * @param index    l'index de la liste de mouvement
-     * @param position la position du pion sélectionné
-     * @return oui si le pion est au limite du jeu
+     * @param index    l'index de la liste de mouvement.
+     * @param position la position du pion sélectionné.
+     * @return true si le pion est au limite du jeu.
      */
     public boolean estAuLimite(int position, int index) {
         if (position % 10 == 6 && index == 0 || position % 10 == 6 && index == 2 ||
                 position % 10 == 5 && index == 1 || position % 10 == 5 && index == 3) {
             return true;
-        } else return position >= 1 && position <= 5 && index < 2 ||
+        } else {
+            return position >= 1 && position <= 5 && index < 2 ||
                 position >= 46 && position <= 50 && index >= 2;
+        }
     }
 
     /**
@@ -357,10 +390,10 @@ public class Damier {
      *
      * @param position La position du pion sélectionné.
      * @return Une liste des nombre à additonner selon leur directions:
-     * 0: haut droit
-     * 1: haut gauche
-     * 2: bas droit
-     * 3: bas gauche
+     *      0: haut droit
+     *      1: haut gauche
+     *      2: bas droit
+     *      3: bas gauche
      */
     private int[] getSuiteMouvement(int position) {
         if (position % 10 <= 5 && position % 10 > 0) {
@@ -371,7 +404,7 @@ public class Damier {
     }
 
     /**
-     * Enlève la selection d'un pion.
+     * Enlève la sélection du pion.
      */
     public void enleverSelection() {
         mouvementDispoPion.clear();
@@ -380,21 +413,21 @@ public class Damier {
     }
 
     /**
-     * bouge le pion selectionner à la position donné
+     * Déplace le pion selectionné à la position donné.
      *
-     * @param nouvellePosition la nouvlle position du pion
+     * @param nouvellePosition la nouvelle position du pion.
      */
     public void bougerPionSelectionner(int nouvellePosition) {
         if (estPionSelectionner &&
                 etatJeu == EtatJeu.ENCOURS &&
                 verifierTours() &&
                 listePion.get(positionPionSelectionner) != null) {
-            boolean aPrise = false;
+            boolean unePrise = false;
             Pion pion = listePion.get(positionPionSelectionner);
             listePion.remove(positionPionSelectionner);
             for (int i = 0; i <= 3; i++) {
                 if (regarderBranche(nouvellePosition, positionPionSelectionner, i)) {
-                    aPrise = supprimerPion(nouvellePosition, i);
+                    unePrise = supprimerPion(nouvellePosition, i);
                     listePion.put(nouvellePosition, pion);
                     break;
                 }
@@ -402,7 +435,7 @@ public class Damier {
             NotationManoury.getInstance().ajouterNotation(pion.estNoir(),
                     positionPionSelectionner,
                     nouvellePosition,
-                    aPrise);
+                    unePrise);
             changerPion(nouvellePosition);
             changerTour();
             positionPionSelectionner = nouvellePosition;
@@ -412,8 +445,9 @@ public class Damier {
     }
 
     /**
-     * Change les pions en damier si il sont a bout du damier.
-     * @param position positon a verifer
+     * Modifie le pion en dame s'il a atteint la rangée au fond du damier.
+     *
+     * @param position position à verifer.
      */
     private void changerPion(int position) {
         if (position >= 46 && position <= 50 &&
@@ -428,12 +462,12 @@ public class Damier {
     }
 
     /**
-     * fonction qui regarde si la postion demmander fait partie de cet direction
+     * Fonction qui vérifie si la position demandée fait partie de cette direction.
      *
-     * @param positionAtrouver la poisiton a trouver
-     * @param positionActuel   la postion actuel
-     * @param index            l'index pour la direction dans la suite de mouvement
-     * @return true si la position fait parti de cet branche
+     * @param positionAtrouver la position à trouver.
+     * @param positionActuel   la position actuelle.
+     * @param index            l'index pour la direction dans la suite de mouvement.
+     * @return true si la position fait partie de cette branche.
      */
     private boolean regarderBranche(int positionAtrouver, int positionActuel, int index) {
         if (positionActuel == positionAtrouver) {
@@ -448,28 +482,28 @@ public class Damier {
     }
 
     /**
-     * supprimer les pion dans le chemin
+     * Supprime les pions dans le chemin.
      *
-     * @param positionaArreter la position a arreter
-     * @param index            l'index pour la direction dans la suite de mouvement
+     * @param positionaArreter la position à arreter.
+     * @param index            l'index pour la direction dans la suite de mouvement.
      */
     private boolean supprimerPion(int positionaArreter, int index) {
-        boolean aPrise = false;
+        boolean unePrise = false;
         int positionActuel =
                 positionPionSelectionner + getSuiteMouvement(positionPionSelectionner)[index];
         while (positionaArreter != positionActuel) {
             if (listePion.get(positionActuel) != null) {
-                aPrise = true;
+                unePrise = true;
                 listePion.remove(positionActuel);
             }
 
             positionActuel = positionActuel + getSuiteMouvement(positionActuel)[index];
         }
-        return aPrise;
+        return unePrise;
     }
 
     /**
-     * Verifier l'etat du jeu.
+     * Verifier l'état du jeu.
      */
     public void verfigerEtatJeu() {
         boolean aucunBlanc = true;
@@ -506,21 +540,24 @@ public class Damier {
     }
 
     /**
-     * Change se le tour a qui.
+     * Change le tour actuel du jeu.
      */
     private void changerTour() {
         tourAuBlanc = !tourAuBlanc;
     }
 
     /**
-     * Verifie si le pion selectionner est de la bonne couleur pour le tours.
-     * @return true si il est de la meme couleur
+     * Verifie si le pion sélectionner est de la bonne couleur pour le tour.
+     *
+     * @return true s'il est de la même couleur.
      */
     private boolean verifierTours() {
         if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
                 !tourAuBlanc) {
             return true;
-        } else return !Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
+        } else {
+            return !Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
                 tourAuBlanc;
+        }
     }
 }

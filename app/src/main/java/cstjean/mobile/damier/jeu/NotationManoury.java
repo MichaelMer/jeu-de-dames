@@ -4,18 +4,24 @@ import java.util.ArrayList;
 
 /**
  * Classe pour les notations manoury.
+ *
+ * @author Xavier Gagnon
+ * @author Michaël Mercier
  */
 public class NotationManoury {
+
     /**
-     * instance de NotationManoury
+     * instance de NotationManoury.
      */
     private static NotationManoury instance = null;
+
     /**
-     * liste des notations manoury
+     * liste des notations manoury.
      */
     private ArrayList<String> listeManoury;
+
     /**
-     * le jeu de Damier
+     * le jeu de Damier.
      */
     private final Damier damier;
 
@@ -28,7 +34,7 @@ public class NotationManoury {
     }
 
     /**
-     * getter pour l'instance
+     * Getter pour l'instance.
      *
      * @return l'instance de NotationManoury
      */
@@ -77,7 +83,7 @@ public class NotationManoury {
     }
 
     /**
-     * Getter pour une notation
+     * Getter pour une notation.
      *
      * @param positionNotation la notation a retourner
      * @return la notation selon la position demmander
@@ -87,7 +93,7 @@ public class NotationManoury {
     }
 
     /**
-     * Getter pour le nombre de notations
+     * Getter pour le nombre de notations.
      *
      * @return le nombre de notation
      */
@@ -96,9 +102,9 @@ public class NotationManoury {
     }
 
     /**
-     * Faire un retour en arriere a un ancien etat du jeu
+     * Faire un retour à un ancien état de jeu.
      *
-     * @param positionNotation la position a recommencer a jouer
+     * @param positionNotation la position pour recommencer à jouer.
      */
     public void retournerArriere(int positionNotation) {
         ArrayList<String> nouvelleListe = new ArrayList<>();
@@ -115,11 +121,11 @@ public class NotationManoury {
     }
 
     /**
-     * rafraichi le jeu selon les notations manoury
+     * Rafraichi le jeu selon les notations manoury.
      */
     public void rafraichirJeu() {
         ArrayList<String> ancienneListe = new ArrayList<>(listeManoury);
-        damier.viderDamier();
+        damier.viderDamierSansNoms();
         damier.initialiser();
 
         for (String notation : ancienneListe) {
@@ -136,10 +142,10 @@ public class NotationManoury {
     }
 
     /**
-     * Converti les carateres en nombre.
+     * Converti les caractères en nombre.
      *
      * @param positionDizane nombre pour les dizaines
-     * @param positionUnite  nombre pour les unite
+     * @param positionUnite  nombre pour les unités
      * @return le nombre converti
      */
     private int convertirCharEnNombre(char positionDizane, char positionUnite) {

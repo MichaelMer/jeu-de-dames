@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintDamier"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/constraintDamier"
     android:gravity="center"
-    android:orientation="horizontal"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@drawable/background"
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tour_joueur"
+    <Button
+        android:id="@+id/btn_afficher_Notation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        tools:text="C'est le tour à nom_joueur"
+        android:text="@string/btn_notation"
+        android:theme="@style/Bouton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/txt_message_victoire"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_boutons" />
+
+    <TextView
+        android:id="@+id/txt_tour_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/grid_boutons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="C'est le tour à nom_joueur" />
 
     <GridLayout
         android:id="@+id/grid_boutons"
@@ -26,6 +39,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/txt_message_victoire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_boutons"
+        tools:text="joueur X à gagner" />
+
+    <Button
+        android:id="@+id/btn_recommencer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_recommencer"
+        android:theme="@style/Bouton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_message_victoire"
+        app:layout_constraintTop_toBottomOf="@+id/grid_boutons" />
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

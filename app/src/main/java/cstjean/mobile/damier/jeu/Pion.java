@@ -59,6 +59,11 @@ public class Pion {
         return 'p';
     }
 
+    /**
+     * Retourne le type de pion qu'est un pion.
+     *
+     * @return Enum TypePion.PION
+     */
     public TypePion getType() {
         return TypePion.PION;
     }

@@ -364,6 +364,9 @@ public class TestDamier {
         damier.enleverSelection();
     }
 
+    /**
+     * Test si le pion est bel et bien au limites du damier
+     */
     @Test
     public void testSelectionLimiteArriere(){
         Damier damier = Damier.getInstance();

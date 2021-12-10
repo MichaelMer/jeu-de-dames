@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Bureau/MOB_TP/app/src/main/res/layout/fragment_damier.xml" value="0.15648148148148147" />
+        <entry key="..\:/Bureau/MOB_TP/app/src/main/res/layout-land/fragment_damier.xml" value="0.1" />
+        <entry key="..\:/Bureau/MOB_TP/app/src/main/res/layout-land/fragment_nom_joueur.xml" value="0.1484375" />
+        <entry key="..\:/Bureau/MOB_TP/app/src/main/res/layout/fragment_damier.xml" value="0.22" />
+        <entry key="..\:/Bureau/MOB_TP/app/src/main/res/layout/fragment_nom_joueur.xml" value="0.25" />
         <entry key="..\:/Users/1846117/Desktop/tp/damier/app/src/main/res/layout/fragment_damier.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/1954491/Desktop/damier/app/src/main/res/layout-land/fragment_damier.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/1954491/Desktop/damier/app/src/main/res/layout/fragment_damier.xml" value="0.17831813576494426" />

@@ -4,6 +4,7 @@ package cstjean.mobile.damier.jeu;
  * Classe pour les pions de dames.
  *
  * @author Xavier Gagnon
+ * @author Michaël Mercier
  */
 public class Dame extends Pion {
     /**
@@ -36,7 +37,8 @@ public class Dame extends Pion {
     }
 
     /**
-     * Getter pour le type des dames
+     * Getter pour le type des dames.
+     *
      * @return Enum de TypePion pour les dames
      */
     @Override

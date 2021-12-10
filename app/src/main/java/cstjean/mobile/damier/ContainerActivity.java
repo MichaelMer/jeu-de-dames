@@ -5,10 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+/**
+ * Activity qui agira à titre de conteneur, il contiendra qu'un seul Fragment.
+ *
+ * @author Xavier Gagnon
+ * @author Michaël Mercier
+ */
 public abstract class ContainerActivity extends AppCompatActivity {
 
     /**
-     * Création du fragment pour associer à l'Activity
+     * Création du fragment pour associer à l'Activity.
      *
      * @return un fragment à associer à l'Activity
      */

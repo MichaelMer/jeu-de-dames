@@ -1,17 +1,21 @@
 package cstjean.mobile.damier;
 
-import androidx.fragment.app.Fragment;
-
 import android.content.Context;
 import android.content.Intent;
+import androidx.fragment.app.Fragment;
 
 /**
- * Activity pour les notations manoury
+ * Activity pour les notations Manoury.
+ *
+ * @author Xavier Gagnon
+ * @author Michaël Mercier
  */
 public class NotationManouryActivity extends ContainerActivity {
+
     /**
-     *Créer le fragment.
-     * @return le fragment créer
+     * Pour créer un fragment associé à la notation Manoury.
+     *
+     * @return un fragment pour la notation Manoury.
      */
     @Override
     protected Fragment createFragment() {
@@ -19,11 +23,12 @@ public class NotationManouryActivity extends ContainerActivity {
     }
 
     /**
-     * Donne l'intent à utilisé pour afficher l'activity.
-     * @param packageContext le context à utiliser
-     * @return l'intent à utiliser
+     * Donne l'intent à utiliser pour afficher l'activity.
+     *
+     * @param packageContext le context à utiliser.
+     * @return l'intent à utiliser.
      */
-    public static Intent newIntent(Context packageContext){
+    public static Intent newIntent(Context packageContext) {
         return new Intent(packageContext, NotationManouryActivity.class);
     }
 }

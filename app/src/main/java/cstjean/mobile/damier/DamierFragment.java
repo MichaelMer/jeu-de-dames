@@ -2,10 +2,8 @@ package cstjean.mobile.damier;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,99 +12,122 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
-
 import cstjean.mobile.damier.jeu.CouleurPion;
 import cstjean.mobile.damier.jeu.Damier;
 import cstjean.mobile.damier.jeu.EtatJeu;
-import cstjean.mobile.damier.jeu.NotationManoury;
+import java.util.ArrayList;
 
+/**
+ * Fragment pour le jeu de dame.
+ *
+ * @author Xavier Gagnon
+ * @author Michaël Mercier
+ */
 public class DamierFragment extends Fragment {
-    GridLayout gridBoutons;
-    private final Damier damier = Damier.getInstance();
-    private TextView txt_joueur;
-    private TextView txt_gagnant;
-    private Button btn_notation;
-    private ArrayList<Integer> listeAnciensPions = new ArrayList<>();
-    private final int COULEUR_BLANC = Color.rgb(244, 208, 165);
-    private final int COULEUR_NOIR = Color.rgb(195, 141, 83);
 
+    /** Le gridLayout des boutons. */
+    private GridLayout gridBoutons;
+
+    /** L'instance du jeu de dames. */
+    private final Damier damier = Damier.getInstance();
+
+    /** Le TextView du tour du joueur. */
+    private TextView txtJoueur;
+
+    /** Le TextView du joueur ayant gagné. */
+    private TextView txtGagnant;
+
+    // À mettre dans le damier → Logique ne va pas dans l'activity
+    /** La liste des anciens pions. */
+    private ArrayList<Integer> listeAnciensPions = new ArrayList<>();
+
+    /** La couleur des cases noires. */
+    private final int couleurNoir = Color.rgb(195, 141, 83);
+
+    /**
+     * Instanciation de l'interface du jeu de dame.
+     *
+     * @param inflater Pour instancier l'interface.
+     * @param container Le parent qui contiendra l'interface.
+     * @param savedInstanceState Les données conservées au changement d'état.
+     * @return La vue.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_damier, container, false);
-
-        txt_joueur = view.findViewById(R.id.txt_tour_joueur);
-        txt_gagnant = view.findViewById(R.id.txt_message_victoire);
-        Button btn_recommencer = view.findViewById(R.id.btn_recommencer);
-        btn_notation = view.findViewById(R.id.btn_afficher_Notation);
-
-        btn_recommencer.setOnClickListener(v -> {
-            damier.initialiser();
-            rafraichirJeu();
-        });
-
-        btn_notation.setOnClickListener(v -> {
-            Intent intent = NotationManouryActivity.newIntent(getActivity());
-            startActivity(intent);
-        });
-
-        gridBoutons = view.findViewById(R.id.grid_boutons);
+        final int grosseur = 100;
         int position = 0;
+        View view = inflater.inflate(R.layout.fragment_damier, container, false);
+        txtJoueur = view.findViewById(R.id.txt_tour_joueur);
+        txtGagnant = view.findViewById(R.id.txt_message_victoire);
+        gridBoutons = view.findViewById(R.id.grid_boutons);
+        Button btnRecommencer = view.findViewById(R.id.btn_recommencer);
+        Button btnNotation = view.findViewById(R.id.btn_afficher_Notation);
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
 
                 ImageButton bouton = new ImageButton(this.getContext());
 
-                bouton.setPadding(8,8,8,8);
+                bouton.setPadding(8, 8, 8, 8);
                 bouton.setEnabled(false);
 
                 if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
-                    bouton.setBackgroundColor(COULEUR_NOIR);
+                    bouton.setBackgroundColor(couleurNoir);
                     position++;
                     bouton.setTag(position);
 
                 } else {
-                    bouton.setBackgroundColor(COULEUR_BLANC);
+                    bouton.setBackgroundColor(Color.rgb(244, 208, 165));
                 }
 
                 GridLayout.LayoutParams parametres = new GridLayout.LayoutParams();
-                int GROSSEUR = 100;
                 if (getOrientation()) {
-                    parametres.height = parametres.width = GROSSEUR;
+                    parametres.height = parametres.width = grosseur;
                 } else {
-                    parametres.height = parametres.width = (int) Math.abs(GROSSEUR * 0.65);
+                    parametres.height = parametres.width = (int) Math.abs(grosseur * 0.65);
                 }
                 bouton.setLayoutParams(parametres);
 
                 gridBoutons.addView(bouton);
             }
         }
+
+        btnRecommencer.setOnClickListener(v -> {
+            enleverArtefact();
+            damier.initialiser();
+            rafraichirJeu();
+        });
+
+        btnNotation.setOnClickListener(v -> {
+            Intent intent = NotationManouryActivity.newIntent(getActivity());
+            startActivity(intent);
+        });
+
         rafraichirJeu();
         return view;
     }
 
+    /**
+     * Rafraichît le jeu à chaque tour joué.
+     *      Vérifie si le jeu est toujours en cours,
+     *      Change le joueur, active les boutons, affiche les pions
+     */
     private void rafraichirJeu() {
-        //Log.d("État", damier.getEtatJeu().toString());
-
-        if(damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
-            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomBlanc()));
-            txt_joueur.setText(getString(R.string.vider));
+        if (damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
+            txtGagnant.setText(getString(R.string.txt_victoire, damier.getNomBlanc()));
+            txtJoueur.setText(getString(R.string.vider));
         } else if (damier.getEtatJeu() == EtatJeu.VICTOIRENOIR) {
-            txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomNoir()));
-            txt_joueur.setText(getString(R.string.vider));
+            txtGagnant.setText(getString(R.string.txt_victoire, damier.getNomNoir()));
+            txtJoueur.setText(getString(R.string.vider));
         } else {
-            txt_gagnant.setText(getString(R.string.vider));
-            txt_joueur.setText(getString(R.string.txt_tour_joueur, damier.getJoueurCourant(),
+            txtGagnant.setText(getString(R.string.vider));
+            txtJoueur.setText(getString(R.string.txt_tour_joueur, damier.getJoueurCourant(),
                     damier.getTourActuel().toString().toLowerCase()));
         }
-        Log.d("Tour", damier.getTourActuel().toString());
-         if (damier.getNombrePion() <= 0) {
-           damier.initialiser();
+        if (damier.getNombrePion() <= 0) {
+            damier.initialiser();
         }
 
         activerBoutons();
@@ -115,7 +136,7 @@ public class DamierFragment extends Fragment {
     }
 
     /**
-     * Initialise les pions sur les cases appropriés
+     * Initialise les pions sur les cases appropriés.
      */
     private void initialiserPions() {
         for (int index : damier.getPositionsPions()) {
@@ -123,14 +144,25 @@ public class DamierFragment extends Fragment {
             ImageButton bouton = gridBoutons.findViewWithTag(index);
 
             if (couleur == CouleurPion.NOIR) {
-                bouton.setImageResource(R.drawable.pion_noir);
+                if (damier.getPionEstDame(index)) {
+                    bouton.setImageResource(R.drawable.dame_noir);
+                } else {
+                    bouton.setImageResource(R.drawable.pion_noir);
+                }
             } else {
-                bouton.setImageResource(R.drawable.pion_blanc);
+                if (damier.getPionEstDame(index)) {
+                    bouton.setImageResource(R.drawable.dame_blanc);
+                } else {
+                    bouton.setImageResource(R.drawable.pion_blanc);
+                }
             }
             bouton.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 
+    /**
+     * Supprime les pions qui ont été "mangés" de l'affichage.
+     */
     private void enleverPrise() {
         for (int position : listeAnciensPions) {
             if (!damier.getPositionsPions().contains(position)) {
@@ -143,40 +175,34 @@ public class DamierFragment extends Fragment {
     }
 
     /**
-     * Affiche le pion sélectionné (en jaune) et affiche les cases disponibles (en bleu)
-     * Active les boutons des cases disponibles
+     * Affiche le pion sélectionné (en jaune) et affiche les cases disponibles (en bleu).
+     *      Active les boutons des cases disponibles
+     *
      * @param bouton Le pion sélectionné
      */
     private void caseAppuyee(ImageButton bouton) {
-        enleverArtefact();
+        int position = (int) bouton.getTag();
 
-        int position = (int)bouton.getTag();
+        enleverArtefact();
         damier.selectionnerPion(position);
         ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
 
         bouton.setBackgroundColor(Color.rgb(230, 184, 37));
 
-        if (mouvements.isEmpty()) return;
-        Log.d("Case Appuyée", damier.getPositionPionSelectionner() + "");
-        Log.d("Mouvements", mouvements.toString());
-
         for (int mouvement : mouvements) {
-            if (mouvement <= 0) {
-                continue;
-            }
             ImageButton caseDispo = gridBoutons.findViewWithTag(mouvement);
             caseDispo.setEnabled(true);
             caseDispo.setBackgroundColor(Color.rgb(13, 167, 209));
             caseDispo.setOnClickListener(v -> {
                 rafraichirAffichage();
-                damier.bougerPionSelectionner((int)caseDispo.getTag());
+                damier.bougerPionSelectionner((int) caseDispo.getTag());
                 rafraichirJeu();
             });
         }
     }
 
     /**
-     * Désactive tous les boutons et active les boutons du joueur actuel
+     * Désactive tous les boutons et active les boutons du joueur actuel.
      */
     private void activerBoutons() {
         for (int position : damier.getPositionsPions()) {
@@ -193,43 +219,46 @@ public class DamierFragment extends Fragment {
     }
 
     /**
-     * Affiche le pion sélectionné et ses mouvements disponibles
+     * Affiche le pion sélectionné et ses mouvements disponibles.
      */
     private void rafraichirAffichage() {
         int pionActuel = damier.getPositionPionSelectionner();
         ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
         mouvements.add(pionActuel);
 
-        if (mouvements.contains(0)) return;
-        //Log.d("pion", pionActuel + "");
-        //Log.d("mouv", mouvements.toString());
+        if (mouvements.contains(0)) {
+            return;
+        }
 
         for (int mouvement : mouvements) {
             ImageButton caseDispo = gridBoutons.findViewWithTag(mouvement);
             caseDispo.setImageResource(android.R.color.transparent);
-            caseDispo.setBackgroundColor(COULEUR_NOIR);
+            caseDispo.setBackgroundColor(couleurNoir);
             caseDispo.setEnabled(false);
         }
     }
 
     /**
-     * Supprime la case sélectionnée et les mouvements disponibles de l'ancien pion sélectionné
+     * Supprime la case sélectionnée et les mouvements disponibles de l'ancien pion sélectionné.
      */
     private void enleverArtefact() {
         for (int position : damier.getPositionsPionsCouleur(damier.getTourActuel())) {
             ImageButton pion = gridBoutons.findViewWithTag(position);
-            pion.setBackgroundColor(COULEUR_NOIR);
+            pion.setBackgroundColor(couleurNoir);
         }
         for (int position : damier.getMouvementDispoPion()) {
-            if (position == 0) return;
+            if (position == 0) {
+                return;
+            }
             ImageButton pion = gridBoutons.findViewWithTag(position);
-            pion.setBackgroundColor(COULEUR_NOIR);
+            pion.setBackgroundColor(couleurNoir);
             pion.setEnabled(false);
         }
     }
 
     /**
-     * Obtiens l'orientation de l'appareil
+     * Obtiens l'orientation de l'appareil.
+     *
      * @return Vrai si l'orientation est en mode portrait, sinon faux
      */
     private Boolean getOrientation() {
@@ -237,10 +266,12 @@ public class DamierFragment extends Fragment {
         return orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
+    /**
+     * Crée une nouvelle instance du Fragment du damier.
+     *
+     * @return une nouvelle instance
+     */
     public static DamierFragment newInstance() {
-        //Bundle bundle = new Bundle();
-        DamierFragment fragment = new DamierFragment();
-
-        return fragment;
+        return new DamierFragment();
     }
 }
