@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Damier">
         <activity
+            android:name=".NotationManouryActivity"
+            android:exported="false" />
+        <activity
             android:name=".DamierActivity"
             android:exported="true" />
         <activity

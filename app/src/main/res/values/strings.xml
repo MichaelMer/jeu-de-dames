@@ -10,4 +10,5 @@
     <string name="txt_victoire">%1$s à gagner!</string>
     <string name="btn_notation">Notation Manoury</string>
     <string name="txt_tour_joueur">Tour à: %1$s (%2$s)</string>
+    <string name="txt_titre_notation">Notations</string>
 </resources>

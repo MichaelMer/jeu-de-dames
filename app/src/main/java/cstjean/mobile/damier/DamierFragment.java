@@ -1,5 +1,6 @@
 package cstjean.mobile.damier;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 
 import android.graphics.Color;
@@ -21,9 +22,9 @@ import java.util.ArrayList;
 import cstjean.mobile.damier.jeu.CouleurPion;
 import cstjean.mobile.damier.jeu.Damier;
 import cstjean.mobile.damier.jeu.EtatJeu;
+import cstjean.mobile.damier.jeu.NotationManoury;
 
 public class DamierFragment extends Fragment {
-
     GridLayout gridBoutons;
     private final Damier damier = Damier.getInstance();
     private TextView txt_joueur;
@@ -46,6 +47,11 @@ public class DamierFragment extends Fragment {
         btn_recommencer.setOnClickListener(v -> {
             damier.initialiser();
             rafraichirAffichage();
+        });
+
+        btn_notation.setOnClickListener(v -> {
+            Intent intent = NotationManouryActivity.newIntent(getActivity());
+            startActivity(intent);
         });
 
         gridBoutons = view.findViewById(R.id.grid_boutons);
