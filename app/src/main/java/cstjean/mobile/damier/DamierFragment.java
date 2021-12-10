@@ -85,8 +85,9 @@ public class DamierFragment extends Fragment {
     }
 
     private void rafraichirJeu() {
+        //Log.d("État", damier.getEtatJeu().toString());
 
-       if(damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
+        if(damier.getEtatJeu() == EtatJeu.VICTOIREBLANC) {
             txt_gagnant.setText(getString(R.string.txt_victoire,damier.getNomBlanc()));
             txt_joueur.setText(getString(R.string.vider));
         } else if (damier.getEtatJeu() == EtatJeu.VICTOIRENOIR) {
@@ -94,12 +95,11 @@ public class DamierFragment extends Fragment {
             txt_joueur.setText(getString(R.string.vider));
         } else {
             txt_gagnant.setText(getString(R.string.vider));
-           txt_joueur.setText(getString(R.string.txt_tour_joueur, damier.getJoueurCourant(),
-                   damier.getTourActuel().toString().toLowerCase()));
+            txt_joueur.setText(getString(R.string.txt_tour_joueur, damier.getJoueurCourant(),
+                    damier.getTourActuel().toString().toLowerCase()));
         }
-
-        if (damier.getNombrePion() <= 0) {
-            damier.initialiser();
+         if (damier.getNombrePion() <= 0) {
+           damier.initialiser();
         }
 
         activerBoutons();
@@ -151,8 +151,13 @@ public class DamierFragment extends Fragment {
         bouton.setBackgroundColor(Color.rgb(230, 184, 37));
 
         if (mouvements.isEmpty()) return;
+        Log.d("Case Appuyée", damier.getPositionPionSelectionner() + "");
+        Log.d("Mouvements", mouvements.toString());
 
         for (int mouvement : mouvements) {
+            if (mouvement <= 0) {
+                continue;
+            }
             ImageButton caseDispo = gridBoutons.findViewWithTag(mouvement);
             caseDispo.setEnabled(true);
             caseDispo.setBackgroundColor(Color.rgb(13, 167, 209));
@@ -191,8 +196,8 @@ public class DamierFragment extends Fragment {
 
         if (mouvements.contains(0)) return;
 
-        Log.d("pion", pionActuel + "");
-        Log.d("mouv", mouvements.toString());
+        //Log.d("pion", pionActuel + "");
+        //Log.d("mouv", mouvements.toString());
 
         for (int mouvement : mouvements) {
             ImageButton caseDispo = gridBoutons.findViewWithTag(mouvement);
