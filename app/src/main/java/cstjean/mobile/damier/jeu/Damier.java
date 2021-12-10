@@ -283,7 +283,8 @@ public class Damier {
             } else {
                 if (Objects.requireNonNull(listePion.get(position)).getCouleur() !=
                     Objects.requireNonNull(listePion.get(positionPionSelectionner)).getCouleur()) {
-                    if (listePion.get(position + getSuiteMouvement(position)[index]) == null) {
+                    if (listePion.get(position + getSuiteMouvement(position)[index]) == null &&
+                        estAuLimite(position + getSuiteMouvement(position)[index], index)) {
                         resultat.add(position + getSuiteMouvement(position)[index]);
                     }
                 }
