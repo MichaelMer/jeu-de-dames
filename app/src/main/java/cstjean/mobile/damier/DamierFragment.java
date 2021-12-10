@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import cstjean.mobile.damier.jeu.CouleurPion;
@@ -33,6 +34,7 @@ public class DamierFragment extends Fragment {
     private TextView txt_gagnant;
     private Button btn_recommencer;
     private Button btn_notation;
+    private ArrayList<Integer> listeAnciensPions = new ArrayList<>();
     private final int COULEUR_BLANC = Color.rgb(244, 208, 165);
     private final int COULEUR_NOIR = Color.rgb(195, 141, 83);
 
@@ -74,10 +76,6 @@ public class DamierFragment extends Fragment {
                 }
                 bouton.setLayoutParams(parametres);
 
-                bouton.setOnClickListener(v -> {
-                    caseAppuyee(gridBoutons, bouton);
-                });
-
                 gridBoutons.addView(bouton);
             }
         }
@@ -95,9 +93,8 @@ public class DamierFragment extends Fragment {
             txt_joueur.setText(getString(R.string.vider));
         } else {
             txt_gagnant.setText(getString(R.string.vider));
-            txt_joueur.setText("C'est le tour à " + damier.getJoueurCourant() + " (" + damier.getTourActuel().toString().toLowerCase() + ")");
-
-           Log.d("yo", txt_joueur.getText().toString());
+            txt_joueur.setText("C'est le tour à " + damier.getJoueurCourant() + " (" +
+                    damier.getTourActuel().toString().toLowerCase() + ")");
         }
 
         if (damier.getNombrePion() <= 0) {
@@ -106,6 +103,8 @@ public class DamierFragment extends Fragment {
 
         activerBoutons(gridBoutons);
         initialiserPions(gridBoutons);
+
+        enleverPrise(gridBoutons);
     }
 
     /**
@@ -126,6 +125,17 @@ public class DamierFragment extends Fragment {
         }
     }
 
+    private void enleverPrise(GridLayout gridBoutons) {
+        for (int position : listeAnciensPions) {
+            if (!damier.getPositionsPions().contains(position)) {
+                ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
+                pion.setImageResource(android.R.color.transparent);
+            }
+        }
+
+        listeAnciensPions = damier.getPositionsPions();
+    }
+
     /**
      * Affiche le pion sélectionné (en jaune) et affiche les cases disponibles (en bleu)
      * Active les boutons des cases disponibles
@@ -139,13 +149,10 @@ public class DamierFragment extends Fragment {
         damier.selectionnerPion(position);
         ArrayList<Integer> mouvements = damier.getMouvementDispoPion();
 
-        Log.d("pionAvant", position + "");
-        if (mouvements.isEmpty()) return;
-        Log.d("pionApres",  "oui " + position);
-
         bouton.setBackgroundColor(Color.rgb(230, 184, 37));
 
-        // Surpasse le setOnClickListener de base
+        if (mouvements.isEmpty()) return;
+
         for (int mouvement : mouvements) {
             ImageButton caseDispo = (ImageButton)gridBoutons.findViewWithTag(mouvement);
             caseDispo.setEnabled(true);
@@ -167,9 +174,14 @@ public class DamierFragment extends Fragment {
             ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
             pion.setEnabled(false);
         }
+
         for (int position : damier.getPositionsPionsCouleur(damier.getTourActuel())) {
             ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
             pion.setEnabled(true);
+
+            pion.setOnClickListener(v -> {
+                caseAppuyee(gridBoutons, pion);
+            });
         }
     }
 
@@ -201,7 +213,6 @@ public class DamierFragment extends Fragment {
      */
     private void enleverArtefact(GridLayout gridBoutons) {
         for (int position : damier.getPositionsPionsCouleur(damier.getTourActuel())) {
-            Log.d("Artefact 1", position + "");
             ImageButton pion = (ImageButton)gridBoutons.findViewWithTag(position);
             pion.setBackgroundColor(COULEUR_NOIR);
         }
