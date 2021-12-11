@@ -38,8 +38,7 @@ public class DamierFragment extends Fragment {
     /** Le TextView du joueur ayant gagné. */
     private TextView txtGagnant;
 
-    // À mettre dans le damier → Logique ne va pas dans l'activity
-    /** La liste des anciens pions. */
+    /** La liste des anciens pions affichés sur l'écran. */
     private ArrayList<Integer> listeAnciensPions = new ArrayList<>();
 
     /** La couleur des cases noires. */

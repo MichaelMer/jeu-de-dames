@@ -44,7 +44,7 @@ public class Damier {
      * Constructeur du damier.
      */
     private Damier() {
-        listePion = new LinkedHashMap<>();
+        listePion = new LinkedHashMap<>(40);
     }
 
     /**
@@ -153,7 +153,7 @@ public class Damier {
      * @return ArrayList de toutes les positions.
      */
     public ArrayList<Integer> getPositionsPions() {
-        ArrayList<Integer> liste = new ArrayList<>(30);
+        ArrayList<Integer> liste = new ArrayList<>(40);
         liste.addAll(listePion.keySet());
         return liste;
     }
@@ -275,7 +275,7 @@ public class Damier {
             mouvementDispoPion.clear();
             estPionSelectionner = true;
             positionPionSelectionner = position;
-            mouvementDispoPion.addAll(chercherMovement(position));
+            mouvementDispoPion.addAll(chercherMouvement(position));
         }
     }
 
@@ -285,7 +285,7 @@ public class Damier {
      * @param position la position du pion sélectionné.
      * @return un liste des mouvements disponibles.
      */
-    private ArrayList<Integer> chercherMovement(int position) {
+    private ArrayList<Integer> chercherMouvement(int position) {
         ArrayList<Integer> resultat = new ArrayList<>();
         int[] mouvements = getSuiteMouvement(position);
         for (int i = 0; i < mouvements.length; i++) {
@@ -420,7 +420,7 @@ public class Damier {
     public void bougerPionSelectionner(int nouvellePosition) {
         if (estPionSelectionner &&
                 etatJeu == EtatJeu.ENCOURS &&
-                verifierTours() &&
+                verifierTour() &&
                 listePion.get(positionPionSelectionner) != null) {
             boolean unePrise = false;
             Pion pion = listePion.get(positionPionSelectionner);
@@ -432,14 +432,16 @@ public class Damier {
                     break;
                 }
             }
-            NotationManoury.getInstance().ajouterNotation(pion.estNoir(),
-                    positionPionSelectionner,
-                    nouvellePosition,
-                    unePrise);
+            if (pion != null) {
+                NotationManoury.getInstance().ajouterNotation(pion.estNoir(),
+                        positionPionSelectionner,
+                        nouvellePosition,
+                        unePrise);
+            }
             changerPion(nouvellePosition);
             changerTour();
             positionPionSelectionner = nouvellePosition;
-            verfigerEtatJeu();
+            verifierEtatJeu();
             enleverSelection();
         }
     }
@@ -505,7 +507,7 @@ public class Damier {
     /**
      * Verifier l'état du jeu.
      */
-    public void verfigerEtatJeu() {
+    public void verifierEtatJeu() {
         boolean aucunBlanc = true;
         boolean aucunNoir = true;
         boolean pionsBlancImmobile = true;
@@ -551,7 +553,7 @@ public class Damier {
      *
      * @return true s'il est de la même couleur.
      */
-    private boolean verifierTours() {
+    private boolean verifierTour() {
         if (Objects.requireNonNull(listePion.get(positionPionSelectionner)).estNoir() &&
                 !tourAuBlanc) {
             return true;

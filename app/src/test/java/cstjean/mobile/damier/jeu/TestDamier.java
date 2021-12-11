@@ -271,6 +271,11 @@ public class TestDamier {
 
         assertNotNull(damier.getPion(49));
         assertNull(damier.getPion(44));
+
+        damier.selectionnerPion(24);
+        damier.bougerPionSelectionner(29);
+        assertNull(damier.getPion(24));
+        assertNull(damier.getPion(29));
     }
 
     /**
