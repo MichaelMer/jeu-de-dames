@@ -2,6 +2,9 @@ package cstjean.mobile.damier.jeu;
 
 /**
  * Enum pour les differente etat possible du jeu.
+ *
+ * @author Xavier Gagnon
+ * @author Michaël Mercier
  */
 public enum EtatJeu {
     /**

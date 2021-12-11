@@ -9,6 +9,9 @@ import org.junit.Test;
 
 /**
  * Test pour la notation manoury
+ *
+ * @author Xavier Gagnon
+ * @author Michaël Mercier
  */
 public class TestNotationManoury {
     /**
